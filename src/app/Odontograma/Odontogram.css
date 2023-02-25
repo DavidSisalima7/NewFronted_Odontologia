@@ -1,0 +1,195 @@
+.Odontogram {
+  text-align: center;
+  padding: 5px;
+  height: 220px;
+  align-items: center;
+}
+
+h1 {
+  color: black;
+}
+
+.imgtratamient {
+  float: left;
+}
+
+.hide-load {
+  display: none;
+}
+
+td {
+  text-align: center;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+  border-right: none !important;
+  border-left: none !important;
+
+}
+
+.odontograma {
+  align-items: center;
+  width: 100%;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.miniodontograma {
+  align-items: center;
+  width: 75%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+.linea{
+  align-items: center;
+  width: 100%;
+  margin-left: 20;
+  margin-right: 20;
+  text-align: left;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.table input {
+  transition: all .1s ease-in-out;
+  vertical-align: top;
+}
+
+.table input:hover {
+
+  transform: scale(1.2);
+}
+
+.table tr:nth-child(odd) td {
+  background-color: #fff;
+  margin-left: 200px;
+}
+
+.table tr:hover td {
+  background-color: #fff;
+}
+
+#tabla td {
+  text-align: left;
+
+
+}
+
+.imgtratamiento {
+  position: relative;
+  right: 9px;
+  margin-right: -15px;
+  top: -8px;
+}
+
+.abajo .imgtratamiento {
+  position: relative;
+  right: 5px;
+  margin-right: -15px;
+  top: 5px;
+  vertical-align: bottom;
+}
+
+.filaup .imgtratamiento {
+  position: relative;
+  right: 9px;
+  margin-right: -20px;
+  top: -8px;
+
+
+}
+
+.filadown .imgtratamiento {
+  position: relative;
+  right: 5px;
+  margin-right: -20px;
+  top: 5px;
+  vertical-align: bottom;
+
+}
+
+body {
+  font-family: 'Public Sans', sans-serif;
+}
+
+*[contenteditable]:hover,
+*[contenteditable]:focus,
+img.hover {
+  background: #fff;
+  border: 1px dashed #0066cc;
+  padding-left: 4px;
+  padding-right: 5px;
+}
+
+address {
+  margin-bottom: 3px;
+}
+
+.delete {
+  border: none;
+  padding: 0px;
+}
+
+a.delete :hover {
+  background-color: none;
+
+}
+
+.elementor-accordion .elementor-tab-title .elementor-accordion-icon.elementor-accordion-icon-left {
+  float: none !important;
+  font-size: 15px;
+}
+
+@media (min-width: 1400px) {
+
+  .container,
+  .container-lg,
+  .container-md,
+  .container-sm,
+  .container-xl,
+  .container-xxl {
+    max-width: 1140px;
+  }
+}
+
+
+
+
+@media print {
+  #exportpdf {
+    box-shadow: none !important;
+    margin-top: 0px !important;
+    padding-top: 0px !important;
+    scale: 0.9;
+
+  }
+
+  .container {
+    margin-top: 0px !important;
+    padding-top: 0px !important;
+  }
+
+  .row {
+    margin-top: 0px !important;
+    padding-top: 0px !important;
+  }
+
+  .hide-print {
+    display: none;
+  }
+
+  .msg3 {
+    display: none;
+  }
+
+  #hideprivacidad {
+    display: none;
+  }
+
+  img {
+    transform: scale(0.9);
+
+  }
+}
