@@ -1,0 +1,16 @@
+.DialogoCentrado {
+    justify-content: center;
+    width: '40vw'
+}
+
+.elementosDialog {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 5px;
+}
+.TextoMamalon{
+    font-weight: bold;
+}
