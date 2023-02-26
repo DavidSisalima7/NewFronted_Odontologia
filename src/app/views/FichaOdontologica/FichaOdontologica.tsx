@@ -5,9 +5,11 @@ import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { IPaciente } from "./interface/FichaDto";
+import { IFicha, IPaciente } from "./interface/FichaDto";
 import { Button } from "primereact/button";
-import '../../Styles/css/FichaOdontologica.css'
+import "../../Styles/css/FichaOdontologica.css";
+import OdontoTable from "../../views/FichaOdontologica/odontoTable";
+import { Card } from "@mui/material";
 
 export default function FichaOdontologica() {
   //El estado paciento el cual puede ser IPaciente o nulo, va a ser nulo al inicio del renderizado.
@@ -21,9 +23,24 @@ export default function FichaOdontologica() {
   const [observaciones, setObservaciones] = useState("");
   //<Interface> tipado al estado creado
   const [pacientes, setPacientes] = useState<IPaciente[]>([]);
+
+  const [ficha, setFicha] = useState<IFicha | null>(null);
+
+  const [show, setShowTable]=useState(false);
+  console.log(show)
   // console.log(pacientes.map((item) => ({ value: item.nombre })));
   // console.log(selectedPaciente);
   const date = new Date();
+
+  const getFicha = async (id_persona:number) => {
+    const { data } = await axios.get(
+      `http://localhost:8080/api/ficha/buscarF/${id_persona}`
+    );
+    setObservaciones((data as IFicha).observaciones || '' );
+    setAntecedente((data as IFicha).diagnostico || '');
+    setMotivo((data as IFicha).motivo_consulta || '');
+    setFicha(data as IFicha);
+  };
 
   const getPaciente = async () => {
     const { data } = await axios.get(
@@ -35,7 +52,16 @@ export default function FichaOdontologica() {
   useEffect(() => {
     getPaciente();
   }, []);
+
+const save= async() =>{
+  if(ficha){
+    await putFicha();
+  }else{
+    await postFicha();
+  }
   
+}
+
   const postFicha = async () => {
     const url = "http://localhost:8080/api/ficha/crear";
     const data = {
@@ -49,6 +75,16 @@ export default function FichaOdontologica() {
     };
     const response = await axios.post(url, data);
   };
+  const putFicha = async () => {
+    const url = `http://localhost:8080/api/ficha/actualizar/${ficha?.id_ficha}`;
+    const data = {
+      diagnostico: antecedentes,
+      fecha_consulta: date,
+      motivo_consulta: motivo,
+      observaciones: observaciones
+    };
+    const response = await axios.put(url, data);
+  };
 
   function onPacienteChange(paciente: any) {
     const selectedPaciente = pacientes.find(
@@ -57,8 +93,23 @@ export default function FichaOdontologica() {
     //recive un atributo ya definido
     //Si existe envia el objeto si no envia null
     setSelectedPaciente(selectedPaciente || null);
+    getFicha(paciente.id);
   }
 
+  // const handleShow = () => {
+
+  // }
+
+  function handleShow() {
+    if (show) {
+      setShowTable(false)
+    } else {
+      setShowTable(true)
+    }
+    // setShowTable(show? false :  true)
+    // setShowTable(!show)
+    // setShowTable(prevState => !prevState)
+  }
   return (
     <div
       style={{
@@ -66,6 +117,7 @@ export default function FichaOdontologica() {
         paddingTop: "4rem",
         alignItems: "center",
         flexDirection: "column",
+        background:"white"
       }}
     >
       <label
@@ -78,7 +130,7 @@ export default function FichaOdontologica() {
       >
         Ficha Odontológica
       </label>
-
+      <Card>
       <div
         id="container"
         style={{
@@ -117,8 +169,16 @@ export default function FichaOdontologica() {
           }))}
           optionLabel="label"
           placeholder="Seleccione un Paciente"
-          style={{ marginBottom: "25px", fontFamily: "Poppins" }}
+          style={{ marginBottom: "25px", fontFamily: "Poppins",marginTop:"20px" }}
         />
+          <Button onClick={handleShow} label="Save" icon="pi pi-check"  style={{ marginBottom: "25px", fontFamily: "Poppins" ,marginLeft:"45%",marginTop:"20px"}} />
+          {/* <Button onClick={()=>setShowTable(!show)} label="Save" icon="pi pi-check"  style={{ marginBottom: "25px", fontFamily: "Poppins" ,marginLeft:"300px",marginTop:"20px"}} /> */}
+          {show && 
+          <div style={{
+            position: "absolute",
+            top: "60px",
+            right: "30px"
+        }}><OdontoTable id_ficha={ficha?.id_ficha} /></div> }
         <table>
           <td>
             <span className="p-float-label">
@@ -159,9 +219,7 @@ export default function FichaOdontologica() {
             </span>
           </td>
           <td>
-            <span
-              className="p-float-label"
-            >
+            <span className="p-float-label">
               <InputText
                 id="nombres"
                 value={selectedPaciente?.nombre}
@@ -229,7 +287,7 @@ export default function FichaOdontologica() {
               <label
                 htmlFor="Dirección"
                 style={{
-                  fontFamily: "Poppins"
+                  fontFamily: "Poppins",
                 }}
               >
                 Dirección
@@ -319,19 +377,20 @@ export default function FichaOdontologica() {
           }}
         >
           <Button
-            onClick={postFicha}
+            onClick={save}
             label="Guardar"
             className="p-button-success p-button-rounded"
-            style={{marginRight:"10px"}}
+            style={{ marginRight: "10px" }}
           />
 
-          <Button 
+          <Button
             label="Cancelar"
             type="reset"
             className="p-button-danger p-button-rounded"
           />
         </div>
       </div>
+      </Card>
     </div>
   );
 }
