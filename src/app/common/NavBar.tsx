@@ -26,7 +26,7 @@ export const NavBar: React.FC = () => {
               <label htmlFor="drop-1" className="toggle">
                 Registrar
               </label>
-              <a href="#">Registrar</a>
+              <a href="/reg-person">Registrar</a>
               <input type="checkbox" id="drop-1" />
               <ul>
                 <li>
@@ -72,7 +72,7 @@ export const NavBar: React.FC = () => {
             </li>
 
             <li>
-              <a>Cerrar Sesion</a>
+              <a href="/auth/login">Cerrar Sesion</a>
             </li>
           </ul>
         </nav>

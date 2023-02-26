@@ -19,11 +19,12 @@ import Persona from "./interfaces/persona";
 
 import 'bootstrap/dist/css/bootstrap.css';
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 export const RegisterPerson = () => {
 
-    let navigate = useNavigate();
+    let navigate = useHistory();
 
     const [person, setPerson] = useState({
 
@@ -52,7 +53,7 @@ export const RegisterPerson = () => {
         await axios.post("http://localhost:8080/api/persona/crear", person);
         setShowMessage(true);
         formikPerson.resetForm();
-        navigate("/")
+        navigate.replace("/")
     };
 
     /* useEffect(() => {

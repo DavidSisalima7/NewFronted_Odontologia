@@ -5,7 +5,6 @@ import { RouterLayout } from "../../common/RouterLayout";
 import FichaOdontologica from "../FichaOdontologica/FichaOdontologica";
 import Home from "./home/Home";
 import { BrowserRouter as Router } from "react-router-dom";
-import { Odontogram2 } from "../../Odontograma/Odontogram2";
 import { RegisterPerson } from "../Register-persona/register-person";
 
 export function DashboardRouter() {
@@ -28,7 +27,8 @@ export function DashboardRouter() {
                    </Route>
                    <Route path="/odontograma">
                    <NavBar/>
-                      <Odontogram2/>
+                     {/*Poner ruta del odontograma aqui*/}
+                      {/*<Odontogram2/>*/}
                    </Route>
                    <Route path="*">
                       <Redirect to="/dashboard/home" />
