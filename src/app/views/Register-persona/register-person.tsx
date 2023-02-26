@@ -19,33 +19,40 @@ import Persona from "./interfaces/persona";
 
 import 'bootstrap/dist/css/bootstrap.css';
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const RegisterPerson = () => {
 
-    let navigate = useHistory();
+    let navigate = useNavigate();
 
-    const [user, setUser] = useState({
+    const [person, setPerson] = useState({
 
-        username: "",
-        password: ""
+        cedula: "",
+        nombre: "",
+        apellido: "",
+        email: "",
+        fechaNac: "",
+        genero: "",
+        celular: "",
+        direccion: "",
+        telefono: "",
     });
 
-    const { username, password } = user;
+    const { cedula, nombre, apellido, email, fechaNac, genero, celular, direccion, telefono } = person;
 
     const onInputChange = (e: any) => {
 
-        setUser({ ...user, [e.target.name]: e.target.value })
+        setPerson({ ...person, [e.target.name]: e.target.value })
 
     }
 
     const onSubmit = async (e: any) => {
 
         e.preventDefault();
-        await axios.post("http://localhost:8080/usuarios/", user);
+        await axios.post("http://localhost:8080/api/persona/crear", person);
         setShowMessage(true);
-        formikUsr.resetForm();
-        navigate.replace("/")
+        formikPerson.resetForm();
+        navigate("/")
     };
 
     /* useEffect(() => {
@@ -66,11 +73,8 @@ export const RegisterPerson = () => {
     const [formData, setFormData] = useState({});
 
     //Datos Dropdown
-    const [selectedGender, setSelectedGender] = useState(null);
-    const genero = [
-        { name: 'Masculino', code: 'MAS' },
-        { name: 'Femenino', code: 'FEM' },
-        { name: 'Otro', code: 'OTR' }
+    const generos: string[] = [
+        'Masculino', 'Femenino', 'Otro'
     ];
 
     // Reestringir campos
@@ -137,37 +141,6 @@ export const RegisterPerson = () => {
         },
     });
 
-    // Uso de formik para formularios
-    const formikUsr = useFormik<Usuario>({
-        // Inicializamos los valores de la interfaz importada LoginDto
-        initialValues: {
-            // Agregamos todos los atributos de la interfaz y los inicializamos con "" o 0
-            username: "",
-            password: "",
-        },
-        // validaciones
-        validate: (data: { username: string; password: string }) => {
-            // variable para controlar los errores
-            const errors: any = {};
-            // Aqui se validan que el campo es obligatorio y no este vacio
-            if (!data.username) {
-                errors.username = "Campo obligatorio";
-            }
-            if (!data.password) {
-                errors.password = "Campo obligatorio";
-            }
-            // retorna si da error
-            return errors;
-        },
-        onSubmit: (data: Usuario) => {
-            // Esto manda la data de los campos en JSON para el sessionStorage del navegador /F12/Inspeccionar/Aplicacion/SessionStorage
-            sessionStorage.setItem("Reguser", JSON.stringify(data));
-            setFormData(data);
-            setShowMessage(true);
-            formikUsr.resetForm();
-        },
-    });
-
     const dialogFooter = (
         <div className="flex justify-content-center">
             <Button
@@ -184,19 +157,33 @@ export const RegisterPerson = () => {
     // Metodo para validaciones y mensajes en cuadro de texto Usuario
     const isFormFieldValid = (
         name: keyof {
-            username: string;
-            password: string;
+            cedula: string,
+            nombre: string,
+            apellido: string,
+            email: string,
+            fechaNac: string,
+            genero: string,
+            celular: string,
+            direccion: string,
+            telefono: string,
         }
-    ) => !!(formikUsr.touched[name] && formikUsr.errors[name]);
+    ) => !!(formikPerson.touched[name] && formikPerson.errors[name]);
 
     const getFormErrorMessage = (
         name: keyof {
-            username: string;
-            password: string;
+            cedula: string,
+            nombre: string,
+            apellido: string,
+            email: string,
+            fechaNac: string,
+            genero: string,
+            celular: string,
+            direccion: string,
+            telefono: string,
         }
     ) =>
         isFormFieldValid(name) && (
-            <small className="p-error">{formikUsr.errors[name]}</small>
+            <small className="p-error">{formikPerson.errors[name]}</small>
         );
 
     // Metodo para validaciones y mensajes en cuadro de texto Persona
@@ -251,26 +238,16 @@ export const RegisterPerson = () => {
 
             <div className="container">
 
-                <div className="box" >
-                    <Dialog
-                        visible={showMessage}
-                        onHide={() => {
-                            setShowMessage(false);
-                        }}
-                        position="top"
-                        footer={dialogFooter}
-                        showHeader={false}
-                        breakpoints={{ "960px": "80vw" }}
-                        style={{ width: "30vw" }}
-                    >
+                <div className="box">
+                    <Dialog visible={showMessage} onHide={() => { setShowMessage(false); }}
+                        position="top" footer={dialogFooter} showHeader={false}
+                        breakpoints={{ "960px": "80vw" }} style={{ width: "30vw" }}>
                         <div className="flex align-items-center flex-column pt-6 px-3">
-                            <i
-                                className="pi pi-check-circle"
-                                style={{ fontSize: "5rem", color: "var(--green-500)" }}
-                            ></i>
+                            <i className="pi pi-check-circle"
+                                style={{ fontSize: "5rem", color: "var(--green-500)" }}></i>
                             <h5>Registro Exitoso!</h5>
                             <p style={{ lineHeight: 1.5, textIndent: "1rem" }}>
-                                Bienvenido <b>{formikUsr.values.username}</b> ;
+                                Bienvenido <b>{formikPerson.values.nombre}</b> ;
                             </p>
                         </div>
                     </Dialog>
@@ -278,15 +255,13 @@ export const RegisterPerson = () => {
                         <h2 className="text-center" style={{ color: "black" }}>Registrar Persona</h2>
                         <form onSubmit={(e) => onSubmit(e)} className="p-fluid" style={{ marginTop: 20 }}>
                             <div className="row">
-                                <div className="col" style={{ width: "auto" }}>
+                                <div className="col">
 
                                     <div className="campo p-col-12 p-md-4">
                                         <span className="p-float-label p-input-icon-left">
                                             <i className="pi pi-id-card" />
-                                            <InputText id="float-input" name="username" type={"text"} keyfilter="int" value={username} onChange={(e) => onInputChange(e)} />
-                                            <label htmlFor="name" className={classNames({
-                                                "p-error": isFormFieldValidP("cedula"),
-                                            })}>
+                                            <InputText id="float-input" name="cedula" type={"text"} keyfilter="int" value={cedula} onChange={(e) => onInputChange(e)} />
+                                            <label htmlFor="name" className={classNames({ "p-error": isFormFieldValidP("cedula"), })}>
                                                 Cédula
                                             </label>
                                         </span>
@@ -295,7 +270,7 @@ export const RegisterPerson = () => {
 
                                     <div className="campo p-col-12 p-md-4">
                                         <span className="p-float-label">
-                                            <Dropdown id="float-input" onChange={(e) => setSelectedGender(e.value)} value={selectedGender} options={genero} optionLabel="name"
+                                            <Dropdown id="float-input" name="genero" onChange={(e) => onInputChange(e)} value={genero} options={generos}
                                                 placeholder="Seleccione Género" className="w-full md:w-14rem" />
                                             <label htmlFor="float-input">Género</label>
                                         </span>
@@ -304,63 +279,24 @@ export const RegisterPerson = () => {
                                     <div className="campo p-col-12 p-md-4">
                                         <span className="p-float-label p-input-icon-left">
                                             <i className="pi pi-phone" />
-                                            <InputMask id="float-input" onChange={(e) => setValue(e.target.value!)} mask="9999999999" placeholder="9999999999"
-                                                className={classNames("inputBox", {
-                                                    "p-invalid": isFormFieldValidP("celular"),
-                                                })}
-                                            />
-                                            <label
-                                                htmlFor="name"
-                                                className={classNames({
-                                                    "p-error": isFormFieldValidP("celular"),
-                                                })}
-                                            >
+                                            <InputMask id="float-input" name="celular" value={celular} onChange={(e) => onInputChange(e)}
+                                                mask="9999999999" placeholder="9999999999"
+                                                className={classNames("inputBox", { "p-invalid": isFormFieldValidP("celular"), })} />
+                                            <label htmlFor="name" className={classNames({ "p-error": isFormFieldValidP("celular"), })}>
                                                 Número Celular
                                             </label>
                                         </span>
                                         {getFormErrorMessageP("celular")}
                                     </div>
 
-                                    <div className="campo p-col-12 p-md-4">
-                                        <span className="p-float-label p-input-icon-left">
-                                            <i className="pi pi-id-card" />
-                                            <Password
-                                                id="password"
-                                                name="password"
-                                                value={formikUsr.values.password}
-                                                onChange={formikUsr.handleChange}
-                                                toggleMask
-                                                className={classNames("inputBox", {
-                                                    "p-invalid": isFormFieldValid("password"),
-                                                })}
-                                                header={passwordHeader}
-                                                footer={passwordFooter}
-                                            />
-                                            <label
-                                                htmlFor="password"
-                                                className={classNames({
-                                                    "p-error": isFormFieldValid("password"),
-                                                })}
-                                            >
-                                                Contraseña
-                                            </label>
-                                        </span>
-                                        {getFormErrorMessage("password")}
-                                    </div>
-
                                 </div>
-                                <div className="col" style={{ width: "auto" }}>
+                                <div className="col">
                                     <div className="campo p-col-12 p-md-4">
                                         <span className="p-float-label p-input-icon-left">
                                             <i className="pi pi-user" />
-                                            <InputText id="float-input" type="text" keyfilter={blockSpecial}
-                                                className={classNames("inputBox", {
-                                                    "p-invalid": isFormFieldValidP("nombre"),
-                                                })}
-                                            />
-                                            <label htmlFor="name" className={classNames({
-                                                "p-error": isFormFieldValidP("nombre"),
-                                            })}>
+                                            <InputText id="float-input" name="nombre" value={nombre} onChange={(e) => onInputChange(e)} type="text" keyfilter={blockSpecial}
+                                                className={classNames("inputBox", { "p-invalid": isFormFieldValidP("nombre"), })} />
+                                            <label htmlFor="name" className={classNames({ "p-error": isFormFieldValidP("nombre"), })}>
                                                 Nombres
                                             </label>
                                         </span>
@@ -369,17 +305,9 @@ export const RegisterPerson = () => {
 
                                     <div className="campo p-col-12 p-md-4">
                                         <span className="p-float-label">
-                                            <InputText type={"date"} id="float-input"
-                                                className={classNames("inputBox", {
-                                                    "p-invalid": isFormFieldValidP("fechaNac"),
-                                                })}
-                                            />
-                                            <label
-                                                htmlFor="name"
-                                                className={classNames({
-                                                    "p-error": isFormFieldValidP("fechaNac"),
-                                                })}
-                                            >
+                                            <InputText type={"date"} id="float-input" name="fechaNac" value={fechaNac} onChange={(e) => onInputChange(e)}
+                                                className={classNames("inputBox", { "p-invalid": isFormFieldValidP("fechaNac"), })} />
+                                            <label htmlFor="name" className={classNames({ "p-error": isFormFieldValidP("fechaNac"), })}>
                                                 Fecha de Nacimiento
                                             </label>
                                         </span>
@@ -389,67 +317,24 @@ export const RegisterPerson = () => {
                                     <div className="campo p-col-12 p-md-4">
                                         <span className="p-float-label p-input-icon-left">
                                             <i className="pi pi-phone" />
-                                            <InputMask id="float-input" onChange={(e) => setValue(e.target.value!)} mask="99-9999999" placeholder="99-9999999"
-                                                className={classNames("inputBox", {
-                                                    "p-invalid": isFormFieldValidP("telefono"),
-                                                })}
-                                            />
-                                            <label
-                                                htmlFor="name"
-                                                className={classNames({
-                                                    "p-error": isFormFieldValidP("telefono"),
-                                                })}
-                                            >
+                                            <InputMask id="float-input" name="telefono" value={telefono} onChange={(e) => onInputChange(e)} mask="99-9999999"
+                                                placeholder="99-9999999" className={classNames("inputBox", { "p-invalid": isFormFieldValidP("telefono"), })} />
+                                            <label htmlFor="name" className={classNames({ "p-error": isFormFieldValidP("telefono"), })}>
                                                 Número Telefónico
                                             </label>
                                         </span>
                                         {getFormErrorMessageP("telefono")}
                                     </div>
 
-                                    <div className="campo p-col-12 p-md-4">
-                                        <span className="p-float-label p-input-icon-left">
-                                            <i className="pi pi-id-card" />
-                                            <Password
-                                                id="password"
-                                                name="password"
-                                                value={password}
-                                                onChange={(e) => onInputChange(e)}
-                                                toggleMask
-                                                className={classNames("inputBox", {
-                                                    "p-invalid": isFormFieldValid("password"),
-                                                })}
-                                                header={passwordHeader}
-                                                footer={passwordFooter}
-                                            />
-                                            <label
-                                                htmlFor="password"
-                                                className={classNames({
-                                                    "p-error": isFormFieldValid("password"),
-                                                })}
-                                            >
-                                                Repetir Contraseña
-                                            </label>
-                                        </span>
-                                        {getFormErrorMessage("password")}
-                                    </div>
-
                                 </div>
-                                <div className="col" style={{ width: "auto" }}>
+                                <div className="col">
 
                                     <div className="campo p-col-12 p-md-4">
                                         <span className="p-float-label p-input-icon-left">
                                             <i className="pi pi-user" />
-                                            <InputText id="float-input" type="text" keyfilter={blockSpecial}
-                                                className={classNames("inputBox", {
-                                                    "p-invalid": isFormFieldValidP("apellido"),
-                                                })}
-                                            />
-                                            <label
-                                                htmlFor="name"
-                                                className={classNames({
-                                                    "p-error": isFormFieldValidP("apellido"),
-                                                })}
-                                            >
+                                            <InputText id="float-input" type="text" name="apellido" value={apellido} onChange={(e) => onInputChange(e)} keyfilter={blockSpecial}
+                                                className={classNames("inputBox", { "p-invalid": isFormFieldValidP("apellido"), })} />
+                                            <label htmlFor="name" className={classNames({ "p-error": isFormFieldValidP("apellido"), })}>
                                                 Apellidos
                                             </label>
                                         </span>
@@ -459,17 +344,9 @@ export const RegisterPerson = () => {
                                     <div className="campo p-col-12 p-md-4">
                                         <span className="p-float-label p-input-icon-left">
                                             <i className="pi pi-calendar" />
-                                            <InputText id="float-input" type="text"
-                                                className={classNames("inputBox", {
-                                                    "p-invalid": isFormFieldValidP("direccion"),
-                                                })}
-                                            />
-                                            <label
-                                                htmlFor="name"
-                                                className={classNames({
-                                                    "p-error": isFormFieldValidP("direccion"),
-                                                })}
-                                            >
+                                            <InputText id="float-input" type="text" name="direccion" value={direccion} onChange={(e) => onInputChange(e)}
+                                                className={classNames("inputBox", { "p-invalid": isFormFieldValidP("direccion"), })} />
+                                            <label htmlFor="name" className={classNames({ "p-error": isFormFieldValidP("direccion"), })}>
                                                 Dirección
                                             </label>
                                         </span>
@@ -479,17 +356,9 @@ export const RegisterPerson = () => {
                                     <div className="campo p-col-12 p-md-4">
                                         <span className="p-float-label p-input-icon-left">
                                             <i className="pi pi-envelope" />
-                                            <InputText id="float-input" type="text"
-                                                className={classNames("inputBox", {
-                                                    "p-invalid": isFormFieldValidP("email"),
-                                                })}
-                                            />
-                                            <label
-                                                htmlFor="name"
-                                                className={classNames({
-                                                    "p-error": isFormFieldValidP("email"),
-                                                })}
-                                            >
+                                            <InputText id="float-input" type="text" name="email" value={email} onChange={(e) => onInputChange(e)}
+                                                className={classNames("inputBox", { "p-invalid": isFormFieldValidP("email"), })} />
+                                            <label htmlFor="name" className={classNames({ "p-error": isFormFieldValidP("email"), })}>
                                                 Correo Electronico
                                             </label>
                                         </span>
@@ -503,44 +372,29 @@ export const RegisterPerson = () => {
                             <div className="row text-center">
                                 <div className="col">
                                     <div style={{ justifyContent: "center", alignItems: "center" }}>
-                                        <Button
-                                            type="submit"
-                                            label="Guardar"
-                                            className="mt-2"
-                                            style={{
-                                                background: "#ffff",
-                                                width: "150px",
-                                                height: "40px",
-                                                textAlign: "center",
+                                        <Button type="submit" label="Guardar"
+                                            className="mt-2" style={{
+                                                background: "#ffff", width: "150px",
+                                                height: "40px", textAlign: "center",
                                                 color: "#292929",
-                                            }}
-                                        />
+                                            }} />
                                     </div>
                                 </div>
                                 <div className="col">
                                     <div style={{ justifyContent: "center" }}>
-                                        <Button
-                                            type="submit"
-                                            label="Cancelar"
-                                            className="mt-2"
-                                            style={{
-                                                background: "#ffff",
-                                                width: "150px",
-                                                height: "40px",
-                                                textAlign: "center",
+                                        <Button type="reset" label="Cancelar"
+                                            className="mt-2" style={{
+                                                background: "#ffff", width: "150px",
+                                                height: "40px", textAlign: "center",
                                                 color: "#292929",
-                                            }}
-                                        />
+                                            }} />
                                     </div>
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
-
             </div>
-
         </body >
     )
-
 }
