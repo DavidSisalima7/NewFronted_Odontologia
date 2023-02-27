@@ -30,6 +30,7 @@ export default function FichaOdontologica() {
 
   const date = new Date();
 
+
   const getFicha = async (id_persona: number) => {
     const { data } = await axios.get(
       `http://localhost:8080/api/ficha/buscarF/${id_persona}`
@@ -100,152 +101,152 @@ export default function FichaOdontologica() {
     }
   }
   return (
-    <div className="fichaP">
-      <label className="labelFicha">Ficha Odontológica</label>
-      <Card id="card1">
-        <div className="container" id="container">
-          <h5 className="datos">Datos del Cliente</h5>
-          <Dropdown
-            id="dropP"
-            value={{
-              id: selectedPaciente?.id_persona,
-              label: `${selectedPaciente?.nombre} ${selectedPaciente?.apellido}`,
-            }}
-            onChange={(e) => onPacienteChange(e.value)}
-            options={pacientes.map((item) => ({
-              id: item.id_persona,
-              label: `${item.nombre} ${item.apellido}`,
-            }))}
-            optionLabel="label"
-            placeholder="Seleccione un Paciente"
-          />
-          <Button className="BotonE" onClick={handleShow}>
-          </Button>
+      <div className="fichaP">
+        <label className="labelFicha">Ficha Odontológica</label>
 
-          {show && (
-            <div className="tableO">
-              <OdontoTable id_ficha={ficha?.id_ficha} />
+        <Card id="card1">
+          <div className="container" id="container">
+            <h5 className="datos">Datos del Cliente</h5>
+            <Dropdown
+              id="dropP"
+              value={{
+                id: selectedPaciente?.id_persona,
+                label: `${selectedPaciente?.nombre} ${selectedPaciente?.apellido}`,
+              }}
+              onChange={(e) => onPacienteChange(e.value)}
+              options={pacientes.map((item) => ({
+                id: item.id_persona,
+                label: `${item.nombre} ${item.apellido}`,
+              }))}
+              optionLabel="label"
+              placeholder="Seleccione un Paciente"
+            />
+            <Button className="BotonE" onClick={handleShow}></Button>
+
+            {show && (
+              <div className="tableO">
+                <OdontoTable id_ficha={ficha?.id_ficha} />
+              </div>
+            )}
+            <table>
+              <td>
+                <span className="p-float-label">
+                  <InputText
+                    id="txtInput"
+                    value={selectedPaciente?.cedula}
+                    disabled
+                    placeholder="Disabled"
+                  />
+                  <label className="InputS" htmlFor="Cedula">
+                    Cédula
+                  </label>
+                </span>
+                <span className="p-float-label" style={{ marginTop: "20px" }}>
+                  <InputText
+                    id="txtInput"
+                    value={selectedPaciente?.genero}
+                    disabled
+                    placeholder="Disabled"
+                  />
+                  <label className="InputS" htmlFor="Género">
+                    Género
+                  </label>
+                </span>
+              </td>
+              <td>
+                <span className="p-float-label">
+                  <InputText
+                    id="txtInput"
+                    value={selectedPaciente?.nombre}
+                    disabled
+                    placeholder="Disabled"
+                  />
+                  <label className="InputS" htmlFor="Nombres">
+                    Nombres
+                  </label>
+                </span>
+                <span id="span1" className="p-float-label">
+                  <InputText
+                    id="txtInput"
+                    value={selectedPaciente?.fechaNac}
+                    disabled
+                    placeholder="Disabled"
+                  />
+                  <label className="InputS" htmlFor="Fecha Nacimiento">
+                    Fecha Nacimiento
+                  </label>
+                </span>
+              </td>
+              <td>
+                <span className="p-float-label">
+                  <InputText
+                    id="txtInput"
+                    value={selectedPaciente?.apellido}
+                    disabled
+                    placeholder="Disabled"
+                  />
+                  <label className="InputS" htmlFor="Apellidos">
+                    Apellidos
+                  </label>
+                </span>
+                <span id="span1" className="p-float-label">
+                  <InputText
+                    id="txtInput"
+                    value={selectedPaciente?.direccion}
+                    disabled
+                    placeholder="Disabled"
+                  />
+                  <label className="InputS" htmlFor="Dirección">
+                    Dirección
+                  </label>
+                </span>
+              </td>
+            </table>
+
+            <div>
+              <h5 className="textI">Antecedentes</h5>
+              <textarea
+                id="textA"
+                value={antecedentes}
+                onChange={(e) => setAntecedente(e.target.value)}
+                rows={3}
+                cols={30}
+                className="p-inputtextarea p-inputtext p-component p-inputtextarea-resizable"
+              ></textarea>
+              <h5 className="textI">Motivo de Consulta</h5>
+              <textarea
+                id="textA"
+                value={motivo}
+                onChange={(e) => setMotivo(e.target.value)}
+                rows={3}
+                cols={30}
+                className="p-inputtextarea p-inputtext p-component p-inputtextarea-resizable"
+              ></textarea>
+              <h5 className="textI">Observaciones</h5>
+              <textarea
+                id="textA"
+                value={observaciones}
+                onChange={(e) => setObservaciones(e.target.value)}
+                rows={3}
+                cols={30}
+                className="p-inputtextarea p-inputtext p-component p-inputtextarea-resizable"
+              ></textarea>
             </div>
-          )}
-          <table>
-            <td>
-              <span className="p-float-label">
-                <InputText
-                  id="txtInput"
-                  value={selectedPaciente?.cedula}
-                  disabled
-                  placeholder="Disabled"
-                />
-                <label className="InputS" htmlFor="Cedula">
-                  Cédula
-                </label>
-              </span>
-              <span className="p-float-label" style={{ marginTop: "20px" }}>
-                <InputText
-                  id="txtInput"
-                  value={selectedPaciente?.genero}
-                  disabled
-                  placeholder="Disabled"
-                />
-                <label className="InputS" htmlFor="Género">
-                  Género
-                </label>
-              </span>
-            </td>
-            <td>
-              <span className="p-float-label">
-                <InputText
-                  id="txtInput"
-                  value={selectedPaciente?.nombre}
-                  disabled
-                  placeholder="Disabled"
-                />
-                <label className="InputS" htmlFor="Nombres">
-                  Nombres
-                </label>
-              </span>
-              <span id="span1" className="p-float-label">
-                <InputText
-                  id="txtInput"
-                  value={selectedPaciente?.fechaNac}
-                  disabled
-                  placeholder="Disabled"
-                />
-                <label className="InputS" htmlFor="Fecha Nacimiento">
-                  Fecha Nacimiento
-                </label>
-              </span>
-            </td>
-            <td>
-              <span className="p-float-label">
-                <InputText
-                  id="txtInput"
-                  value={selectedPaciente?.apellido}
-                  disabled
-                  placeholder="Disabled"
-                />
-                <label className="InputS" htmlFor="Apellidos">
-                  Apellidos
-                </label>
-              </span>
-              <span id="span1" className="p-float-label">
-                <InputText
-                  id="txtInput"
-                  value={selectedPaciente?.direccion}
-                  disabled
-                  placeholder="Disabled"
-                />
-                <label className="InputS" htmlFor="Dirección">
-                  Dirección
-                </label>
-              </span>
-            </td>
-          </table>
-
-          <div>
-            <h5 className="textI">Antecedentes</h5>
-            <textarea
-              id="textA"
-              value={antecedentes}
-              onChange={(e) => setAntecedente(e.target.value)}
-              rows={3}
-              cols={30}
-              className="p-inputtextarea p-inputtext p-component p-inputtextarea-resizable"
-            ></textarea>
-            <h5 className="textI">Motivo de Consulta</h5>
-            <textarea
-              id="textA"
-              value={motivo}
-              onChange={(e) => setMotivo(e.target.value)}
-              rows={3}
-              cols={30}
-              className="p-inputtextarea p-inputtext p-component p-inputtextarea-resizable"
-            ></textarea>
-            <h5 className="textI">Observaciones</h5>
-            <textarea
-              id="textA"
-              value={observaciones}
-              onChange={(e) => setObservaciones(e.target.value)}
-              rows={3}
-              cols={30}
-              className="p-inputtextarea p-inputtext p-component p-inputtextarea-resizable"
-            ></textarea>
+            <div className="botones">
+              <Button
+                onClick={save}
+                label="Guardar"
+                className="p-button-success p-button-rounded"
+                style={{ marginRight: "10px" }}
+              />
+              <Button
+                label="Cancelar"
+                type="reset"
+                className="p-button-danger p-button-rounded"
+              />
+            </div>
           </div>
-          <div className="botones">
-            <Button
-              onClick={save}
-              label="Guardar"
-              className="p-button-success p-button-rounded"
-              style={{ marginRight: "10px" }}
-            />
-            <Button
-              label="Cancelar"
-              type="reset"
-              className="p-button-danger p-button-rounded"
-            />
-          </div>
-        </div>
-      </Card>
-    </div>
+        </Card>
+      </div>
   );
 }

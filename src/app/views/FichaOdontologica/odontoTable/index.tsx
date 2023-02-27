@@ -26,7 +26,7 @@ import { useEffect, useState } from "react";
     </div>
   );
   return (
-    <div className="card">
+    <div className="card" style={{marginTop:"110px",marginRight:"10px"}}>
       <DataTable
         value={odontograma}
         header={header}
