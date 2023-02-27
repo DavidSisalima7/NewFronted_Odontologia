@@ -11,7 +11,7 @@ import { AuthService } from "../../../services/auth/AuthService";
 export function Login(){
   
   const { dispatchUser }:any = useContext(AuthContext);
-  const [ auth, setAuth ] = useState({email:'', password:''})
+  const [ auth, setAuth ] = useState({username:'', password:''})
   const history = useHistory();
 
   const handleSubmit = async (e:React.ChangeEvent<HTMLFormElement>) => {
@@ -57,8 +57,7 @@ export function Login(){
          <input
            autoFocus
            className="form-control border-0 txt-input"
-           name="email"
-           type="email"
+           name="username"
            placeholder="Usuario"
            onChange={ e => handleChange(e) }
          />
