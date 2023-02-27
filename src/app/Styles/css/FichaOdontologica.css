@@ -1,20 +1,23 @@
-div.fichaP{
+div.fichaP {
     display: flex;
     padding-top: 4rem;
     align-items: center;
     flex-direction: column;
-    background:white;
+    background: white;
 }
-label.labelFicha{
+
+label.labelFicha {
     color: #05313A;
     font-family: Poppins;
     font-size: 35px;
     font-size: oblique;
 }
-div.container{
+
+div.container {
     padding: 8px;
 }
-h5.datos{
+
+h5.datos {
     color: #05313A;
     font-family: Poppins;
     margin-left: 15px;
@@ -22,22 +25,60 @@ h5.datos{
     font-size: 23px;
     text-align: center;
 }
-div.tableO{
+
+div.tableO {
     position: absolute;
     top: 60px;
     right: 30px;
 }
-label.InputS{
+
+label.InputS {
     font-family: Poppins;
 }
-h5.textI{
+
+h5.textI {
     color: #05313A;
     font-family: "Poppins";
     margin-left: "15px";
     margin-top: "5px";
     font-size: "20px";
 }
-div.botones{
-        display: flex;
-        justify-content: center;
+
+div.botones {
+    display: flex;
+    justify-content: center;
+}
+
+Button.BotonE {
+    margin-bottom: 25px;
+    font-family: Poppins;
+    margin-left: 45%;
+    margin-top: 20px;
+    height:60px;
+    width: 10%;
+    background-image: url(../../Image/chequeo-dental\ \(3\).png);
+    background-color: whitesmoke;
+    border-color:black;  
+}
+
+#dropP {
+    margin-bottom: 25px;
+    font-family: Poppins;
+    margin-top: 20px;
+}
+
+#card1 {
+    margin-bottom: 10px;
+}
+#txtInput{
+    margin: 5px;
+}
+#textA{
+    overflow: hidden;
+    height: 80px;
+    width: 98%;
+    margin: 5px;
+}
+#span1{
+    margin-top: 20px;
 }

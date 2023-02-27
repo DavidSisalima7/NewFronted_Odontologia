@@ -12,7 +12,9 @@ import OdontoTable from "../../views/FichaOdontologica/odontoTable";
 import { Card } from "@mui/material";
 
 export default function FichaOdontologica() {
-  const [selectedPaciente, setSelectedPaciente] = useState<IPaciente | null>(null);
+  const [selectedPaciente, setSelectedPaciente] = useState<IPaciente | null>(
+    null
+  );
 
   const [antecedentes, setAntecedente] = useState("");
 
@@ -100,15 +102,11 @@ export default function FichaOdontologica() {
   return (
     <div className="fichaP">
       <label className="labelFicha">Ficha Odontológica</label>
-      <Card
-        style={{
-          marginBottom: "10px",
-        }}
-      >
+      <Card id="card1">
         <div className="container" id="container">
           <h5 className="datos">Datos del Cliente</h5>
-
           <Dropdown
+            id="dropP"
             value={{
               id: selectedPaciente?.id_persona,
               label: `${selectedPaciente?.nombre} ${selectedPaciente?.apellido}`,
@@ -116,28 +114,14 @@ export default function FichaOdontologica() {
             onChange={(e) => onPacienteChange(e.value)}
             options={pacientes.map((item) => ({
               id: item.id_persona,
-
               label: `${item.nombre} ${item.apellido}`,
             }))}
             optionLabel="label"
             placeholder="Seleccione un Paciente"
-            style={{
-              marginBottom: "25px",
-              fontFamily: "Poppins",
-              marginTop: "20px",
-            }}
           />
-          <Button
-            onClick={handleShow}
-            label="Save"
-            icon="pi pi-check"
-            style={{
-              marginBottom: "25px",
-              fontFamily: "Poppins",
-              marginLeft: "45%",
-              marginTop: "20px",
-            }}
-          />
+          <Button className="BotonE" onClick={handleShow}>
+          </Button>
+
           {show && (
             <div className="tableO">
               <OdontoTable id_ficha={ficha?.id_ficha} />
@@ -147,11 +131,10 @@ export default function FichaOdontologica() {
             <td>
               <span className="p-float-label">
                 <InputText
-                  id="cedula"
+                  id="txtInput"
                   value={selectedPaciente?.cedula}
                   disabled
                   placeholder="Disabled"
-                  style={{ margin: "5px" }}
                 />
                 <label className="InputS" htmlFor="Cedula">
                   Cédula
@@ -159,11 +142,10 @@ export default function FichaOdontologica() {
               </span>
               <span className="p-float-label" style={{ marginTop: "20px" }}>
                 <InputText
-                  id="genero"
+                  id="txtInput"
                   value={selectedPaciente?.genero}
                   disabled
                   placeholder="Disabled"
-                  style={{ margin: "5px" }}
                 />
                 <label className="InputS" htmlFor="Género">
                   Género
@@ -173,23 +155,21 @@ export default function FichaOdontologica() {
             <td>
               <span className="p-float-label">
                 <InputText
-                  id="nombres"
+                  id="txtInput"
                   value={selectedPaciente?.nombre}
                   disabled
                   placeholder="Disabled"
-                  style={{ margin: "5px" }}
                 />
                 <label className="InputS" htmlFor="Nombres">
                   Nombres
                 </label>
               </span>
-              <span className="p-float-label" style={{ marginTop: "20px" }}>
+              <span id="span1" className="p-float-label">
                 <InputText
-                  id="fechaNac"
+                  id="txtInput"
                   value={selectedPaciente?.fechaNac}
                   disabled
                   placeholder="Disabled"
-                  style={{ margin: "5px" }}
                 />
                 <label className="InputS" htmlFor="Fecha Nacimiento">
                   Fecha Nacimiento
@@ -199,23 +179,21 @@ export default function FichaOdontologica() {
             <td>
               <span className="p-float-label">
                 <InputText
-                  id="apellidos"
+                  id="txtInput"
                   value={selectedPaciente?.apellido}
                   disabled
                   placeholder="Disabled"
-                  style={{ margin: "5px" }}
                 />
                 <label className="InputS" htmlFor="Apellidos">
                   Apellidos
                 </label>
               </span>
-              <span className="p-float-label" style={{ marginTop: "20px" }}>
+              <span id="span1" className="p-float-label">
                 <InputText
-                  id="direccion"
+                  id="txtInput"
                   value={selectedPaciente?.direccion}
                   disabled
                   placeholder="Disabled"
-                  style={{ margin: "5px" }}
                 />
                 <label className="InputS" htmlFor="Dirección">
                   Dirección
@@ -227,46 +205,30 @@ export default function FichaOdontologica() {
           <div>
             <h5 className="textI">Antecedentes</h5>
             <textarea
-              name="textA"
+              id="textA"
               value={antecedentes}
               onChange={(e) => setAntecedente(e.target.value)}
               rows={3}
               cols={30}
               className="p-inputtextarea p-inputtext p-component p-inputtextarea-resizable"
-              style={{
-                overflow: "hidden",
-                height: "80px",
-                width: "98%",
-                margin: "5px",
-              }}
             ></textarea>
             <h5 className="textI">Motivo de Consulta</h5>
             <textarea
+              id="textA"
               value={motivo}
               onChange={(e) => setMotivo(e.target.value)}
               rows={3}
               cols={30}
               className="p-inputtextarea p-inputtext p-component p-inputtextarea-resizable"
-              style={{
-                overflow: "hidden",
-                height: "80px",
-                width: "98%",
-                margin: "5px",
-              }}
             ></textarea>
             <h5 className="textI">Observaciones</h5>
             <textarea
+              id="textA"
               value={observaciones}
               onChange={(e) => setObservaciones(e.target.value)}
               rows={3}
               cols={30}
               className="p-inputtextarea p-inputtext p-component p-inputtextarea-resizable"
-              style={{
-                overflow: "hidden",
-                height: "80px",
-                width: "98%",
-                margin: "5px",
-              }}
             ></textarea>
           </div>
           <div className="botones">
