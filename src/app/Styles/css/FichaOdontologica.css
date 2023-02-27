@@ -1,0 +1,43 @@
+div.fichaP{
+    display: flex;
+    padding-top: 4rem;
+    align-items: center;
+    flex-direction: column;
+    background:white;
+}
+label.labelFicha{
+    color: #05313A;
+    font-family: Poppins;
+    font-size: 35px;
+    font-size: oblique;
+}
+div.container{
+    padding: 8px;
+}
+h5.datos{
+    color: #05313A;
+    font-family: Poppins;
+    margin-left: 15px;
+    margin-top: 5px;
+    font-size: 23px;
+    text-align: center;
+}
+div.tableO{
+    position: absolute;
+    top: 60px;
+    right: 30px;
+}
+label.InputS{
+    font-family: Poppins;
+}
+h5.textI{
+    color: #05313A;
+    font-family: "Poppins";
+    margin-left: "15px";
+    margin-top: "5px";
+    font-size: "20px";
+}
+div.botones{
+        display: flex;
+        justify-content: center;
+}
