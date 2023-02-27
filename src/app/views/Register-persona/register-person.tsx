@@ -16,10 +16,8 @@ import { classNames } from "primereact/utils";
 import { Dialog } from "primereact/dialog";
 import Usuario from "../Register-usr/interfaces/Usuario";
 import Persona from "./interfaces/persona";
-
 import 'bootstrap/dist/css/bootstrap.css';
 import axios from "axios";
-//import { useNavigate } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 
 export const RegisterPerson = () => {
