@@ -2,11 +2,10 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { IOdontograma } from "./interface/Odontograma";
 import axios from "axios";
-
+import { Button } from "primereact/button";
 import { useEffect, useState } from "react";
 
- function OdontoTable({id_ficha}:{id_ficha:number|undefined}) {
-
+function OdontoTable({ id_ficha }: { id_ficha: number | undefined }) {
   const [odontograma, setOdontograma] = useState<IOdontograma[]>([]);
 
   const getOdontograma = async () => {
@@ -26,7 +25,12 @@ import { useEffect, useState } from "react";
     </div>
   );
   return (
-    <div className="card" style={{marginTop:"110px",marginRight:"10px"}}>
+    <div className="card" style={{ marginTop: "110px", marginRight: "10px" }}>
+      <div>
+        <Button label="Crear" ></Button>
+        <Button label="Editar"></Button>
+      </div>
+
       <DataTable
         value={odontograma}
         header={header}
@@ -36,11 +40,11 @@ import { useEffect, useState } from "react";
           field="fecha_Odontograma"
           header="Fecha"
           style={{
-            textAlign:"center"
+            textAlign: "center",
           }}
         ></Column>
       </DataTable>
     </div>
   );
 }
-export default OdontoTable
+export default OdontoTable;

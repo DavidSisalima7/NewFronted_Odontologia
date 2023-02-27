@@ -1,6 +1,5 @@
 
 import '../../Styles/css/Odontogram.css';
-import "./Odontogram"
 import { Card } from 'primereact/card';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
@@ -11,7 +10,7 @@ import { Toast } from 'primereact/toast';
 import { Divider } from 'primereact/divider';
 import PiezasForm from "./PiezasForm";
 import { PiezaContext } from './PiezaContext';
-export const OdontogramList = () => {
+export const OdontogramList = (id_odontograma) => {
 
     // Codigo para llenar la tabla segun un array
     const {
