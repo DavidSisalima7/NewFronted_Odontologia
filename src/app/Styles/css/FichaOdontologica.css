@@ -1,6 +1,6 @@
 div.fichaP {
     display: flex;
-    padding-top: 4rem;
+    padding-top: 20px;
     align-items: center;
     flex-direction: column;
     background: white;
@@ -52,13 +52,13 @@ div.botones {
 Button.BotonE {
     margin-bottom: 25px;
     font-family: Poppins;
-    margin-left: 45%;
+    margin-left: 53%;
     margin-top: 20px;
     height:60px;
     width: 10%;
     background-image: url(../../Image/chequeo-dental\ \(3\).png);
     background-color: whitesmoke;
-    border-color:black;  
+    border-color: rgb(0, 0, 0);  
 }
 
 #dropP {
@@ -75,7 +75,7 @@ Button.BotonE {
 }
 #textA{
     overflow: hidden;
-    height: 80px;
+    height: 50px;
     width: 98%;
     margin: 5px;
 }
