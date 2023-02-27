@@ -1,0 +1,102 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@3030;400;500;600;700;800;900&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+.body1 {
+  min-height: 100vh;
+  background: #23242a;
+  background-color: #05313a;
+  padding: auto;
+}
+
+.campo {
+  margin-top: 5%;
+}
+
+#float-input {
+  position: relative;
+  border-radius: 10px;
+  color: #23242a;
+  font-size: 1em;
+  letter-spacing: 0.05em;
+}
+
+.inputBox input {
+  position: relative;
+  border-radius: 10px;
+  color: #23242a;
+  font-size: 1em;
+  letter-spacing: 0.05em;
+}
+
+.register {
+  width: 50px;
+  height: 50%;
+  background-color: antiquewhite;
+}
+
+.box {
+  width: 60%;
+  height: 80%;
+  background: #1c1c1c;
+  position: absolute;
+  border-radius: 8px;
+  overflow: hidden;
+  top: 30%;
+  right: 20%;
+  margin-top: -200px;
+}
+.box::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 380px;
+  height: 420px;
+
+  background: linear-gradient(0deg, transparent, #651313, #b61c1c);
+  transform-origin: bottom right;
+  animation: animate 6s linear infinite;
+}
+
+.box::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(0deg, transparent, #ac0000, #ce0f0f);
+  transform-origin: bottom right;
+  animation: animate 6s linear infinite;
+  animation-delay: -3s;
+}
+@keyframes animate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.form {
+  position: absolute;
+  inset: 2px;
+  border-radius: 8px;
+  background: #ffffff;
+  z-index: 10;
+  padding: 50px 40px;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.form::-webkit-scrollbar {
+  display: none;
+}

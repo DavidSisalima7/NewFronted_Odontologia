@@ -2,32 +2,50 @@ import { AuthCard } from "../components/authCard/AuthCard";
 import logo from '../../../assets/img/smOdonto.png';
 import accountIcon from '../../../assets/icons/account.svg';
 import passwordIcon from '../../../assets/icons/password.svg';
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { Link, useHistory } from 'react-router-dom';
 import { AuthContext } from "../../store/contexts/AuthContext";
 import { AuthService } from "../../../services/auth/AuthService";
+import { Toast } from "primereact/toast";
 
 
 export function Login(){
+
+  const toast = useRef<Toast>(null);
+
+  const showError = (errorPrincipal: string, detalleError: string) => {
+    toast.current?.show({
+      severity: 'error',
+      summary: errorPrincipal,
+      detail: detalleError,
+      life: 3000
+    });
+  }
   
   const { dispatchUser }:any = useContext(AuthContext);
   const [ auth, setAuth ] = useState({username:'', password:''})
   const history = useHistory();
 
   const handleSubmit = async (e:React.ChangeEvent<HTMLFormElement>) => {
-      
+    //try {
           e.preventDefault();
           const resp = await AuthService.login(auth);
           console.log(resp)
-          
+          //if(resp.success){
+             history.replace('/dashboard/home');
             sessionStorage.setItem('user', JSON.stringify({...resp.data, loggedIn:true}));  
             dispatchUser({type:'login', payload:resp.data }); 
             console.log(history);
+          //}else{
+            //console.log("no existe");
             
-            history.replace('/dashboard/home');
+          //}
+        //} catch (error) {
+          //showError("ERROR","Credenciales incorrectas")
+        //} 
          
    }
-
+   
    const handleChange = (e:React.ChangeEvent<HTMLFormElement | HTMLInputElement>) => {
     setAuth({
       ...auth,
@@ -36,7 +54,8 @@ export function Login(){
 }
 
   return(
-    
+    <>
+    <Toast ref={toast} />
     <AuthCard>
        <form onSubmit={handleSubmit} autoComplete="off">
        <div className="text-center mb-2">
@@ -104,6 +123,6 @@ export function Login(){
 
      </form>
     </AuthCard>
-   
+    </>
   );
 }
