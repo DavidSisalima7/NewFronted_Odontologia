@@ -6,7 +6,7 @@ interface Props{
 
 export function AuthCard(props:Props){
    return(
-      <div className="container mt-4rem mycontainer" >
+      <div className="containerL mt-4rem mycontainer" >
         <div className="d-flex justify-content-center" >
             <div className="col-md-4 col-10" style={{backgroundColor:"white",borderRadius:"15px"}}>
                <div className="shadow-sm rounded p-3">

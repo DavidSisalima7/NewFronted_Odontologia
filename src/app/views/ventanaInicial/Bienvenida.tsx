@@ -1,10 +1,52 @@
 import React from "react";
-import "../../../Styles/css/MenuP.css"
-//npm i -d sass - INSTALAR para usar el menu
-const Home = () => {
-  //24-02-23
+
+const Bienvenida = () => {
   return (
     <div>
+{/*   
+        <body className="body2">
+        <nav>
+        <div className="icon_diente"></div>
+          <div id="logo">
+            Odontología Integral SM</div>
+          <label htmlFor="drop" className="toggle">
+            Menu
+          </label>
+          <input type="checkbox" id="drop" />
+          <ul className="menu">
+            <li>
+            <label htmlFor="drop" className="toggle">
+                Home
+              </label>
+              <a href="/home"><div className='Home'></div></a>
+            </li>
+            <li>
+            <label htmlFor="drop" className="toggle">
+                Service
+              </label>
+              <a href="/home"><div className='Servicios'></div></a>
+            </li>
+            <li>
+            <label htmlFor="drop" className="toggle">
+                About
+              </label>
+              <a href="/home"><div className='Home'></div></a>
+            </li>
+            <li>
+            <label htmlFor="drop" className="toggle">
+                Contact
+              </label>
+              <a href="/home"><div className='Home'></div></a>
+            </li>
+            <li>
+            <label htmlFor="drop" className="toggle">
+                Login
+              </label>
+              <a href="/home"><div className=''></div></a>
+            </li>
+          </ul>
+        </nav>
+      </body>
       <html>
         <head>
           <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -86,8 +128,30 @@ const Home = () => {
             </section>
           </div>
           <section></section>
+       
+          <div className="fondo2">
+            <section className="section about" id="about">
+              <div className="about__container container grid">
+                <div className="about__data">
+                  <h2 className="section__title about__title">
+                    Acerca de Odontologia SM
+                  </h2>
+                  <p className="about__description">
+                    Odontologia Integral SM es una organización que pretende ser
+                    un referente a seguir dentro del sector de la odontología,
+                    por la calidad de su trabajo y actitud humana. Por ello,
+                    prestamos especial atención al tratamiento deseado de
+                    nuestros pacientes y utilizamos todo nuestro conocimiento
+                    para solucionar sus problemas de salud dental de la forma
+                    más adecuada.
+                  </p>
+                </div>
+                <div className="Servabout"></div>
+              </div>
+            </section>
+          </div>
         </main>
-        {/* //foooter */}
+      
         <body>
           <footer className="footer section" id="foot">
             <div className="footer__container container grid">
@@ -183,9 +247,9 @@ const Home = () => {
             <i className="bx bx-up-arrow-alt scrollup__icon"></i>
           </a>
         </body>
-      </html>
+      </html> */}
     </div>
   );
-};
+}
 
-export default Home;
+export default Bienvenida;
