@@ -6,8 +6,9 @@ import FichaOdontologica from "../FichaOdontologica/FichaOdontologica";
 import { OdontogramList } from "../Odontograma/OdontogramList";
 import Home from "./home/Home";
 import { BrowserRouter as Router } from "react-router-dom";
-import { RegisterPerson } from "../Register-persona/register-person";
+import { PersonList } from "../Register-persona/components/ListPerson";
 import PiezaContextProvider from "../Odontograma/PiezaContext";
+import PersonContextProvider from "../Register-persona/contexts/PersonContext";
 
 export function DashboardRouter() {
   return (
@@ -25,7 +26,10 @@ export function DashboardRouter() {
                 <FichaOdontologica />
               </Route>
               <Route path="/reg-person">
-                <RegisterPerson />
+                {/* <RegisterPerson /> */}
+                <PersonContextProvider>
+                  <PersonList />
+                </PersonContextProvider>
               </Route>
               <Route path="/odontograma">
                 <NavBar />
