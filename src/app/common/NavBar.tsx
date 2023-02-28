@@ -6,13 +6,13 @@ export const NavBar: React.FC = () => {
 
   return (
     <>
-    <div>
-      <body className="body2">
+       <div>
+        <body className="body2">
         <nav>
-        {/* <div className="icon_diente"></div> */}
+        <div className="icon_diente"></div>
           <div id="logo">
           
-            Odontologia Integral SM</div>
+            Odontología Integral SM</div>
 
           <label htmlFor="drop" className="toggle">
             Menu
@@ -20,20 +20,23 @@ export const NavBar: React.FC = () => {
           <input type="checkbox" id="drop" />
           <ul className="menu">
             <li>
-              <a href="/home">Home</a>
+            <label htmlFor="drop" className="toggle">
+                Home
+              </label>
+              <a href="/home"><div className='Home'></div></a>
             </li>
             <li>
               <label htmlFor="drop-1" className="toggle">
                 Registrar
               </label>
-              <a href="">Registrar</a>
+              <a href="#">Registrar</a>
               <input type="checkbox" id="drop-1" />
               <ul>
-                <li>
-                  <a href="/reg-person">Paciente</a>
+                <li >
+                  <a href="/reg-person">■ Paciente</a>
                 </li>
                 <li>
-                  <a href="/ficha">Ficha Odontologica</a>
+                  <a href="/ficha">■ Ficha Odontológica</a>
                 </li>
               </ul>
             </li>
@@ -46,9 +49,10 @@ export const NavBar: React.FC = () => {
               <ul>
                 <li>
                   <a href="/list-person">Paciente</a>
+                  <a href="#">■ Paciente</a>
                 </li>
                 <li>
-                  <a href="/odontograma">Ficha Odontologica</a>
+                  <a href="ficha">■ Ficha Odontológica</a>
                 </li>
               </ul>
             </li>
@@ -61,18 +65,21 @@ export const NavBar: React.FC = () => {
               <ul>
                 <li>
                   <a href="/list-person">Paciente</a>
+                  <a href="#">■ Paciente</a>
                 </li>
                 <li>
-                  <a href="#">Ficha Odontologica</a>
+                  <a href="#">■ Ficha Odontológica</a>
                 </li>
                 <li>
-                  <a href="#">Historial Clinico Dental</a>
+                  <a href="#">■ Historial Clínico Dental</a>
                 </li>
               </ul>
             </li>
-
             <li>
-              <a href="/auth/login">Cerrar Sesion</a>
+            <label htmlFor="drop" className="toggle">
+            Cerrar Sesión
+              </label>
+              <a href="/auth/login"><div className='Exit'></div></a>
             </li>
           </ul>
         </nav>

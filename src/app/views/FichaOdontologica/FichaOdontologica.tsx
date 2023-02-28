@@ -153,7 +153,7 @@ export default function FichaOdontologica() {
               id: selectedPaciente?.id_persona,
               label: `${selectedPaciente?.nombre} ${selectedPaciente?.apellido}`,
             }}
-            onChange={(e) => onPacienteChange(e.value)}
+            onChange={(e) => {onPacienteChange(e.value);setShowTable(true)}}
             options={pacientes.map((item) => ({
               id: item.id_persona,
               label: `${item.nombre} ${item.apellido}`,
@@ -161,8 +161,7 @@ export default function FichaOdontologica() {
             optionLabel="label"
             placeholder="Seleccione un Paciente"
           />
-          <div id="divButton">
-            <Button className="BotonE" onClick={handleShow}></Button>
+          <div >
             {show && (
               <div className="tableO">
                 <OdontoTable id_ficha={ficha?.id_ficha} />

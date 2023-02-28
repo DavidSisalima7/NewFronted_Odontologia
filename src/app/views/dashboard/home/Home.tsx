@@ -12,14 +12,9 @@ const Home = () => {
             name="viewport"
             content="width=device-width, initial-scale=1.0"
           />
-          <title>Odontologia SM</title>
           <link
             href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
             rel="stylesheet"
-          />
-          <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
           />
           <link rel="stylesheet" href="../../Styles/css/MenuP.css" />
         </head>
@@ -33,54 +28,64 @@ const Home = () => {
                 <div className="swiper-wrapper">
                   <section className="swiper-slide">
                     <div className="home__content grid">
-                      <div className="home__group">
-                        <div className="Serv1"></div>
-                      </div>
-
-                      <div className="home__data">
-                
-                        <h3 className="home__subtitle">
-                            PROFILAXIS(Limpieza)
-                          </h3>
-
-                          <p className="home__description">
-                            La prevención de enfermedades en la salud humana es
-                            el conjunto de medidas necesarias para evitar el
-                            desarrollo o progreso de enfermedades
-                          </p>
-                          <div className="home__buttons">
-                            <a className="button">Atiendete Ya!!!</a>
-                          </div>
+                      <div className="home__group"></div>
+                      <div>
+                        <div className="slider-frame">
+                          <ul className="ulS">
+                            <li className="liS">
+                              <div className="Serv1"></div>
+                              <h3 className="home__subtitle">
+                              Carillas Dentales
+                              </h3>
+                              <p className="home__description">
+                              Son una buena opción para dientes fracturados, 
+                              espacios entre los dientes y para algunas situaciones 
+                              en las que la posición de los dientes se ve comprometida y 
+                              existen problemas menores relacionados con la oclusión.
+                              </p>
+                            </li>
+                            <li className="liS">
+                              <div className="Serv2"></div>
+                              <h3 className="home__subtitle">
+                              Ortodoncia
+                              </h3>
+                              <p className="home__description">
+                              El crecimiento y desarrollo de los dientes en una posición 
+                              errónea supone un riesgo para el cuidado de la higiene oral.
+                              </p>
+                            </li>
+                            <li className="liS">
+                              <div className="Serv3"></div>
+                              <h3 className="home__subtitle">
+                              Protesis Dentales
+                              </h3>
+                              <p className="home__description">
+                              La prótesis dental ayuda a evitar el desplazamiento de los dientes 
+                              naturales restantes. La presencia de la prótesis impide que los 
+                              dientes naturales se desplacen hacia la zona desdentada. 
+                              </p>
+                            </li>
+                            <li className="liS">
+                              <div className="Serv4"></div>
+                              <h3 className="home__subtitle">
+                              Profilaxis Dental
+                              </h3>
+                              <p className="home__description">
+                              Permite eliminar la placa y el sarro acumulado, previene la aparición de caries 
+                              y enfermedades periodontales, evita el temido mal aliento y, además, refuerza el 
+                              esmalte protegiendo a las piezas dentales. 
+                              </p>
+                            </li>
+                          </ul>
                         </div>
                       </div>
-                    </section>
-                          </div>
+                    </div>
+                  </section>
+                </div>
               </div>
             </section>
           </div>
           <section></section>
-          {/* //acerca de */}
-          <div className="fondo2">
-            <section className="section about" id="about">
-              <div className="about__container container grid">
-                <div className="about__data">
-                  <h2 className="section__title about__title">
-                    Acerca de Odontologia Integral SM
-                  </h2>
-                  <p className="about__description">
-                    Odontologia Integral SM es una organización que pretende ser
-                    un referente a seguir dentro del sector de la odontología,
-                    por la calidad de su trabajo y actitud humana. Por ello,
-                    prestamos especial atención al tratamiento deseado de
-                    nuestros pacientes y utilizamos todo nuestro conocimiento
-                    para solucionar sus problemas de salud dental de la forma
-                    más adecuada.
-                  </p>
-                </div>
-                <div className="Servabout"></div>
-              </div>
-            </section>
-          </div>
         </main>
         {/* //foooter */}
         <body>

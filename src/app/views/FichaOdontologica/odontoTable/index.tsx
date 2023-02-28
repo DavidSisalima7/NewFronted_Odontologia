@@ -19,6 +19,13 @@ function OdontoTable({ id_ficha }: { id_ficha: number | undefined }) {
       state: { idF: odontogramas[0].id_odontograma },
     });
   }
+  function handleClickP() {
+    postOdontograma()
+    // history.push({
+    //   pathname: "/odontograma",
+    //   state: { idF: odontogramas[0].id_odontograma },
+    // });
+  }
 
   const getOdontograma = async () => {
     const { data } = await axios.get(
@@ -74,7 +81,7 @@ function OdontoTable({ id_ficha }: { id_ficha: number | undefined }) {
           ></Column>
         </DataTable>
         <div className="btnOdonto">
-          <Button id="btnCrear" onClick={handleClick}></Button>
+          <Button id="btnCrear" onClick={handleClickP}></Button>
           <Button id="btnEditar" onClick={handleClick}></Button>
         </div>
       </div>
