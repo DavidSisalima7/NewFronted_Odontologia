@@ -49,16 +49,23 @@ div.botones {
     justify-content: center;
 }
 
+div.btnOdonto {
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
 Button.BotonE {
     margin-bottom: 25px;
     font-family: Poppins;
     margin-left: 53%;
     margin-top: 20px;
-    height:60px;
-    width: 10%;
+    height: 60px;
+    width: 38%;
     background-image: url(../../Image/chequeo-dental\ \(3\).png);
     background-color: whitesmoke;
-    border-color: rgb(0, 0, 0);  
+    border-color: rgb(0, 0, 0);
 }
 
 #dropP {
@@ -70,15 +77,43 @@ Button.BotonE {
 #card1 {
     margin-bottom: 10px;
 }
-#txtInput{
+
+#txtInput {
     margin: 5px;
 }
-#textA{
+
+#textA {
     overflow: hidden;
     height: 50px;
     width: 98%;
     margin: 5px;
 }
-#span1{
+
+#span1 {
     margin-top: 20px;
+}
+#btnCrear{
+    width: 16%;
+    background-image: url(../../Image/agregar.png);
+    background-color: white;
+    border-color: black;
+    margin-right: 5px;
+}
+#btnEditar{
+    width: 16%;
+    height: 10% ;
+    background-image: url(../../Image/editar.png);
+    background-color: white;
+    border-color: black;
+    margin-right: 5px;
+}
+#cardTable{
+    width: 100%;
+    height: 40%;
+    margin-top: 70px;
+}
+#divButton{
+    margin-bottom: 5px;
+    margin-left: 74%;
+    margin-top: -97px;
 }
