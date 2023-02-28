@@ -1,7 +1,7 @@
 import React from 'react';
 import "../Styles/css/Navbar.css";
 
-export const NavBar: React.FC = () => {
+export const NavBarAdmin: React.FC = () => {
    //24-02-23
 
   return (

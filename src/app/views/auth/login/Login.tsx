@@ -20,6 +20,7 @@ export function Login() {
     });
   };
 
+  const [rol, setRol] = useState();
   const { dispatchUser }: any = useContext(AuthContext);
   const [auth, setAuth] = useState({ username: "", password: "" });
   const history = useHistory();
@@ -27,9 +28,9 @@ export function Login() {
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     try {
       const usuario=auth.username
-      if (auth.username==="administrador" && auth.password==="claveadmin") {
+      //if (auth.username==="administrador" && auth.password==="claveadmin") {
         
-      }else{
+      //}else{
         e.preventDefault();
         const resp = await AuthService.login(auth);
         history.replace("/dashboard/home");
@@ -38,7 +39,7 @@ export function Login() {
           JSON.stringify({ usuario, loggedIn: true })
         );
         dispatchUser({ type: "login", payload: resp.data });
-      }
+      //}
         
        
     } catch (error) {

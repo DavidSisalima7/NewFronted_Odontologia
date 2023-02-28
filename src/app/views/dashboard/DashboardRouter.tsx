@@ -9,8 +9,11 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { PersonList } from "../Register-persona/components/ListPerson";
 import PiezaContextProvider from "../Odontograma/PiezaContext";
 import PersonContextProvider from "../Register-persona/contexts/PersonContext";
+import { NavBarAdmin } from "../../commonAdmin/NavBarAdmin";
+//import {NavBarAdmin} from '../../commonAdmin/NavBarAdmin'
 
 export function DashboardRouter() {
+  //const {rol} props;
   return (
     <>
       <main>
@@ -18,7 +21,7 @@ export function DashboardRouter() {
           <div>
             <Switch>
               <Route exact path="/dashboard/home">
-                <NavBar />
+                <NavBarAdmin />
                 <Home />
               </Route>
               <Route path="/ficha">
