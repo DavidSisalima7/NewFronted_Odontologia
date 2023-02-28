@@ -9,20 +9,28 @@ import { Divider } from "primereact/divider";
 import PiezasForm from "./PiezasForm";
 import { PiezaContext } from "./PiezaContext";
 import { useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 export const OdontogramList = () => {
   // Codigo para llenar la tabla segun un array
   const { findPieza, piezas } = useContext(PiezaContext);
+  const history = useHistory();
 
+  const redireccion =()=>(
+    history.push({
+      pathname: "/ficha",
+    })
+  )
   //Aqui llega el id de odontograma
   let location = useLocation();
   console.log(location.state.idF);
 
   //Para el dialog de la creacion de pieza y el otro
+  const [idondonto,setIdodonto]=useState(location.state.idF);
   const [isVisible, setIsVisible] = useState(false);
   const [confirm, setConfirm] = useState(false);
   const [seleccion, setSeleccion] = useState();
   const toast = useRef(null);
-
+  
   const savePieza = (id) => {
     findPieza(id);
     setIsVisible(true);
@@ -232,82 +240,82 @@ export const OdontogramList = () => {
                 <tr>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "18").length
+                      piezas.filter((p) => p.numero_pieza === "18" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "17").length
+                      piezas.filter((p) => p.numero_pieza === "17" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "16").length
+                      piezas.filter((p) => p.numero_pieza === "16" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "15").length
+                      piezas.filter((p) => p.numero_pieza === "15" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "14").length
+                      piezas.filter((p) => p.numero_pieza === "14" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "13").length
+                      piezas.filter((p) => p.numero_pieza === "13" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "12").length
+                      piezas.filter((p) => p.numero_pieza === "12" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "11").length
+                      piezas.filter((p) => p.numero_pieza === "11" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias LineaIzquierda">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "21").length
+                      piezas.filter((p) => p.numero_pieza === "21" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "22").length
+                      piezas.filter((p) => p.numero_pieza === "22" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "23").length
+                      piezas.filter((p) => p.numero_pieza === "23" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "24").length
+                      piezas.filter((p) => p.numero_pieza === "24" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "25").length
+                      piezas.filter((p) => p.numero_pieza === "25" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "26").length
+                      piezas.filter((p) => p.numero_pieza === "26" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "27").length
+                      piezas.filter((p) => p.numero_pieza === "27" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "28").length
+                      piezas.filter((p) => p.numero_pieza === "28" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                 </tr>
@@ -350,82 +358,82 @@ export const OdontogramList = () => {
                 <tr>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "48").length
+                      piezas.filter((p) => p.numero_pieza === "48" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "47").length
+                      piezas.filter((p) => p.numero_pieza === "47" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "46").length
+                      piezas.filter((p) => p.numero_pieza === "46" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "45").length
+                      piezas.filter((p) => p.numero_pieza === "45" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "44").length
+                      piezas.filter((p) => p.numero_pieza === "44" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "43").length
+                      piezas.filter((p) => p.numero_pieza === "43" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "42").length
+                      piezas.filter((p) => p.numero_pieza === "42" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "41").length
+                      piezas.filter((p) => p.numero_pieza === "41" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias LineaIzquierda">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "31").length
+                      piezas.filter((p) => p.numero_pieza === "31"  && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "32").length
+                      piezas.filter((p) => p.numero_pieza === "32" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "33").length
+                      piezas.filter((p) => p.numero_pieza === "33" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "34").length
+                      piezas.filter((p) => p.numero_pieza === "34" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "35").length
+                      piezas.filter((p) => p.numero_pieza === "35" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "36").length
+                      piezas.filter((p) => p.numero_pieza === "36" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "37").length
+                      piezas.filter((p) => p.numero_pieza === "37" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "38").length
+                      piezas.filter((p) => p.numero_pieza === "38" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                 </tr>
@@ -737,52 +745,52 @@ export const OdontogramList = () => {
                   <td></td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "55").length
+                      piezas.filter((p) => p.numero_pieza === "55" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "54").length
+                      piezas.filter((p) => p.numero_pieza === "54" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "53").length
+                      piezas.filter((p) => p.numero_pieza === "53" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "52").length
+                      piezas.filter((p) => p.numero_pieza === "52" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "51").length
+                      piezas.filter((p) => p.numero_pieza === "51" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias LineaIzquierda">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "61").length
+                      piezas.filter((p) => p.numero_pieza === "61" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "62").length
+                      piezas.filter((p) => p.numero_pieza === "62" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "63").length
+                      piezas.filter((p) => p.numero_pieza === "63" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "64").length
+                      piezas.filter((p) => p.numero_pieza === "64" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "65").length
+                      piezas.filter((p) => p.numero_pieza === "65" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td></td>
@@ -825,52 +833,52 @@ export const OdontogramList = () => {
                   <td></td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "85").length
+                      piezas.filter((p) => p.numero_pieza === "85" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "84").length
+                      piezas.filter((p) => p.numero_pieza === "84" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "83").length
+                      piezas.filter((p) => p.numero_pieza === "83" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "82").length
+                      piezas.filter((p) => p.numero_pieza === "82" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "81").length
+                      piezas.filter((p) => p.numero_pieza === "81" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias LineaIzquierda">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "71").length
+                      piezas.filter((p) => p.numero_pieza === "71" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "72").length
+                      piezas.filter((p) => p.numero_pieza === "72" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "73").length
+                      piezas.filter((p) => p.numero_pieza === "73" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "74").length
+                      piezas.filter((p) => p.numero_pieza === "74" && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "75").length
+                      piezas.filter((p) => p.numero_pieza === "75"  && p.odontograma.id_odontograma === idondonto).length
                     )}
                   </td>
                   <td></td>
@@ -1003,7 +1011,7 @@ export const OdontogramList = () => {
             <DataTable
               value={piezas
                 //Filtro para piezas con el id del odontograma
-                .filter((p) => p.odontograma.id_odontograma === 1)}
+                .filter((p) => p.odontograma.id_odontograma === idondonto)}
               responsiveLayout="scroll"
               style={{ textAlign: "center" }}
               selectionMode="single"
@@ -1030,7 +1038,7 @@ export const OdontogramList = () => {
             <Divider />
             {/* Boton para Confirmar los cambios */}
             <div style={{ paddingLeft: "40%" }}>
-              <Button label="GUARDAR" icon="pi pi-check" autoFocus />
+              <Button label="GUARDAR" icon="pi pi-check" autoFocus onClick={redireccion}/>
             </div>
           </Card>
         </div>
@@ -1041,6 +1049,8 @@ export const OdontogramList = () => {
         seleccion={seleccion}
         setSeleccion={setSeleccion}
         toast={toast}
+        idodonto={location.state.idF}
+        
       />
     </>
   );

@@ -7,7 +7,7 @@ import { Button } from "primereact/button";
 import { useEffect, useState } from "react";
 import { Card } from "@mui/material";
 import { useHistory } from "react-router-dom";
-
+import { Divider } from "primereact/divider";
 function OdontoTable({ id_ficha }: { id_ficha: number | undefined }) {
   const [odontogramas, setOdontograma] = useState<IOdontograma[]>([]);
   const history = useHistory();

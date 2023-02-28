@@ -11,6 +11,7 @@ import { Button } from "primereact/button";
 import "../../Styles/css/FichaOdontologica.css";
 import OdontoTable from "../../views/FichaOdontologica/odontoTable";
 import { Card } from "@mui/material";
+import { Divider } from "primereact/divider";
 
 export default function FichaOdontologica() {
   const toast = useRef<Toast>(null);
@@ -119,9 +120,15 @@ export default function FichaOdontologica() {
     <div className="fichaP">
       <label className="labelFicha">Ficha Odontológica</label>
       <Toast ref={toast} />
+
       <Card id="card1">
         <div className="container" id="container">
-          <h5 className="datos">Datos del Cliente</h5>
+        <Divider align="left">
+              <div className="inline-flex align-items-center">
+                <b>Seleccione el paciente</b>
+              </div>
+            </Divider>
+
           <Dropdown
             id="dropP"
             value={{
@@ -144,7 +151,11 @@ export default function FichaOdontologica() {
               </div>
             )}
           </div>
-
+          <Divider align="left">
+              <div className="inline-flex align-items-center">
+                <b>Datos del paciente</b>
+              </div>
+            </Divider>
           <table>
             <td>
               <span className="p-float-label">
@@ -219,7 +230,11 @@ export default function FichaOdontologica() {
               </span>
             </td>
           </table>
-
+          <Divider align="left">
+              <div className="inline-flex align-items-center">
+                <b>Datos de la ficha</b>
+              </div>
+            </Divider>
           <div>
             <h5 className="textI">Antecedentes</h5>
             <textarea
