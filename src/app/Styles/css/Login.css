@@ -27,7 +27,7 @@ header{
     padding: 20px;
 }
 
-.box{
+#box{
     width: 400px;
     height: 430px;
     background: #1c1c1c;
@@ -40,7 +40,7 @@ header{
 
     
 }
-.box::before{
+#box::before{
     content: '';
     position: absolute;
     top: -50%;
@@ -55,7 +55,7 @@ header{
 }
 
 
-.box::after{
+#box::after{
     content: '';
     position: absolute;
     top: -50%;
@@ -92,7 +92,7 @@ header{
 }
 
 
-.form{
+#form{
     position: absolute;
     inset: 2px;
     border-radius: 8px;
