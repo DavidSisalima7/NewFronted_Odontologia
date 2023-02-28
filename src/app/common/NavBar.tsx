@@ -26,7 +26,7 @@ export const NavBar: React.FC = () => {
               <label htmlFor="drop-1" className="toggle">
                 Registrar
               </label>
-              <a href="/reg-person">Registrar</a>
+              <a href="">Registrar</a>
               <input type="checkbox" id="drop-1" />
               <ul>
                 <li>

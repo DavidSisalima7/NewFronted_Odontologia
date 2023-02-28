@@ -27,7 +27,7 @@ export const PersonForm = (props) => {
         nombre: "",
         apellido: "",
         email: "",
-        fechaNac: null,
+        fecha_nacimiento: null,
         genero: "",
         celular: "",
         direccion: "",
@@ -80,7 +80,7 @@ export const PersonForm = (props) => {
     );
 
     return (
-        <div>
+        <div >
             <Dialog
                 visible={isVisible}
                 modal={true}
@@ -90,7 +90,7 @@ export const PersonForm = (props) => {
                 onHide={() => clearSelected()}
                 footer={dialogFooter}>
 
-                <div className="p-grid p-fluid">
+                <div className="p-grid p-fluid" >
 
                     <div className="row">
                         <div className="col">

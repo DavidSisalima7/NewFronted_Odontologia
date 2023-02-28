@@ -2,7 +2,7 @@ import "primeicons/primeicons.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.css";
 import { InputText } from "primereact/inputtext";
-import { Dropdown } from "primereact/dropdown";
+import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { Toast } from "primereact/toast";
@@ -116,6 +116,21 @@ export default function FichaOdontologica() {
     setObservaciones("");
     setSelectedPaciente(null);
   }
+
+  const selectedPacientTemplate = (option: any, props: any) => {
+    if (option) {
+      return (
+        <div className="flex align-items-center">{option.label}</div>
+      );
+    }
+
+    return <span>{props.placeholder}</span>;
+  };
+
+  const pacientOptionTemplate = (option: any) => {
+    console.log(option.cedula);
+    return <>{option.label}</>;
+  };
   return (
     <div className="fichaP">
       <label className="labelFicha">Ficha Odontológica</label>
@@ -123,15 +138,18 @@ export default function FichaOdontologica() {
 
       <Card id="card1">
         <div className="container" id="container">
-        <Divider align="left">
-              <div className="inline-flex align-items-center">
-                <b>Seleccione el paciente</b>
-              </div>
-            </Divider>
+          <Divider align="left">
+            <div className="inline-flex align-items-center">
+              <b>Seleccione el paciente</b>
+            </div>
+          </Divider>
 
           <Dropdown
+            filter
+            valueTemplate={selectedPacientTemplate}
+            itemTemplate={pacientOptionTemplate}
             id="dropP"
-            value={{
+            value={{        
               id: selectedPaciente?.id_persona,
               label: `${selectedPaciente?.nombre} ${selectedPaciente?.apellido}`,
             }}
@@ -152,10 +170,10 @@ export default function FichaOdontologica() {
             )}
           </div>
           <Divider align="left">
-              <div className="inline-flex align-items-center">
-                <b>Datos del paciente</b>
-              </div>
-            </Divider>
+            <div className="inline-flex align-items-center">
+              <b>Datos del paciente</b>
+            </div>
+          </Divider>
           <table>
             <td>
               <span className="p-float-label">
@@ -231,10 +249,10 @@ export default function FichaOdontologica() {
             </td>
           </table>
           <Divider align="left">
-              <div className="inline-flex align-items-center">
-                <b>Datos de la ficha</b>
-              </div>
-            </Divider>
+            <div className="inline-flex align-items-center">
+              <b>Datos de la ficha</b>
+            </div>
+          </Divider>
           <div>
             <h5 className="textI">Antecedentes</h5>
             <textarea

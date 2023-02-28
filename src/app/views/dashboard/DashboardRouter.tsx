@@ -26,11 +26,13 @@ export function DashboardRouter() {
                 <FichaOdontologica />
               </Route>
               <Route path="/reg-person">
+              <NavBar />
                 {/* <RegisterPerson /> */}
                 <PersonContextProvider>
                   <PersonList />
                 </PersonContextProvider>
               </Route>
+             
               <Route path="/odontograma">
                 <NavBar />
                 {/*Poner ruta del odontograma aqui*/}

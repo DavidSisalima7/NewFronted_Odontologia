@@ -76,7 +76,6 @@ export const PersonList = () => {
                                     selectionMode="single"
                                     onSelectionChange={(e) => savePerson(e.value.id)}
                                     footer={footer}>
-
                                     <Column field="cedula" header="N° Cédula" />
                                     <Column field="nombre" header="Nombres" />
                                     <Column field="apellido" header="Apellidos" />
