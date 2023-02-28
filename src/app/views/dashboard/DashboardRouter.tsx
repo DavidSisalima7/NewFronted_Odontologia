@@ -9,8 +9,8 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { PersonList } from "../Register-persona/components/ListPerson";
 import PiezaContextProvider from "../Odontograma/PiezaContext";
 import PersonContextProvider from "../Register-persona/contexts/PersonContext";
-import RegisterPerson from "../Register-persona/register-person";
 import { NavBarAdmin } from "../../commonAdmin/NavBarAdmin";
+import RegisterPerson from "../Register-persona/register-person";
 //import {NavBarAdmin} from '../../commonAdmin/NavBarAdmin'
 
 export function DashboardRouter() {
@@ -38,7 +38,7 @@ export function DashboardRouter() {
 
               <Route path="/reg-person">
                 <NavBar />
-                <RegisterPerson />
+                <RegisterPerson/>
               </Route>
 
               <Route path="/odontograma">

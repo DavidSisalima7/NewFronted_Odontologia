@@ -380,5 +380,6 @@ export default function RegisterPerson() {
                 </div>
             </div>
         </div>
+       
     );
 }
