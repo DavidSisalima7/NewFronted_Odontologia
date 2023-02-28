@@ -26,16 +26,21 @@ export function Login() {
 
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     try {
+      const usuario=auth.username
+      if (auth.username==="administrador" && auth.password==="claveadmin") {
         
+      }else{
         e.preventDefault();
         const resp = await AuthService.login(auth);
         history.replace("/dashboard/home");
         sessionStorage.setItem(
           "user",
-          JSON.stringify({ ...resp.data, loggedIn: true })
+          JSON.stringify({ usuario, loggedIn: true })
         );
         dispatchUser({ type: "login", payload: resp.data });
-    
+      }
+        
+       
     } catch (error) {
       showError("ERROR", "Credenciales incorrectas");
     }
