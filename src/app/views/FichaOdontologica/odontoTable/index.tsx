@@ -7,7 +7,7 @@ import { Button } from "primereact/button";
 import { useEffect, useState } from "react";
 import { Card } from "@mui/material";
 import { useHistory } from "react-router-dom";
-
+import { Divider } from "primereact/divider";
 function OdontoTable({ id_ficha }: { id_ficha: number | undefined }) {
   const [odontogramas, setOdontograma] = useState<IOdontograma[]>([]);
   const history = useHistory();
@@ -18,6 +18,13 @@ function OdontoTable({ id_ficha }: { id_ficha: number | undefined }) {
       pathname: "/odontograma",
       state: { idF: odontogramas[0].id_odontograma },
     });
+  }
+  function handleClickP() {
+    postOdontograma()
+    // history.push({
+    //   pathname: "/odontograma",
+    //   state: { idF: odontogramas[0].id_odontograma },
+    // });
   }
 
   const getOdontograma = async () => {
@@ -74,7 +81,7 @@ function OdontoTable({ id_ficha }: { id_ficha: number | undefined }) {
           ></Column>
         </DataTable>
         <div className="btnOdonto">
-          <Button id="btnCrear" onClick={handleClick}></Button>
+          <Button id="btnCrear" onClick={handleClickP}></Button>
           <Button id="btnEditar" onClick={handleClick}></Button>
         </div>
       </div>

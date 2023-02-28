@@ -22,11 +22,12 @@ export const PersonForm = (props) => {
     ];
 
     const initialPersonState = {
+        id_persona: null,
         cedula: "",
         nombre: "",
         apellido: "",
         email: "",
-        fechaNac: null,
+        fecha_nacimiento: null,
         genero: "",
         celular: "",
         direccion: "",
@@ -49,7 +50,7 @@ export const PersonForm = (props) => {
 
     const _deletePerson = () => {
         if (editPerson) {
-            deletePerson(personData._id);
+            deletePerson(personData.id_persona);
             setPersonData(initialPersonState);
         }
         setIsVisible(false);
@@ -79,7 +80,7 @@ export const PersonForm = (props) => {
     );
 
     return (
-        <div>
+        <div >
             <Dialog
                 visible={isVisible}
                 modal={true}
@@ -89,11 +90,12 @@ export const PersonForm = (props) => {
                 onHide={() => clearSelected()}
                 footer={dialogFooter}>
 
-                <div className="p-grid p-fluid">
+                <div className="p-grid p-fluid" >
 
                     <div className="row">
                         <div className="col">
 
+                            <br />
                             <br />
                             <div className="p-float-label">
                                 <span className="p-float-label">
@@ -106,27 +108,30 @@ export const PersonForm = (props) => {
                             </div>
 
                             <br />
+                            <br />
                             <div className="p-float-label">
                                 <span className="p-float-label">
                                     <InputText id="float-input" type="text" name="apellido" value={personData.apellido}
                                         onChange={(e) => updateField(e.target.value, "apellido")} keyfilter={blockSpecial} />
                                     <label htmlFor="nombre" >
-                                        Apellidos
+                                        Apellidos:
                                     </label>
                                 </span>
                             </div>
 
+                            <br />
                             <br />
                             <div className="p-float-label">
                                 <span className="p-float-label">
                                     <InputText id="float-input" type="text" value={personData.email}
                                         onChange={(e) => updateField(e.target.value, "email")} name="email" />
                                     <label htmlFor="email" >
-                                        Correo Electrónico
+                                        Correo Electrónico:
                                     </label>
                                 </span>
                             </div>
 
+                            <br />
                             <br />
                             <div className="p-float-label">
                                 <span className="p-float-label">
@@ -134,18 +139,19 @@ export const PersonForm = (props) => {
                                         onChange={(e) => updateField(e.target.value, "celular")}
                                         mask="9999999999" placeholder="9999999999" />
                                     <label htmlFor="celular">
-                                        Número Celular
+                                        Número Celular:
                                     </label>
                                 </span>
                             </div>
 
+                            <br />
                             <br />
                             <div className="p-float-label">
                                 <span className="p-float-label">
                                     <InputText id="float-input" type="text" name="direccion" value={personData.direccion}
                                         onChange={(e) => updateField(e.target.value, "direccion")} />
                                     <label htmlFor="direccion">
-                                        Dirección
+                                        Dirección:
                                     </label>
                                 </span>
                             </div>
@@ -153,6 +159,7 @@ export const PersonForm = (props) => {
 
                         <div className="col">
 
+                            <br />
                             <br />
                             <span className="p-float-label">
                                 <InputText id="float-input" name="nombre" value={personData.nombre}
@@ -163,6 +170,7 @@ export const PersonForm = (props) => {
                             </span>
 
                             <br />
+                            <br />
                             <div className="p-float-label">
                                 <Calendar
                                     value={personData.fechaNac && new Date(personData.fechaNac + " ")}
@@ -172,15 +180,17 @@ export const PersonForm = (props) => {
                             </div>
 
                             <br />
+                            <br />
                             <div className="p-float-label">
                                 <span className="p-float-label">
                                     <Dropdown id="float-input" name="genero" value={personData.genero}
                                         onChange={(e) => updateField(e.target.value, "genero")} options={generos}
                                         placeholder="Género" className="w-full md:w-14rem" />
-                                    <label htmlFor="float-input">Género</label>
+                                    <label htmlFor="float-input">Género:</label>
                                 </span>
                             </div>
 
+                            <br />
                             <br />
                             <div className="p-float-label">
                                 <span className="p-float-label">
@@ -188,7 +198,7 @@ export const PersonForm = (props) => {
                                         onChange={(e) => updateField(e.target.value, "telefono")} mask="99-9999999"
                                         placeholder="99-9999999" />
                                     <label htmlFor="telefono">
-                                        Número Telefónico
+                                        Número Telefónico:
                                     </label>
                                 </span>
                             </div>

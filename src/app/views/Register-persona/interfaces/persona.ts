@@ -4,7 +4,7 @@ export interface Persona {
     nombre: string;
     apellido: string;
     email: string;
-    fechaNac: string;
+    fecha_nacimiento: string;
     genero: string;
     celular: string;
     direccion: string;

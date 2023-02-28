@@ -2,7 +2,7 @@ import "primeicons/primeicons.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.css";
 import { InputText } from "primereact/inputtext";
-import { Dropdown } from "primereact/dropdown";
+import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { Toast } from "primereact/toast";
@@ -11,6 +11,7 @@ import { Button } from "primereact/button";
 import "../../Styles/css/FichaOdontologica.css";
 import OdontoTable from "../../views/FichaOdontologica/odontoTable";
 import { Card } from "@mui/material";
+import { Divider } from "primereact/divider";
 
 export default function FichaOdontologica() {
   const toast = useRef<Toast>(null);
@@ -115,20 +116,44 @@ export default function FichaOdontologica() {
     setObservaciones("");
     setSelectedPaciente(null);
   }
+
+  const selectedPacientTemplate = (option: any, props: any) => {
+    if (option) {
+      return (
+        <div className="flex align-items-center">{option.label}</div>
+      );
+    }
+
+    return <span>{props.placeholder}</span>;
+  };
+
+  const pacientOptionTemplate = (option: any) => {
+    console.log(option.cedula);
+    return <>{option.label}</>;
+  };
   return (
     <div className="fichaP">
       <label className="labelFicha">Ficha Odontológica</label>
       <Toast ref={toast} />
+
       <Card id="card1">
         <div className="container" id="container">
-          <h5 className="datos">Datos del Cliente</h5>
+          <Divider align="left">
+            <div className="inline-flex align-items-center">
+              <b>Seleccione el paciente</b>
+            </div>
+          </Divider>
+
           <Dropdown
+            filter
+            valueTemplate={selectedPacientTemplate}
+            itemTemplate={pacientOptionTemplate}
             id="dropP"
-            value={{
+            value={{        
               id: selectedPaciente?.id_persona,
               label: `${selectedPaciente?.nombre} ${selectedPaciente?.apellido}`,
             }}
-            onChange={(e) => onPacienteChange(e.value)}
+            onChange={(e) => {onPacienteChange(e.value);setShowTable(true)}}
             options={pacientes.map((item) => ({
               id: item.id_persona,
               label: `${item.nombre} ${item.apellido}`,
@@ -136,15 +161,18 @@ export default function FichaOdontologica() {
             optionLabel="label"
             placeholder="Seleccione un Paciente"
           />
-          <div id="divButton">
-            <Button className="BotonE" onClick={handleShow}></Button>
+          <div >
             {show && (
               <div className="tableO">
                 <OdontoTable id_ficha={ficha?.id_ficha} />
               </div>
             )}
           </div>
-
+          <Divider align="left">
+            <div className="inline-flex align-items-center">
+              <b>Datos del paciente</b>
+            </div>
+          </Divider>
           <table>
             <td>
               <span className="p-float-label">
@@ -219,7 +247,11 @@ export default function FichaOdontologica() {
               </span>
             </td>
           </table>
-
+          <Divider align="left">
+            <div className="inline-flex align-items-center">
+              <b>Datos de la ficha</b>
+            </div>
+          </Divider>
           <div>
             <h5 className="textI">Antecedentes</h5>
             <textarea
