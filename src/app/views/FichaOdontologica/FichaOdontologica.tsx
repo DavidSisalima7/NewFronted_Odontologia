@@ -5,17 +5,16 @@ import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { Toast } from 'primereact/toast';
+import { Toast } from "primereact/toast";
 import { IFicha, IPaciente } from "./interface/FichaDto";
 import { Button } from "primereact/button";
 import "../../Styles/css/FichaOdontologica.css";
 import OdontoTable from "../../views/FichaOdontologica/odontoTable";
 import { Card } from "@mui/material";
 
-
 export default function FichaOdontologica() {
   const toast = useRef<Toast>(null);
-  
+
   const [selectedPaciente, setSelectedPaciente] = useState<IPaciente | null>(
     null
   );
@@ -58,7 +57,12 @@ export default function FichaOdontologica() {
   const save = async () => {
     if (ficha) {
       await putFicha();
-      toast.current?.show({ severity: 'success', summary: 'Exito', detail: 'Operacion Exitosa', life: 3000 });
+      toast.current?.show({
+        severity: "success",
+        summary: "Exito",
+        detail: "Operacion Exitosa",
+        life: 3000,
+      });
     } else {
       await postFicha();
     }
@@ -104,6 +108,13 @@ export default function FichaOdontologica() {
       setShowTable(true);
     }
   }
+
+  function handleCancelar() {
+    setAntecedente("");
+    setMotivo("");
+    setObservaciones("");
+    setSelectedPaciente(null);
+  }
   return (
     <div className="fichaP">
       <label className="labelFicha">Ficha Odontológica</label>
@@ -125,19 +136,21 @@ export default function FichaOdontologica() {
             optionLabel="label"
             placeholder="Seleccione un Paciente"
           />
-          <Button className="BotonE" onClick={handleShow}></Button>
+          <div id="divButton">
+            <Button className="BotonE" onClick={handleShow}></Button>
+            {show && (
+              <div className="tableO">
+                <OdontoTable id_ficha={ficha?.id_ficha} />
+              </div>
+            )}
+          </div>
 
-          {show && (
-            <div className="tableO">
-              <OdontoTable id_ficha={ficha?.id_ficha} />
-            </div>
-          )}
           <table>
             <td>
               <span className="p-float-label">
                 <InputText
                   id="txtInput"
-                  value={selectedPaciente?.cedula}
+                  value={selectedPaciente?.cedula || ""}
                   disabled
                   placeholder="Disabled"
                 />
@@ -148,7 +161,7 @@ export default function FichaOdontologica() {
               <span className="p-float-label" style={{ marginTop: "20px" }}>
                 <InputText
                   id="txtInput"
-                  value={selectedPaciente?.genero}
+                  value={selectedPaciente?.genero || ""}
                   disabled
                   placeholder="Disabled"
                 />
@@ -161,7 +174,7 @@ export default function FichaOdontologica() {
               <span className="p-float-label">
                 <InputText
                   id="txtInput"
-                  value={selectedPaciente?.nombre}
+                  value={selectedPaciente?.nombre || ""}
                   disabled
                   placeholder="Disabled"
                 />
@@ -172,7 +185,7 @@ export default function FichaOdontologica() {
               <span id="span1" className="p-float-label">
                 <InputText
                   id="txtInput"
-                  value={selectedPaciente?.fechaNac}
+                  value={selectedPaciente?.fechaNac || ""}
                   disabled
                   placeholder="Disabled"
                 />
@@ -185,7 +198,7 @@ export default function FichaOdontologica() {
               <span className="p-float-label">
                 <InputText
                   id="txtInput"
-                  value={selectedPaciente?.apellido}
+                  value={selectedPaciente?.apellido || ""}
                   disabled
                   placeholder="Disabled"
                 />
@@ -196,7 +209,7 @@ export default function FichaOdontologica() {
               <span id="span1" className="p-float-label">
                 <InputText
                   id="txtInput"
-                  value={selectedPaciente?.direccion}
+                  value={selectedPaciente?.direccion || ""}
                   disabled
                   placeholder="Disabled"
                 />
@@ -244,6 +257,7 @@ export default function FichaOdontologica() {
               style={{ marginRight: "10px" }}
             />
             <Button
+              onClick={handleCancelar}
               label="Cancelar"
               type="reset"
               className="p-button-danger p-button-rounded"
