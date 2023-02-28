@@ -31,7 +31,7 @@ export const OdontogramList = () => {
   const [seleccion, setSeleccion] = useState();
   const toast = useRef(null);
   
-  const savePieza = (id) => {
+  const savePieza = (id) => { 
     findPieza(id);
     setIsVisible(true);
   };
@@ -1030,7 +1030,7 @@ export const OdontogramList = () => {
                 }}
               />
               <Column field="numero_pieza" header="PIEZA"></Column>
-              <Column field="tratamiento" header="TRATAMINENTO"></Column>
+              <Column field="tratamiento" header="TRATAMIENTO"></Column>
               <Column field="cara_pieza" header="CARA"></Column>
             </DataTable>
 
