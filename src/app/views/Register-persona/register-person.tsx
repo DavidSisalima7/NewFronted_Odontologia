@@ -1,5 +1,6 @@
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
+import 'bootstrap/dist/css/bootstrap.css';
 import "primeicons/primeicons.css";
 import React, { useEffect, useState } from "react";
 import "../../Styles/css/Register-person.css"
@@ -16,7 +17,6 @@ import { classNames } from "primereact/utils";
 import { Dialog } from "primereact/dialog";
 import Usuario from "../Register-usr/interfaces/Usuario";
 import Persona from "./interfaces/persona";
-import 'bootstrap/dist/css/bootstrap.css';
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 
@@ -53,18 +53,6 @@ export const RegisterPerson = () => {
         formikPerson.resetForm();
         navigate.replace("/")
     };
-
-    /* useEffect(() => {
-        loadUsers();
-    }, []);
-
-    const loadUsers = async () => {
-
-        const result = axios.get("http://localhost:8080/usuarios/");
-        console.log(result);
-    } */
-
-
 
     const [value, setValue] = useState('');
 

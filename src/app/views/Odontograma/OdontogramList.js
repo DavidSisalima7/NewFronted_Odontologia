@@ -10,6 +10,7 @@ import { Toast } from 'primereact/toast';
 import { Divider } from 'primereact/divider';
 import PiezasForm from "./PiezasForm";
 import { PiezaContext } from './PiezaContext';
+
 export const OdontogramList = (id_odontograma) => {
 
     // Codigo para llenar la tabla segun un array
