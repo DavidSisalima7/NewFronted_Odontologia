@@ -1,6 +1,6 @@
 import React from "react";
 import "../../../Styles/css/MenuP.css"
-//npm i -d sass - INSTALAR para usar el menu
+//npm install boxicons --save
 const Home = () => {
   //24-02-23
   return (
@@ -16,6 +16,10 @@ const Home = () => {
             href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
             rel="stylesheet"
           />
+             <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
+    />
           <link rel="stylesheet" href="../../Styles/css/MenuP.css" />
         </head>
 
@@ -24,7 +28,7 @@ const Home = () => {
         <main>
           <div className="fondo">
             <section className="home container1" id="home">
-              <div className="swiper home-swiper" id="wiper">
+              <div className="swiper home-swiper" id="swiper">
                 <div className="swiper-wrapper">
                   <section className="swiper-slide">
                     <div className="home__content grid">
@@ -123,10 +127,9 @@ const Home = () => {
                     <i className="bx bxl-instagram-alt"></i>
                   </a>
                   <a
-                    href="https://wa.me/0990369421"
+                    href="https://wa.me/593990369421"
                     target="_blank"
-                    className="footer__social-link"
-                  >
+                    className="footer__social-link">
                     <i className="bx bxl-whatsapp"></i>
                   </a>
                 </div>

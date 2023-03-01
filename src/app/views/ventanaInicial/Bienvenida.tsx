@@ -1,48 +1,58 @@
 import React from "react";
+import "../../Styles/css/Bienvenida.css";
 
 const Bienvenida = () => {
   return (
     <div>
-{/*   
-        <body className="body2">
+      <body className="body2">
         <nav>
-        <div className="icon_diente"></div>
-          <div id="logo">
-            Odontología Integral SM</div>
+          <div className="icon_diente"></div>
+          <div id="logo">Odontología Integral SM</div>
           <label htmlFor="drop" className="toggle">
             Menu
           </label>
           <input type="checkbox" id="drop" />
           <ul className="menu">
             <li>
-            <label htmlFor="drop" className="toggle">
+              <label htmlFor="drop" className="toggle">
                 Home
               </label>
-              <a href="/home"><div className='Home'></div></a>
+              <a href="/home">
+                <div className="Home"></div>
+              </a>
             </li>
             <li>
-            <label htmlFor="drop" className="toggle">
+              <label htmlFor="drop-1" className="toggle">
                 Service
               </label>
-              <a href="/home"><div className='Servicios'></div></a>
+              <a href="#service">
+                <div className="">service</div>
+              </a>
             </li>
             <li>
-            <label htmlFor="drop" className="toggle">
+              <label htmlFor="drop-2" className="toggle">
                 About
               </label>
-              <a href="/home"><div className='Home'></div></a>
+              <a href="#about">
+                <div className="">about</div>
+              </a>
             </li>
-            <li>
-            <label htmlFor="drop" className="toggle">
+            <li className="liP">
+              <label htmlFor="drop-3" className="toggle">
                 Contact
               </label>
-              <a href="/home"><div className='Home'></div></a>
+              <a href="https://wa.me/593990369421" target="_blank" className="aPhone">
+                <div className="phone"></div> 
+                (+593)990369421
+              </a>
             </li>
             <li>
-            <label htmlFor="drop" className="toggle">
+              <label htmlFor="drop" className="toggle">
                 Login
               </label>
-              <a href="/home"><div className=''></div></a>
+              <a href="/login">
+                <div className="">login</div>
+              </a>
             </li>
           </ul>
         </nav>
@@ -77,45 +87,49 @@ const Bienvenida = () => {
                             <li className="liS">
                               <div className="Serv1"></div>
                               <h3 className="home__subtitle">
-                              Carillas Dentales
+                                Carillas Dentales
                               </h3>
                               <p className="home__description">
-                              Son una buena opción para dientes fracturados, 
-                              espacios entre los dientes y para algunas situaciones 
-                              en las que la posición de los dientes se ve comprometida y 
-                              existen problemas menores relacionados con la oclusión.
+                                Son una buena opción para dientes fracturados,
+                                espacios entre los dientes y para algunas
+                                situaciones en las que la posición de los
+                                dientes se ve comprometida y existen problemas
+                                menores relacionados con la oclusión.
                               </p>
                             </li>
                             <li className="liS">
                               <div className="Serv2"></div>
-                              <h3 className="home__subtitle">
-                              Ortodoncia
-                              </h3>
+                              <h3 className="home__subtitle">Ortodoncia</h3>
                               <p className="home__description">
-                              El crecimiento y desarrollo de los dientes en una posición 
-                              errónea supone un riesgo para el cuidado de la higiene oral.
+                                El crecimiento y desarrollo de los dientes en
+                                una posición errónea supone un riesgo para el
+                                cuidado de la higiene oral.
                               </p>
                             </li>
                             <li className="liS">
                               <div className="Serv3"></div>
                               <h3 className="home__subtitle">
-                              Protesis Dentales
+                                Protesis Dentales
                               </h3>
                               <p className="home__description">
-                              La prótesis dental ayuda a evitar el desplazamiento de los dientes 
-                              naturales restantes. La presencia de la prótesis impide que los 
-                              dientes naturales se desplacen hacia la zona desdentada. 
+                                La prótesis dental ayuda a evitar el
+                                desplazamiento de los dientes naturales
+                                restantes. La presencia de la prótesis impide
+                                que los dientes naturales se desplacen hacia la
+                                zona desdentada.
                               </p>
                             </li>
                             <li className="liS">
                               <div className="Serv4"></div>
                               <h3 className="home__subtitle">
-                              Profilaxis Dental
+                                Profilaxis Dental
                               </h3>
                               <p className="home__description">
-                              Permite eliminar la placa y el sarro acumulado, previene la aparición de caries 
-                              y enfermedades periodontales, evita el temido mal aliento y, además, refuerza el 
-                              esmalte protegiendo a las piezas dentales. 
+                                Permite eliminar la placa y el sarro acumulado,
+                                previene la aparición de caries y enfermedades
+                                periodontales, evita el temido mal aliento y,
+                                además, refuerza el esmalte protegiendo a las
+                                piezas dentales.
                               </p>
                             </li>
                           </ul>
@@ -128,7 +142,58 @@ const Bienvenida = () => {
             </section>
           </div>
           <section></section>
-       
+
+          {/* ///segunda seccion SERVICIOS */}
+          <div className="fondo3" id="service">
+          <section className="section trick" id="trick">
+     
+        <h2 className="section__title">Nuestros Servicios</h2>
+
+        <div className="trick__container container grid">
+          <div className="trick__content">
+            <div className="S1"></div>
+            <h3 className="trick__title">Restauraciones Dentales</h3>
+          </div>
+
+          <div className="trick__content">
+          <div className="S2"></div>
+            <h3 className="trick__title">Profilaxis</h3>
+          </div>
+
+          <div className="trick__content">
+          <div className="S3"></div>
+            <h3 className="trick__title">Prótesis Dentales</h3>
+          </div>
+
+          <div className="trick__content">
+          <div className="S4"></div>
+            <h3 className="trick__title">Blanqueamiento</h3>
+          </div>
+
+          <div className="trick__content">
+          <div className="S5"></div>
+            <h3 className="trick__title">Odontopediatría</h3>
+          </div>
+
+          <div className="trick__content">
+          <div className="S6"></div>
+            <h3 className="trick__title">Endodoncia</h3>
+          </div>
+          <div className="trick__content">
+          <div className="S7"></div>
+            <h3 className="trick__title">Endodoncia</h3>
+          </div>
+          <div className="trick__content">
+          <div className="S8"></div>
+            <h3 className="trick__title">Endodoncia</h3>
+          </div>
+        </div>
+        </section>
+        </div>
+
+
+
+          {/* //acerca de */}
           <div className="fondo2">
             <section className="section about" id="about">
               <div className="about__container container grid">
@@ -150,8 +215,8 @@ const Bienvenida = () => {
               </div>
             </section>
           </div>
-        </main>
-      
+       </main>
+        {/* //foooter */}
         <body>
           <footer className="footer section" id="foot">
             <div className="footer__container container grid">
@@ -247,9 +312,9 @@ const Bienvenida = () => {
             <i className="bx bx-up-arrow-alt scrollup__icon"></i>
           </a>
         </body>
-      </html> */}
+      </html>
     </div>
   );
-}
+};
 
 export default Bienvenida;
