@@ -48,6 +48,7 @@ export const NavBar: React.FC = () => {
               <input type="checkbox" id="drop-2" />
               <ul>
                 <li>
+                  <a href="/list-person">Paciente</a>
                   <a href="#">■ Paciente</a>
                 </li>
                 <li>
@@ -63,6 +64,7 @@ export const NavBar: React.FC = () => {
               <input type="checkbox" id="drop-3" />
               <ul>
                 <li>
+                  <a href="/list-person">Paciente</a>
                   <a href="#">■ Paciente</a>
                 </li>
                 <li>

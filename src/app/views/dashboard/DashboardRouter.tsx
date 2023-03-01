@@ -10,6 +10,7 @@ import { PersonList } from "../Register-persona/components/ListPerson";
 import PiezaContextProvider from "../Odontograma/PiezaContext";
 import PersonContextProvider from "../Register-persona/contexts/PersonContext";
 import { NavBarAdmin } from "../../commonAdmin/NavBarAdmin";
+import RegisterPerson from "../Register-persona/register-person";
 //import {NavBarAdmin} from '../../commonAdmin/NavBarAdmin'
 
 export function DashboardRouter() {
@@ -28,14 +29,18 @@ export function DashboardRouter() {
                 <NavBar />
                 <FichaOdontologica />
               </Route>
-              <Route path="/reg-person">
-              <NavBar />
-                {/* <RegisterPerson /> */}
+              <Route path="/list-person">
+                <NavBar />
                 <PersonContextProvider>
                   <PersonList />
                 </PersonContextProvider>
               </Route>
-             
+
+              <Route path="/reg-person">
+                <NavBar />
+                <RegisterPerson/>
+              </Route>
+
               <Route path="/odontograma">
                 <NavBar />
                 {/*Poner ruta del odontograma aqui*/}

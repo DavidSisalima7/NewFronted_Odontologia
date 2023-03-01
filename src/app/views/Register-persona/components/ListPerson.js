@@ -80,7 +80,7 @@ export const PersonList = () => {
                                     <Column field="nombre" header="Nombres" />
                                     <Column field="apellido" header="Apellidos" />
                                     <Column field="email" header="Correo Electrónico" />
-                                    <Column field="fechaNac" header="Fecha de Nacimiento" />
+                                    <Column field="fecha_nacimiento" header="Fecha de Nacimiento" />
                                     <Column field="celular" header="N° Celular" />
                                     <Column field="direccion" header="Dirección" />
                                     <Column field="telefono" header="N° Teléfono" />

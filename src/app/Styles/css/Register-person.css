@@ -81,7 +81,7 @@
 }
 
 .form {
-  position: absolute;
+  position: relative;
   inset: 2px;
   border-radius: 8px;
   background: #ffffff;

@@ -173,8 +173,8 @@ export const PersonForm = (props) => {
                             <br />
                             <div className="p-float-label">
                                 <Calendar
-                                    value={personData.fechaNac && new Date(personData.fechaNac + " ")}
-                                    onChange={(e) => updateField(e.target.value.toISOString().substring(0, 10), "fechaNac")}
+                                    value={personData. fecha_nacimiento&& new Date(personData.fecha_nacimiento + " ")}
+                                    onChange={(e) => updateField(e.target.value.toISOString().substring(0, 10), "fecha_nacimiento")}
                                     dateFormat="yy-mm-dd" />
                                 <label>Fecha de Nacimiento: </label>
                             </div>
