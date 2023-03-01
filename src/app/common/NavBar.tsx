@@ -68,9 +68,6 @@ export const NavBar: React.FC = () => {
                   <a href="#">■ Paciente</a>
                 </li>
                 <li>
-                  <a href="#">■ Ficha Odontológica</a>
-                </li>
-                <li>
                   <a href="#">■ Historial Clínico Dental</a>
                 </li>
               </ul>
