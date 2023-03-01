@@ -1,7 +1,5 @@
-import { NOTFOUND } from "dns";
 import { Switch, Route, Redirect, Link } from "react-router-dom";
 import { NavBar } from "../../common/NavBar";
-import { RouterLayout } from "../../common/RouterLayout";
 import FichaOdontologica from "../FichaOdontologica/FichaOdontologica";
 import { OdontogramList } from "../Odontograma/OdontogramList";
 import Home from "./home/Home";
@@ -11,22 +9,10 @@ import PiezaContextProvider from "../Odontograma/PiezaContext";
 import PersonContextProvider from "../Register-persona/contexts/PersonContext";
 import { NavBarAdmin } from "../../commonAdmin/NavBarAdmin";
 import RegisterPerson from "../Register-persona/register-person";
-import { useLocation } from "react-router-dom";
-//import {NavBarAdmin} from '../../commonAdmin/NavBarAdmin'
-import { ReactElement, useState } from "react";
 import User from "../../interfaces/user/User";
 
-interface Props {
-  roles: boolean;
-}
-
-//export const DashboardRouter = (props: {roles?: boolean;
-//}): ReactElement => {
-//export const DashboardRouter=(props:{
-//roles?:boolean}): ReactElement => {
-//console.log(roles);
 export const DashboardRouter = () => {
-  //variables
+  //Datos del sessionStorage
   const dataT = sessionStorage.getItem("user");
   const objetoDatos: User = dataT ? JSON.parse(dataT || "{}") : null;
   const rol = objetoDatos?.username;

@@ -7,7 +7,6 @@ import { Link, useHistory } from "react-router-dom";
 import { AuthContext } from "../../store/contexts/AuthContext";
 import { AuthService } from "../../../services/auth/AuthService";
 import { Toast } from "primereact/toast";
-import { DashboardRouter } from "../../dashboard/DashboardRouter";
 
 export function Login() {
   const toast = useRef<Toast>(null);
@@ -21,7 +20,6 @@ export function Login() {
     });
   };
 
-  const [rol, setRol] = useState(false);
   const { dispatchUser }: any = useContext(AuthContext);
   const [auth, setAuth] = useState({ username: "", password: "" });
   const history = useHistory();
@@ -30,14 +28,12 @@ export function Login() {
     try {
       const username=auth.username
       if (auth.username==="admin" && auth.password==="claveadmin") {
-        //setRol(true);
         history.replace("/dashboard/home");
         sessionStorage.setItem(
           "user",
           JSON.stringify({ username, loggedIn: true })
         );
       }else{
-        //setRol(false);
         e.preventDefault();
         const resp = await AuthService.login(auth);
         history.replace("/dashboard/home");
@@ -47,7 +43,6 @@ export function Login() {
         );
         dispatchUser({ type: "login", payload: resp.data });
       }
-        
        
     } catch (error) {
       showError("ERROR", "Credenciales incorrectas");
@@ -66,7 +61,6 @@ export function Login() {
   return (
     <>
       <Toast ref={toast} />
-     
       <AuthCard>
         <form onSubmit={handleSubmit} autoComplete="off">
           <div className="text-center mb-2">

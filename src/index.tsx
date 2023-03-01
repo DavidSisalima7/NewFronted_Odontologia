@@ -12,13 +12,10 @@ import "primereact/resources/primereact.min.css";
 
 //icons
 import "primeicons/primeicons.css";
-import { ThemeConfig } from './config/theme.config';
 
 ReactDOM.render(
   <React.StrictMode>
-   <ThemeConfig>
         <App />
-    </ThemeConfig>
   </React.StrictMode>,
   document.getElementById('root')
 );
