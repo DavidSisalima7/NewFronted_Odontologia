@@ -11,10 +11,26 @@ import PiezaContextProvider from "../Odontograma/PiezaContext";
 import PersonContextProvider from "../Register-persona/contexts/PersonContext";
 import { NavBarAdmin } from "../../commonAdmin/NavBarAdmin";
 import RegisterPerson from "../Register-persona/register-person";
+import { useLocation } from "react-router-dom";
 //import {NavBarAdmin} from '../../commonAdmin/NavBarAdmin'
+import { ReactElement, useState } from "react";
+import User from "../../interfaces/user/User";
 
-export function DashboardRouter() {
-  //const {rol} props;
+interface Props {
+  roles: boolean;
+}
+
+//export const DashboardRouter = (props: {roles?: boolean;
+//}): ReactElement => {
+//export const DashboardRouter=(props:{
+//roles?:boolean}): ReactElement => {
+//console.log(roles);
+export const DashboardRouter = () => {
+  //variables
+  const dataT = sessionStorage.getItem("user");
+  const objetoDatos: User = dataT ? JSON.parse(dataT || "{}") : null;
+  const rol = objetoDatos?.username;
+
   return (
     <>
       <main>
@@ -22,33 +38,58 @@ export function DashboardRouter() {
           <div>
             <Switch>
               <Route exact path="/dashboard/home">
-                <NavBarAdmin />
+                {rol==="admin" ? (
+                  <NavBarAdmin/>
+                ) : (
+                  <NavBar/>
+                )}
                 <Home />
               </Route>
+
               <Route path="/ficha">
-                <NavBar />
+              {rol==="admin" ? (
+                  <NavBarAdmin/>
+                ) : (
+                  <NavBar/>
+                )}
                 <FichaOdontologica />
               </Route>
               <Route path="/list-person">
-                <NavBar />
+              {rol==="admin" ? (
+                  <NavBarAdmin/>
+                ) : (
+                  <NavBar/>
+                )}
                 <PersonContextProvider>
                   <PersonList />
                 </PersonContextProvider>
               </Route>
 
               <Route path="/reg-person">
-                <NavBar />
-                <RegisterPerson/>
+              {rol==="admin" ? (
+                  <NavBarAdmin/>
+                ) : (
+                  <NavBar/>
+                )}
+                <RegisterPerson />
               </Route>
 
               <Route path="/odontograma">
-                <NavBar />
-                {/*Poner ruta del odontograma aqui*/}
+              {rol==="admin" ? (
+                  <NavBarAdmin/>
+                ) : (
+                  <NavBar/>
+                )}
                 <PiezaContextProvider>
                   <OdontogramList />
                 </PiezaContextProvider>
               </Route>
               <Route path="*">
+              {rol==="admin" ? (
+                  <NavBarAdmin/>
+                ) : (
+                  <NavBar/>
+                )}
                 <Redirect to="/dashboard/home" />
               </Route>
             </Switch>
@@ -57,4 +98,4 @@ export function DashboardRouter() {
       </main>
     </>
   );
-}
+};
