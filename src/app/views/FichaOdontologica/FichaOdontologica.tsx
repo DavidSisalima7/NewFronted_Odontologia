@@ -149,11 +149,11 @@ export default function FichaOdontologica() {
             valueTemplate={selectedPacientTemplate}
             itemTemplate={pacientOptionTemplate}
             id="dropP"
-            value={{        
+            value={{
               id: selectedPaciente?.id_persona,
               label: `${selectedPaciente?.nombre} ${selectedPaciente?.apellido}`,
             }}
-            onChange={(e) => {onPacienteChange(e.value);setShowTable(true)}}
+            onChange={(e) => { onPacienteChange(e.value); setShowTable(true) }}
             options={pacientes.map((item) => ({
               id: item.id_persona,
               label: `${item.nombre} ${item.apellido}`,
