@@ -13,7 +13,7 @@ const RolContextProvider = (props) => {
 
     useEffect(() => {
         rolService.readAll().then(data => setRoles(data));
-    }, [/* rolService, roles */]);
+    }, [rolService, roles]);
 
     const createRol = (rol) => {
         rolService.create(rol).then(data => setRoles([...roles, data]))
