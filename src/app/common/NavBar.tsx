@@ -4,6 +4,9 @@ import "../Styles/css/Navbar.css";
 export const NavBar: React.FC = () => {
    //24-02-23
 
+   const eliminarUser=()=>{
+    sessionStorage.removeItem('user');
+   }
   return (
     <>
        <div>
@@ -75,8 +78,9 @@ export const NavBar: React.FC = () => {
             <li>
             <label htmlFor="drop" className="toggle">
             Cerrar Sesión
+           
               </label>
-              <a href="/auth/login"><div className='Exit'></div></a>
+              <a href="/auth/login" onClick={eliminarUser}><div className='Exit'></div></a>
             </li>
           </ul>
         </nav>
