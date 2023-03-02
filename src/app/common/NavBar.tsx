@@ -51,8 +51,8 @@ export const NavBar: React.FC = () => {
               <input type="checkbox" id="drop-2" />
               <ul>
                 <li>
-                  <a href="/list-person">Paciente</a>
-                  <a href="#">■ Paciente</a>
+             
+                  <a href="/list-person">■ Paciente</a>
                 </li>
                 <li>
                   <a href="ficha">■ Ficha Odontológica</a>
@@ -67,11 +67,11 @@ export const NavBar: React.FC = () => {
               <input type="checkbox" id="drop-3" />
               <ul>
                 <li>
-                  <a href="/list-person">Paciente</a>
-                  <a href="#">■ Paciente</a>
+            
+                  <a href="/list-person">■ Paciente</a>
                 </li>
                 <li>
-                  <a href="#">■ Historial Clínico Dental</a>
+                  <a href="/historial">■ Historial Clínico Dental</a>
                 </li>
               </ul>
             </li>
@@ -80,7 +80,7 @@ export const NavBar: React.FC = () => {
             Cerrar Sesión
            
               </label>
-              <a href="/auth/login" onClick={eliminarUser}><div className='Exit'></div></a>
+              <a href="/inicio" onClick={eliminarUser}><div className='Exit'></div></a>
             </li>
           </ul>
         </nav>

@@ -2,8 +2,9 @@ import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 import 'bootstrap/dist/css/bootstrap.css';
 import "primeicons/primeicons.css";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "../../Styles/css/Register-person.css"
+import User from "../../interfaces/user/User";
 
 //Components
 import { InputText } from "primereact/inputtext";
@@ -12,74 +13,148 @@ import { InputMask } from 'primereact/inputmask';
 import { Divider } from "primereact/divider";
 import { Button } from "primereact/button";
 import { Calendar } from 'primereact/calendar';
+import { Password } from 'primereact/password';
 import { ScrollPanel } from 'primereact/scrollpanel';
 import { TabView, TabPanel } from 'primereact/tabview';
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import { PersonContext } from "./contexts/PersonContext";
+import { RolContext } from "./contexts/RolContext";
 
-export default function RegisterPerson() {
+export const RegisterPerson = () => {
 
     let navigate = useHistory();
 
-    const [person, setPerson] = useState({
+    const { persons, findPerson } = useContext(PersonContext);
 
-        id_persona: "",
-        cedula: "",
-        nombre: "",
-        apellido: "",
-        email: "",
-        fechaNac: "",
-        genero: "",
-        celular: "",
-        direccion: "",
-        telefono: "",
-    });
+    const { roles, findRol } = useContext(RolContext);
 
-    const {id_persona, cedula, nombre, apellido, email, fechaNac, genero, celular, direccion, telefono } = person;
+    const [selectedRol, setSelectedRol] = useState(roles);
 
-    const onInputChange = (e) => {
+    const [selectedPersona, setSelectedPersona] = useState(persons);
 
-        setPerson({ ...person, [e.target.name]: e.target.value })
+    function onPersonaChange(persona) {
+        const selectedPersona = persons.find(
+            (item) => item.id_persona === persona.id
 
+        );
+        console.log(selectedPersona.id_persona);
+        setSelectedPersona(selectedPersona || null);
     }
+
+    function onRolChange(rol) {
+        const selectedRol = roles.find(
+            (item) => item.rolId === rol.id
+
+        );
+        console.log(selectedRol.rolId);
+        setSelectedRol(selectedRol || null);
+    }
+
+    //DATOS DE PERSONA
+
+    const initialPersonState = {
+
+        id_persona: '',
+        cedula: '',
+        nombre: '',
+        apellido: '',
+        email: '',
+        fechaNac: '',
+        genero: '',
+        celular: '',
+        telefono: '',
+        direccion: ''
+    };
+
+    const [person, setPerson] = useState({ initialPersonState });
+
+    const onInputChange = (data, field) => {
+
+        setPerson({ ...person, [field]: data });
+
+        console.log(person);
+    };
 
     const onSubmit = async (e) => {
 
         e.preventDefault();
         await axios.post("http://localhost:8080/api/persona/crear", person);
-        setShowMessage(true);
-        navigate.replace("/")
+        setTab(1)
     };
 
-    const [value, setValue] = useState('');
+    //DATOS DE ROL
 
-    const [showMessage, setShowMessage] = useState(false);
-    const [formData, setFormData] = useState({});
+    const initialRolState = {
+
+        rolId: "",
+        rolNombre: "",
+        descripcion: ""
+    };
+
+    const [role, setRol] = useState({ initialRolState });
+
+    const onInputChangeRol = (data, field) => {
+
+        setRol({ ...role, [field]: data });
+
+        console.log(role);
+    };
+
+    //DATOS DE USUARIO
+
+    const onSubmitUsr = async () => {
+
+        await postUser();
+
+    };
+
+    const [username, setUsername] = useState("");
+
+    const [password, setPassword] = useState("");
+
+    const postUser = async () => {
+        const url = "http://localhost:8080/usuarios/signup";
+
+        const data = {
+            username: username,
+            password: password,
+            enabled: true,
+            persona: {
+                id_persona: selectedPersona?.id_persona,
+            },
+            rol: {
+                rolId: selectedRol?.rolId,
+            },
+        };
+
+        const response = await axios.post(url, data);
+    };
+
+    const [tab, setTab] = useState(0);
 
     //Datos Dropdown
     const generos = [
         'Masculino', 'Femenino', 'Otro'
     ];
 
-    const roles = [
-        'Odontólogo', 'Paciente', 'Otro'
-    ];
+    const selectedPersonTemplate = (option, props) => {
+        if (option) {
+            return (
+                <div className="flex align-items-center">{option.label}</div>
+            );
+        }
+
+        return <span>{props.placeholder}</span>;
+    };
+
+    const personOptionTemplate = (option) => {
+        console.log(option.cedula);
+        return <>{option.label}</>;
+    };
 
     // Reestringir campos
-    const blockSpecial = RegExp(/^[^<>*!#@$%^_=+?`\|{}[\]~"'\.\,=0123456789/;:]+$/)
-
-    const dialogFooter = (
-        <div className="flex justify-content-center">
-            <Button
-                label="OK"
-                className="p-button-text"
-                autoFocus
-                onClick={() => {
-                    setShowMessage(false);
-                }}
-            />
-        </div>
-    );
+    const blockSpecial = RegExp(/^[^<>*!#@$%^_=+?`\|{}[\]~"'\.\,=0123456789/;:]+$/);
 
     const passwordHeader = <h6>Pick a password</h6>;
     const passwordFooter = (
@@ -101,24 +176,25 @@ export default function RegisterPerson() {
 
             <div className="box">
 
-                <TabView>
+                <TabView activeIndex={tab} onTabChange={(e) => setTab(e.index)}>
                     <TabPanel header="Registro Personas" leftIcon="pi pi-user">
 
                         <div className="form">
 
-                            <Divider align="center" style={{ marginTop: '-15px' }}>
+                            <Divider align="center" style={{ marginTop: '-25px' }}>
                                 <h2 className="text-center" style={{ color: "black" }}>Registrar Persona</h2>
                             </Divider>
 
                             <ScrollPanel style={{ width: '100%', height: '500px' }}>
 
-                                <form onSubmit={(e) => onSubmit(e)} className="p-fluid" style={{ marginTop: '-18px', marginBottom: 80 }}>
+                                <form onSubmit={(e) => onSubmit(e)} className="p-fluid" style={{ marginTop: '-10px', marginBottom: 80 }}>
                                     <div className="row">
                                         <div className="col">
 
                                             <div className="campo p-col-12 p-md-4">
                                                 <span className="p-float-label">
-                                                    <InputText id="float-input" name="cedula" type={"text"} keyfilter="int" value={cedula} onChange={(e) => onInputChange(e)} />
+                                                    <InputText id="float-input" name="cedula" type={"text"} keyfilter="int" value={person.cedula}
+                                                        onChange={(e) => onInputChange(e.target.value, "cedula")} />
                                                     <label htmlFor="name" >
                                                         Cédula:
                                                     </label>
@@ -127,7 +203,8 @@ export default function RegisterPerson() {
 
                                             <div className="campo p-col-12 p-md-4">
                                                 <span className="p-float-label">
-                                                    <InputText id="float-input" name="nombre" value={nombre} onChange={(e) => onInputChange(e)} type="text" keyfilter={blockSpecial} />
+                                                    <InputText id="float-input" name="nombre" value={person.nombre}
+                                                        onChange={(e) => onInputChange(e.target.value, "nombre")} type="text" keyfilter={blockSpecial} />
                                                     <label htmlFor="name" >
                                                         Nombres:
                                                     </label>
@@ -136,17 +213,19 @@ export default function RegisterPerson() {
 
                                             <div className="campo p-col-12 p-md-4">
                                                 <span className="p-float-label">
-                                                    <Dropdown id="float-input" name="genero" onChange={(e) => onInputChange(e)} value={genero} options={generos}
+                                                    <Dropdown id="float-input" name="genero" onChange={(e) => onInputChange(e.target.value, "genero")}
+                                                        value={person.genero} options={generos}
                                                         placeholder="Seleccione Género" className="w-full md:w-14rem" />
-                                                    <label htmlFor="float-input">Género:</label>
+                                                    <label htmlFor="genero">Género:</label>
                                                 </span>
                                             </div>
 
                                             <div className="campo p-col-12 p-md-4">
                                                 <span className="p-float-label">
-                                                    <InputMask id="float-input" name="celular" value={celular} onChange={(e) => onInputChange(e)}
+                                                    <InputMask id="float-input" name="celular" value={person.celular}
+                                                        onChange={(e) => onInputChange(e.target.value, "celular")}
                                                         mask="9999999999" placeholder="9999999999" />
-                                                    <label htmlFor="name" >
+                                                    <label htmlFor="celular" >
                                                         Número Celular:
                                                     </label>
                                                 </span>
@@ -154,8 +233,9 @@ export default function RegisterPerson() {
 
                                             <div className="campo p-col-12 p-md-4">
                                                 <span className="p-float-label">
-                                                    <InputText id="float-input" type="text" name="direccion" value={direccion} onChange={(e) => onInputChange(e)} />
-                                                    <label htmlFor="name" >
+                                                    <InputText id="float-input" type="text" name="direccion" value={person.direccion}
+                                                        onChange={(e) => onInputChange(e.target.value, "direccion")} />
+                                                    <label htmlFor="direccion" >
                                                         Dirección:
                                                     </label>
                                                 </span>
@@ -166,8 +246,9 @@ export default function RegisterPerson() {
 
                                             <div className="campo p-col-12 p-md-4">
                                                 <span className="p-float-label">
-                                                    <InputText id="float-input" type="text" name="email" value={email} onChange={(e) => onInputChange(e)} />
-                                                    <label htmlFor="name" >
+                                                    <InputText id="float-input" type="text" name="email" value={person.email}
+                                                        onChange={(e) => onInputChange(e.target.value, "email")} />
+                                                    <label htmlFor="email" >
                                                         Correo Electronico:
                                                     </label>
                                                 </span>
@@ -175,8 +256,9 @@ export default function RegisterPerson() {
 
                                             <div className="campo p-col-12 p-md-4">
                                                 <span className="p-float-label">
-                                                    <InputText id="float-input" type="text" name="apellido" value={apellido} onChange={(e) => onInputChange(e)} keyfilter={blockSpecial} />
-                                                    <label htmlFor="name">
+                                                    <InputText id="float-input" type="text" name="apellido"
+                                                        value={person.apellido} onChange={(e) => onInputChange(e.target.value, "apellido")} keyfilter={blockSpecial} />
+                                                    <label htmlFor="apellido">
                                                         Apellidos:
                                                     </label>
                                                 </span>
@@ -184,22 +266,22 @@ export default function RegisterPerson() {
 
                                             <div className="campo p-col-12 p-md-4">
                                                 <span className="p-float-label">
-                                                    <InputText type={"date"} id="float-input" name="fechaNac" value={fechaNac} onChange={(e) => onInputChange(e)} />
-                                                    {/* <Calendar
-                                                    value={fechaNac && new Date(fechaNac + " ")}
-                                                    onChange={(e) => onInputChange(e.target.value.toISOString().substring(0, 10), "fechaNac")}
-                                                    dateFormat="yy-mm-dd" /> */}
-                                                    <label htmlFor="name" >
-                                                        Fecha de Nacimiento
+                                                    <Calendar
+                                                        value={person.fechaNac && new Date(person.fechaNac + " ")}
+                                                        onChange={(e) => onInputChange(e.target.value.toISOString().substring(0, 10), "fechaNac")}
+                                                        dateFormat="yy-mm-dd" />
+                                                    <label htmlFor="fechaNac" >
+                                                        Fecha de Nacimiento:
                                                     </label>
                                                 </span>
                                             </div>
 
                                             <div className="campo p-col-12 p-md-4">
                                                 <span className="p-float-label">
-                                                    <InputMask id="float-input" name="telefono" value={telefono} onChange={(e) => onInputChange(e)} mask="99-9999999"
-                                                        placeholder="99-9999999" />
-                                                    <label htmlFor="name" >
+                                                    <InputMask id="float-input" name="telefono" value={person.telefono}
+                                                        onChange={(e) => onInputChange(e.target.value, "telefono")}
+                                                        mask="99-9999999" placeholder="99-9999999" />
+                                                    <label htmlFor="Telefónico" >
                                                         Número Telefónico:
                                                     </label>
                                                 </span>
@@ -214,7 +296,7 @@ export default function RegisterPerson() {
                                     <div className="row text-center">
                                         <div className="col">
                                             <div style={{ justifyContent: "center", alignItems: "center" }}>
-                                                <Button type="submit" label="Guardar"
+                                                <Button type="submit" label="Guardar" onClick={(e) => onSubmit(e)}
                                                     className="mt-2" style={{
                                                         background: "#ffff", width: "150px",
                                                         height: "40px", textAlign: "center",
@@ -241,106 +323,137 @@ export default function RegisterPerson() {
 
                     </TabPanel>
 
-                    <TabPanel header="Crear Usuario" leftIcon="pi pi-user">
+                    <TabPanel header="Crear Usuario" rightIcon="pi pi-user">
 
-                        <Divider align="center" style={{ marginTop: '40px' }}>
-                            <h2 className="text-center" style={{ color: "black" }}>Crear Usuarios</h2>
-                        </Divider>
+                        <div className="form">
 
-                        <form onSubmit={(e) => onSubmit(e)} className="p-fluid" style={{ marginTop: '-18px', marginBottom: 80 }}>
+                            <Divider align="center" style={{ marginTop: '-25px' }}>
+                                <h2 className="text-center" style={{ color: "black" }}>Crear Usuarios</h2>
 
-                            <div className="p-grid p-fluid">
+                            </Divider>
 
-                                {/* <Dropdown
-                                    filter
-                                    valueTemplate={selectedPacientTemplate}
-                                    itemTemplate={pacientOptionTemplate}
-                                    id="dropP"
-                                    value={{
-                                        id: selectedPaciente?.id_persona,
-                                        label: `${selectedPaciente?.nombre} ${selectedPaciente?.apellido}`,
-                                    }}
-                                    onChange={(e) => { onPacienteChange(e.value); setShowTable(true) }}
-                                    options={pacientes.map((item) => ({
-                                        id: item.id_persona,
-                                        label: `${item.nombre} ${item.apellido}`,
-                                    }))}
-                                    optionLabel="label"
-                                    placeholder="Seleccione una Persona"
-                                /> */}
+                            <ScrollPanel style={{ width: '100%', height: '400px' }}>
 
-                                <div className="row">
+                                <form onSubmit={(e) => onSubmitUsr(e)} className="p-fluid" style={{ marginTop: '-18px', marginBottom: 80 }}>
 
-                                    <div className="col">
+                                    <div className="p-grid p-fluid">
 
                                         <div className="campo p-col-12 p-md-4">
                                             <span className="p-float-label">
-                                                <InputText id="float-input" name="cedula" keyfilter="int" />
-                                                <label htmlFor="cedula">
-                                                    Username:
-                                                </label>
+                                                <Dropdown
+                                                    filter
+                                                    valueTemplate={selectedPersonTemplate}
+                                                    itemTemplate={personOptionTemplate} onChange={(e) => { onPersonaChange(e.value) }}
+                                                    id="dropP" value={{
+                                                        id: selectedPersona?.id_persona,
+                                                        label: `${selectedPersona?.cedula}`,
+                                                    }}
+                                                    options={persons.map((item) => ({
+                                                        id: item.id_persona,
+                                                        label: `${item.cedula}`,
+                                                    }))}
+                                                    placeholder="Paciente" className="w-full md:w-14rem"
+                                                />
+                                                <label htmlFor="numCedula">Número de Cédula:</label>
                                             </span>
                                         </div>
 
-                                        <div className="campo p-col-12 p-md-4">
-                                            <span className="p-float-label">
-                                                <InputText id="float-input" type="text" name="apellido" />
-                                                <label htmlFor="nombre" >
-                                                    Password:
-                                                </label>
-                                            </span>
+                                        <div className="row">
+
+                                            <div className="col">
+
+                                                <div className="campo p-col-12 p-md-4">
+                                                    <span className="p-float-label">
+                                                        <InputText id="float-input" name="username" type={"text"}
+                                                            value={username} onChange={(e) => setUsername(e.target.value)} />
+                                                        <label htmlFor="username">
+                                                            Username:
+                                                        </label>
+                                                    </span>
+                                                </div>
+
+                                                <div className="campo p-col-12 p-md-4">
+                                                    <span className="p-float-label">
+                                                        <Password
+                                                            id="password" name="password"
+                                                            value={password} onChange={(e) => setPassword(e.target.value)}
+                                                            toggleMask
+                                                            header={passwordHeader}
+                                                            footer={passwordFooter} />
+                                                        <label
+                                                            htmlFor="password">
+                                                            Contraseña
+                                                        </label>
+                                                    </span>
+                                                </div>
+
+                                            </div>
+
+                                            <div className="col">
+
+                                                <div className="campo p-col-12 p-md-4">
+                                                    <span className="p-float-label">
+                                                        <Dropdown id="password"
+                                                            value={{
+                                                                id: selectedRol?.rolId,
+                                                                label: `${selectedRol?.rolNombre}`,
+                                                            }} onChange={(e) => { onRolChange(e.value) }}
+                                                            options={roles.map((item) => ({
+                                                                id: item.rolId,
+                                                                label: `${item.rolNombre}`,
+                                                            }))}
+                                                            placeholder="Rol" className="w-full md:w-14rem" />
+                                                        <label htmlFor="rolNombre">Rol:</label>
+                                                    </span>
+                                                </div>
+
+                                                <div className="campo p-col-12 p-md-4">
+                                                    <span className="p-float-label">
+                                                        <Password
+                                                            id="password" name="password"
+                                                            value={password} onChange={(e) => setPassword(e.target.value)}
+                                                            toggleMask
+                                                            header={passwordHeader}
+                                                            footer={passwordFooter} />
+                                                        <label
+                                                            htmlFor="password">
+                                                            Repetir Contraseña
+                                                        </label>
+                                                    </span>
+                                                </div>
+
+                                            </div>
                                         </div>
 
                                     </div>
+                                </form>
 
+                                <Divider align="center" style={{ marginTop: '-55px', marginBottom: 40 }}>
+                                </Divider>
+
+                                <div className="row text-center">
                                     <div className="col">
-
-                                        <div className="campo p-col-12 p-md-4">
-                                            <span className="p-float-label">
-                                                <Dropdown id="float-input" name="rolNombre" options={roles}
-                                                    placeholder="Rol" className="w-full md:w-14rem" />
-                                                <label htmlFor="float-input">Rol:</label>
-                                            </span>
+                                        <div style={{ justifyContent: "center", alignItems: "center" }}>
+                                            <Button type="submit" onClick={(e) => onSubmitUsr(e)} label="Guardar"
+                                                className="mt-2" style={{
+                                                    background: "#ffff", width: "150px",
+                                                    height: "40px", textAlign: "center",
+                                                    color: "#292929",
+                                                }} />
                                         </div>
-
-                                        <div className="campo p-col-12 p-md-4">
-                                            <span className="p-float-label">
-                                                <InputText id="float-input" name="descripcion" />
-                                                <label htmlFor="name">
-                                                    Descripción:
-                                                </label>
-                                            </span>
+                                    </div>
+                                    <div className="col">
+                                        <div style={{ justifyContent: "center" }}>
+                                            <Button type="reset" label="Cancelar"
+                                                className="mt-2" style={{
+                                                    background: "#ffff", width: "150px",
+                                                    height: "40px", textAlign: "center",
+                                                    color: "#292929",
+                                                }} />
                                         </div>
-
                                     </div>
                                 </div>
-
-                            </div>
-                        </form>
-                        <Divider align="center" style={{ marginTop: '-35px', marginBottom: 60 }}>
-                        </Divider>
-
-                        <div className="row text-center">
-                            <div className="col">
-                                <div style={{ justifyContent: "center", alignItems: "center" }}>
-                                    <Button type="submit" label="Guardar"
-                                        className="mt-2" style={{
-                                            background: "#ffff", width: "150px",
-                                            height: "40px", textAlign: "center",
-                                            color: "#292929",
-                                        }} />
-                                </div>
-                            </div>
-                            <div className="col">
-                                <div style={{ justifyContent: "center" }}>
-                                    <Button type="reset" label="Cancelar"
-                                        className="mt-2" style={{
-                                            background: "#ffff", width: "150px",
-                                            height: "40px", textAlign: "center",
-                                            color: "#292929",
-                                        }} />
-                                </div>
-                            </div>
+                            </ScrollPanel>
                         </div>
                     </TabPanel>
 
@@ -350,3 +463,5 @@ export default function RegisterPerson() {
         </div>
     );
 }
+
+export default RegisterPerson;

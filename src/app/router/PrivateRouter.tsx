@@ -12,7 +12,7 @@ export function PrivateRouter({ loggedIn, component }:Props){
          loggedIn ? (
               <Route  component={component} />
          ): (
-            <Redirect to="/auth" />
+            <Redirect to="/inicio" />
          )
       }
     </>

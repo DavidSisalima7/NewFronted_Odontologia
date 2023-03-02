@@ -13,7 +13,7 @@ const PersonContextProvider = (props) => {
 
     useEffect(() => {
         personService.readAll().then(data => setPersons(data));
-    }, []);
+    }, [/* personService, persons */]);
 
     const createPerson = (person) => {
         personService.create(person).then(data => setPersons([...persons, data]))
@@ -26,7 +26,7 @@ const PersonContextProvider = (props) => {
 
     const findPerson = (id) => {
 
-        const person = persons.find((p) => p._id === id);
+        const person = persons.find((p) => p.cedula === id);
 
         setEditPersons(person);
     };

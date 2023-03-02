@@ -115,13 +115,12 @@ export default function FichaOdontologica() {
     setMotivo("");
     setObservaciones("");
     setSelectedPaciente(null);
+    setShowTable(false);  
   }
 
   const selectedPacientTemplate = (option: any, props: any) => {
     if (option) {
-      return (
-        <div className="flex align-items-center">{option.label}</div>
-      );
+      return <div className="flex align-items-center">{option.label}</div>;
     }
 
     return <span>{props.placeholder}</span>;
@@ -161,7 +160,7 @@ export default function FichaOdontologica() {
             optionLabel="label"
             placeholder="Seleccione un Paciente"
           />
-          <div >
+          <div>
             {show && (
               <div className="tableO">
                 <OdontoTable id_ficha={ficha?.id_ficha} />
@@ -173,7 +172,7 @@ export default function FichaOdontologica() {
               <b>Datos del paciente</b>
             </div>
           </Divider>
-          <table>
+          <table id="tb12">
             <td>
               <span className="p-float-label">
                 <InputText

@@ -1,15 +1,18 @@
 import { Switch, Route, Redirect, Link } from "react-router-dom";
 import { NavBar } from "../../common/NavBar";
 import FichaOdontologica from "../FichaOdontologica/FichaOdontologica";
+import Historial_ficha from "../HistorialFicha/Historialficha";
 import { OdontogramList } from "../Odontograma/OdontogramList";
 import Home from "./home/Home";
 import { BrowserRouter as Router } from "react-router-dom";
 import { PersonList } from "../Register-persona/components/ListPerson";
 import PiezaContextProvider from "../Odontograma/PiezaContext";
 import PersonContextProvider from "../Register-persona/contexts/PersonContext";
-import { NavBarAdmin } from "../../commonAdmin/NavBarAdmin";
-import RegisterPerson from "../Register-persona/register-person";
+
+//import RegisterPerson from "../Register-persona/register-person";
 import User from "../../interfaces/user/User";
+import RegisterPerson from "../Register-persona/register-person";
+import RolContextProvider from "../Register-persona/contexts/RolContext";
 
 export const DashboardRouter = () => {
   //Datos del sessionStorage
@@ -24,27 +27,35 @@ export const DashboardRouter = () => {
           <div>
             <Switch>
               <Route exact path="/dashboard/home">
-                {rol==="admin" ? (
-                  <NavBarAdmin/>
+                {rol === "admin" ? (
+                  <NavBar />
                 ) : (
-                  <NavBar/>
+                  <NavBar />
                 )}
                 <Home />
               </Route>
 
               <Route path="/ficha">
-              {rol==="admin" ? (
-                  <NavBarAdmin/>
+                {rol === "admin" ? (
+                  <NavBar />
                 ) : (
-                  <NavBar/>
+                  <NavBar />
                 )}
                 <FichaOdontologica />
               </Route>
-              <Route path="/list-person">
-              {rol==="admin" ? (
-                  <NavBarAdmin/>
+              <Route path="/historial">
+                {rol === "admin" ? (
+                  <NavBar />
                 ) : (
-                  <NavBar/>
+                  <NavBar />
+                )}
+                <Historial_ficha />
+              </Route>
+              <Route path="/list-person">
+                {rol === "admin" ? (
+                  <NavBar />
+                ) : (
+                  <NavBar />
                 )}
                 <PersonContextProvider>
                   <PersonList />
@@ -52,29 +63,41 @@ export const DashboardRouter = () => {
               </Route>
 
               <Route path="/reg-person">
-              {rol==="admin" ? (
-                  <NavBarAdmin/>
+                {rol === "admin" ? (
+                  <NavBar />
                 ) : (
-                  <NavBar/>
+                  <NavBar />
                 )}
-                <RegisterPerson />
+                <PersonContextProvider>
+                  <RolContextProvider>
+                    <RegisterPerson />
+                  </RolContextProvider>
+                </PersonContextProvider>
+              </Route>
+              <Route path="/login">
+                {rol === "admin" ? (
+                  <NavBar />
+                ) : (
+                  <NavBar />
+                )}
+
               </Route>
 
               <Route path="/odontograma">
-              {rol==="admin" ? (
-                  <NavBarAdmin/>
+                {rol === "admin" ? (
+                  <NavBar />
                 ) : (
-                  <NavBar/>
+                  <NavBar />
                 )}
                 <PiezaContextProvider>
                   <OdontogramList />
                 </PiezaContextProvider>
               </Route>
               <Route path="*">
-              {rol==="admin" ? (
-                  <NavBarAdmin/>
+                {rol === "admin" ? (
+                  <NavBar />
                 ) : (
-                  <NavBar/>
+                  <NavBar />
                 )}
                 <Redirect to="/dashboard/home" />
               </Route>

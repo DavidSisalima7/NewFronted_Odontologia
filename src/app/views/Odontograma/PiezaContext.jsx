@@ -16,14 +16,17 @@ const PiezaContextProvider = (props) => {
             setPiezas(data)
           })  
     }, []);
+
     const createPieza = (pieza) => {
         piezaService.save(pieza).then(data=> {setPiezas([...piezas, data])});
     };
+
     const deletePieza = (id) => {
         piezaService.delete(id).
             then(() => setPiezas(piezas.filter((p) => p.id_pieza !== id)));
             setEditPieza(null);
     };
+    
     const findPieza = (id) => {
         // const pieza = piezas.find((p) => p.id_pieza === id);
         const pieza = piezas.find((p) => p.id_pieza === id);
