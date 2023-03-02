@@ -20,17 +20,21 @@ const PersonContextProvider = (props) => {
     };
 
     const deletePerson = (id) => {
-        personService.delete(id).then(() => setPersons(persons.filter((p) => p._id !== id)))
+        personService.delete(id).then(() => setPersons(persons.filter((p) => p._id !== id)));
+        setEditPersons(null);
     };
 
     const findPerson = (id) => {
+
         const person = persons.find((p) => p._id === id);
 
         setEditPersons(person);
     };
 
     const updatePerson = (person) => {
-        personService.update(person).then((data) => setPersons(persons.map((p => p._id === person._id ? data : person))));
+        personService.update(person).then((data) => setPersons(
+            persons.map((p => p.id_persona === person.id_persona ? data : p))
+            ));
 
         setEditPersons(null)
     };

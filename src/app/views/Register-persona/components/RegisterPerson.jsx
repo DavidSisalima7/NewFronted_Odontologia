@@ -27,7 +27,7 @@ export const PersonForm = (props) => {
         nombre: "",
         apellido: "",
         email: "",
-        fecha_nacimiento: null,
+        fechaNac: null,
         genero: "",
         celular: "",
         direccion: "",
@@ -60,7 +60,7 @@ export const PersonForm = (props) => {
         if (!editPerson) {
             createPerson(personData);
         } else {
-            updatePerson(personData);
+            updatePerson(personData.id_persona);
         }
         setPersonData(initialPersonState);
         setIsVisible(false);
@@ -173,8 +173,8 @@ export const PersonForm = (props) => {
                             <br />
                             <div className="p-float-label">
                                 <Calendar
-                                    value={personData. fecha_nacimiento&& new Date(personData.fecha_nacimiento + " ")}
-                                    onChange={(e) => updateField(e.target.value.toISOString().substring(0, 10), "fecha_nacimiento")}
+                                    value={personData.fechaNac && new Date(personData.fechaNac + " ")}
+                                    onChange={(e) => updateField(e.target.value.toISOString().substring(0, 10), "fechaNac")}
                                     dateFormat="yy-mm-dd" />
                                 <label>Fecha de Nacimiento: </label>
                             </div>

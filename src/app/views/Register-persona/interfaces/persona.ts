@@ -10,4 +10,5 @@ export interface Persona {
     direccion: string;
     telefono: string;
 }
+
 export default Persona;

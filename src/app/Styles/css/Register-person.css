@@ -6,13 +6,6 @@
   font-family: "Poppins", sans-serif;
 }
 
-.body1 {
-  min-height: 100vh;
-  background: #23242a;
-  background-color: #05313a;
-  padding: auto;
-}
-
 .campo {
   margin-top: 5%;
 }
@@ -41,13 +34,14 @@
 
 .box {
   width: 60%;
+  height: 70%;
   background: #1c1c1c;
   position: absolute;
   border-radius: 8px;
   overflow: hidden;
-  top: 30%;
+  top: 15%;
   right: 20%;
-  margin-top: -56px;
+  background-color: #ffffff;
 }
 .box::before {
   content: "";
@@ -89,10 +83,10 @@
   padding: 50px 40px;
   display: flex;
   flex-direction: column;
-  overflow-x: hidden;
+  overflow-x: none;
   overflow-y: scroll;
 }
 
 .form::-webkit-scrollbar {
-  display: none;
+  display: none;
 }
