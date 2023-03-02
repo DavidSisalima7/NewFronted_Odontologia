@@ -16,7 +16,7 @@ export class PersonService {
 
     update(person) {
 
-        return axios.put(this.baseUrl + "actualizar/" + person.id, person).then(res => res.data);
+        return axios.put(this.baseUrl + "actualizar/" + person.id_persona, person).then(res => res.data);
     }
 
     delete(id) {

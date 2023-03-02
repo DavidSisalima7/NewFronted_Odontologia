@@ -2,16 +2,11 @@ import React, { useContext, useState } from "react";
 import { Panel } from 'primereact/panel'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
-import { Button } from 'primereact/button'
-import { TabView, TabPanel } from 'primereact/tabview';
-import { InputText } from 'primereact/inputtext';
-import { Dropdown } from 'primereact/dropdown';
 import { PersonContext } from "../contexts/PersonContext";
 import PersonForm from "./RegisterPerson";
-import axios from "axios";
 import "../../../Styles/css/Register-person.css"
 
-export const PersonList = (props) => {
+export const PersonList = () => {
 
     const { persons, findPerson } = useContext(PersonContext);
 
@@ -27,12 +22,13 @@ export const PersonList = (props) => {
         <div>
             <div className="container">
 
-                <div className="box">
+                <div className="box" >
                     <Panel header="LISTA DE PERSONAS" style={{ textAlign: "center" }}>
                         <DataTable
                             value={persons}
                             selectionMode="single"
-                            onSelectionChange={(e) => savePerson(e.value.id)}>
+                            onSelectionChange={(e) => savePerson(e.value.cedula)}>
+                                
                             <Column field="cedula" header="N° Cédula" />
                             <Column field="nombre" header="Nombres" />
                             <Column field="apellido" header="Apellidos" />
@@ -45,7 +41,6 @@ export const PersonList = (props) => {
                     </Panel>
 
                     <PersonForm isVisible={isVisible} setIsVisible={setIsVisible} />
-
 
                 </div>
 

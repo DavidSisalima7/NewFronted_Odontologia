@@ -10,6 +10,7 @@ import PersonContextProvider from "../Register-persona/contexts/PersonContext";
 import { NavBarAdmin } from "../../commonAdmin/NavBarAdmin";
 import RegisterPerson from "../Register-persona/register-person";
 import User from "../../interfaces/user/User";
+import RolContextProvider from "../Register-persona/contexts/RolContext";
 
 export const DashboardRouter = () => {
   //Datos del sessionStorage
@@ -24,27 +25,27 @@ export const DashboardRouter = () => {
           <div>
             <Switch>
               <Route exact path="/dashboard/home">
-                {rol==="admin" ? (
-                  <NavBarAdmin/>
+                {rol === "admin" ? (
+                  <NavBarAdmin />
                 ) : (
-                  <NavBar/>
+                  <NavBar />
                 )}
                 <Home />
               </Route>
 
               <Route path="/ficha">
-              {rol==="admin" ? (
-                  <NavBarAdmin/>
+                {rol === "admin" ? (
+                  <NavBarAdmin />
                 ) : (
-                  <NavBar/>
+                  <NavBar />
                 )}
                 <FichaOdontologica />
               </Route>
               <Route path="/list-person">
-              {rol==="admin" ? (
-                  <NavBarAdmin/>
+                {rol === "admin" ? (
+                  <NavBarAdmin />
                 ) : (
-                  <NavBar/>
+                  <NavBar />
                 )}
                 <PersonContextProvider>
                   <PersonList />
@@ -52,29 +53,34 @@ export const DashboardRouter = () => {
               </Route>
 
               <Route path="/reg-person">
-              {rol==="admin" ? (
-                  <NavBarAdmin/>
+                {rol === "admin" ? (
+                  <NavBarAdmin />
                 ) : (
-                  <NavBar/>
+                  <NavBar />
                 )}
-                <RegisterPerson />
+                <PersonContextProvider>
+                  <RolContextProvider>
+                    <RegisterPerson />
+                  </RolContextProvider>
+                </PersonContextProvider>
+
               </Route>
 
               <Route path="/odontograma">
-              {rol==="admin" ? (
-                  <NavBarAdmin/>
+                {rol === "admin" ? (
+                  <NavBarAdmin />
                 ) : (
-                  <NavBar/>
+                  <NavBar />
                 )}
                 <PiezaContextProvider>
                   <OdontogramList />
                 </PiezaContextProvider>
               </Route>
               <Route path="*">
-              {rol==="admin" ? (
-                  <NavBarAdmin/>
+                {rol === "admin" ? (
+                  <NavBarAdmin />
                 ) : (
-                  <NavBar/>
+                  <NavBar />
                 )}
                 <Redirect to="/dashboard/home" />
               </Route>

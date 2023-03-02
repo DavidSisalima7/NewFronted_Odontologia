@@ -29,7 +29,7 @@ export const PersonForm = (props) => {
         email: "",
         fechaNac: null,
         genero: "",
-        celular: "",
+        celular: '',
         direccion: "",
         telefono: ""
     };
@@ -60,7 +60,7 @@ export const PersonForm = (props) => {
         if (!editPerson) {
             createPerson(personData);
         } else {
-            updatePerson(personData.id_persona);
+            updatePerson(personData);
         }
         setPersonData(initialPersonState);
         setIsVisible(false);
@@ -99,7 +99,7 @@ export const PersonForm = (props) => {
                             <br />
                             <div className="p-float-label">
                                 <span className="p-float-label">
-                                    <InputText id="float-input" name="cedula" value={personData.cedula}
+                                    <InputText id="float-input" name="cedula" disabled value={personData.cedula}
                                         onChange={(e) => updateField(e.target.value, "cedula")} type={"text"} keyfilter="int" />
                                     <label htmlFor="cedula">
                                         Cédula:
