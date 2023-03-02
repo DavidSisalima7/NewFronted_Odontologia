@@ -1,36 +1,40 @@
 import { useContext } from 'react';
-import { BrowserRouter as Router, Switch, Route, Redirect, Link} from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect, Link } from 'react-router-dom';
 import { AuthRouter } from '../views/auth/AuthRouter';
 import { DashboardRouter } from '../views/dashboard/DashboardRouter';
 import { AuthContext } from '../views/store/contexts/AuthContext';
+import Bienvenida from '../views/ventanaInicial/Bienvenida';
 import { PrivateRouter } from './PrivateRouter';
 
 interface Context {
-   dispatchUser?:any,
-   user?:User
+   dispatchUser?: any,
+   user?: User
 }
 
-interface User{
-   loggedIn:boolean
+interface User {
+   loggedIn: boolean
 }
 
 
-export function AppRouter(){
+export function AppRouter() {
 
-   const { user }:Context = useContext(AuthContext);
+   const { user }: Context = useContext(AuthContext);
 
    return (
-   
+
       <Router>
          <Switch>
+            <Route exact path="/inicio">
+               < Bienvenida />
+            </Route>
             <Route path='/auth' component={AuthRouter} />
             <PrivateRouter
-              loggedIn={user?.loggedIn}
-              component={DashboardRouter}
+               loggedIn={user?.loggedIn}
+               component={DashboardRouter}
             />
 
-            <Redirect to='/dashboard/home' />   
-           
+            <Redirect to='/dashboard/home' />
+
          </Switch>
       </Router>
    );

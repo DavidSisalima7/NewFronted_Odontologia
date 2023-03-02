@@ -8,19 +8,37 @@ import { useEffect, useState } from "react";
 import { Card } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import { Divider } from "primereact/divider";
+import { PiezaService } from "../../../services/PiezaService";
+
 function OdontoTable({ id_ficha }: { id_ficha: number | undefined }) {
   const [odontogramas, setOdontograma] = useState<IOdontograma[]>([]);
   const history = useHistory();
 
+  const piezaService = new PiezaService();
+
+  // const guardar = () => {
+  //   setContador(contador + 1);
+  //   setVisible(false)
+  // }
+
   function handleClick() {
     // postOdontograma()
+    // piezaService.getAll().then((data) => {
+    //   setPieza(pieza => [...pieza, {
+    //     id_odontograma: nuevo,
+    //     numero_pieza: data,
+    //     tratamiento: data,
+    //     cara_pieza: data,
+    //   }]);
+    // });
+    console.log(piezaService.getAll().then((data:any) => {data.filter((p:any) => p.id_odontograma === 1)}))
     history.push({
       pathname: "/odontograma",
       state: { idF: odontogramas[0].id_odontograma },
     });
   }
   function handleClickP() {
-    postOdontograma()
+    postOdontograma();
     // history.push({
     //   pathname: "/odontograma",
     //   state: { idF: odontogramas[0].id_odontograma },
