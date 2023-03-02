@@ -27,6 +27,7 @@ export function AppRouter() {
             <Route exact path="/inicio">
                < Bienvenida />
             </Route>
+            
             <Route path='/auth' component={AuthRouter} />
             <PrivateRouter
                loggedIn={user?.loggedIn}
