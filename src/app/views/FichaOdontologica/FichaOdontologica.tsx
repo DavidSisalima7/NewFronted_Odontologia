@@ -115,6 +115,7 @@ export default function FichaOdontologica() {
     setMotivo("");
     setObservaciones("");
     setSelectedPaciente(null);
+    setShowTable(false);  
   }
 
   const selectedPacientTemplate = (option: any, props: any) => {
