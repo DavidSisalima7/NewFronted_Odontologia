@@ -9,9 +9,10 @@ import { PersonList } from "../Register-persona/components/ListPerson";
 import PiezaContextProvider from "../Odontograma/PiezaContext";
 import PersonContextProvider from "../Register-persona/contexts/PersonContext";
 
-
 //import RegisterPerson from "../Register-persona/register-person";
 import User from "../../interfaces/user/User";
+import RegisterPerson from "../Register-persona/register-person";
+import RolContextProvider from "../Register-persona/contexts/RolContext";
 
 export const DashboardRouter = () => {
   //Datos del sessionStorage
@@ -24,37 +25,37 @@ export const DashboardRouter = () => {
       <main>
         <div>
           <div>
-            <Switch>  
+            <Switch>
               <Route exact path="/dashboard/home">
-                {rol==="admin" ? (
-                  <NavBar/>
+                {rol === "admin" ? (
+                  <NavBar />
                 ) : (
-                  <NavBar/>
+                  <NavBar />
                 )}
                 <Home />
               </Route>
 
               <Route path="/ficha">
-              {rol==="admin" ? (
-                  <NavBar/>
+                {rol === "admin" ? (
+                  <NavBar />
                 ) : (
-                  <NavBar/>
+                  <NavBar />
                 )}
                 <FichaOdontologica />
               </Route>
               <Route path="/historial">
-              {rol==="admin" ? (
-                  <NavBar/>
+                {rol === "admin" ? (
+                  <NavBar />
                 ) : (
-                  <NavBar/>
+                  <NavBar />
                 )}
                 <Historial_ficha />
               </Route>
               <Route path="/list-person">
-              {rol==="admin" ? (
-                  <NavBar/>
+                {rol === "admin" ? (
+                  <NavBar />
                 ) : (
-                  <NavBar/>
+                  <NavBar />
                 )}
                 <PersonContextProvider>
                   <PersonList />
@@ -62,37 +63,41 @@ export const DashboardRouter = () => {
               </Route>
 
               <Route path="/reg-person">
-              {rol==="admin" ? (
-                  <NavBar/>
+                {rol === "admin" ? (
+                  <NavBar />
                 ) : (
-                  <NavBar/>
+                  <NavBar />
                 )}
-                
+                <PersonContextProvider>
+                  <RolContextProvider>
+                    <RegisterPerson />
+                  </RolContextProvider>
+                </PersonContextProvider>
               </Route>
               <Route path="/login">
-              {rol==="admin" ? (
-                  <NavBar/>
+                {rol === "admin" ? (
+                  <NavBar />
                 ) : (
-                  <NavBar/>
+                  <NavBar />
                 )}
-                
+
               </Route>
 
               <Route path="/odontograma">
-              {rol==="admin" ? (
-                  <NavBar/>
+                {rol === "admin" ? (
+                  <NavBar />
                 ) : (
-                  <NavBar/>
+                  <NavBar />
                 )}
                 <PiezaContextProvider>
                   <OdontogramList />
                 </PiezaContextProvider>
               </Route>
               <Route path="*">
-              {rol==="admin" ? (
-                  <NavBar/>
+                {rol === "admin" ? (
+                  <NavBar />
                 ) : (
-                  <NavBar/>
+                  <NavBar />
                 )}
                 <Redirect to="/dashboard/home" />
               </Route>

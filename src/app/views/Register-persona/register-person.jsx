@@ -38,7 +38,7 @@ export const RegisterPerson = () => {
             (item) => item.id_persona === persona.id
 
         );
-        console.log(selectedPersona.id_persona)
+        console.log(selectedPersona.id_persona);
         setSelectedPersona(selectedPersona || null);
     }
 
@@ -47,7 +47,7 @@ export const RegisterPerson = () => {
             (item) => item.rolId === rol.id
 
         );
-        console.log(selectedRol.rolId)
+        console.log(selectedRol.rolId);
         setSelectedRol(selectedRol || null);
     }
 
@@ -103,36 +103,32 @@ export const RegisterPerson = () => {
 
     //DATOS DE USUARIO
 
-    const initialUserState = {
+    const onSubmitUsr = async () => {
 
-        id_usuario: "",
-        username: "",
-        password: "",
-        enabled: true,
-        persona: {
-            id_persona: selectedPersona?.id_persona,
-        },
-        rol: {
-            rolId: selectedRol?.rolId,
-        }
-    };
-
-    const [user, setUser] = useState({ initialUserState });
-
-    const onSubmitUsr = async (e) => {
-
-        e.preventDefault();
-        console.log(user.persona);
-        console.log(user.rol);
-        await axios.post("http://localhost:8080/usuarios/signup", user);
+        await postUser();
 
     };
 
-    const onInputChangeUsr = (data, field) => {
+    const [username, setUsername] = useState("");
 
-        setUser({ ...user, [field]: data });
+    const [password, setPassword] = useState("");
 
-        console.log(user);
+    const postUser = async () => {
+        const url = "http://localhost:8080/usuarios/signup";
+
+        const data = {
+            username: username,
+            password: password,
+            enabled: true,
+            persona: {
+                id_persona: selectedPersona?.id_persona,
+            },
+            rol: {
+                rolId: selectedRol?.rolId,
+            },
+        };
+
+        const response = await axios.post(url, data);
     };
 
     const [tab, setTab] = useState(0);
@@ -347,8 +343,11 @@ export const RegisterPerson = () => {
                                                 <Dropdown
                                                     filter
                                                     valueTemplate={selectedPersonTemplate}
-                                                    itemTemplate={personOptionTemplate} onChange={(e) => onInputChangeUsr(e.target.value, "persona")}
-                                                    id="dropP" value={user.persona}
+                                                    itemTemplate={personOptionTemplate} onChange={(e) => { onPersonaChange(e.value) }}
+                                                    id="dropP" value={{
+                                                        id: selectedPersona?.id_persona,
+                                                        label: `${selectedPersona?.cedula}`,
+                                                    }}
                                                     options={persons.map((item) => ({
                                                         id: item.id_persona,
                                                         label: `${item.cedula}`,
@@ -366,7 +365,7 @@ export const RegisterPerson = () => {
                                                 <div className="campo p-col-12 p-md-4">
                                                     <span className="p-float-label">
                                                         <InputText id="float-input" name="username" type={"text"}
-                                                            value={user.username} onChange={(e) => onInputChangeUsr(e.target.value, "username")} />
+                                                            value={username} onChange={(e) => setUsername(e.target.value)} />
                                                         <label htmlFor="username">
                                                             Username:
                                                         </label>
@@ -377,7 +376,7 @@ export const RegisterPerson = () => {
                                                     <span className="p-float-label">
                                                         <Password
                                                             id="password" name="password"
-                                                            value={user.password} onChange={(e) => onInputChangeUsr(e.target.value, "password")}
+                                                            value={password} onChange={(e) => setPassword(e.target.value)}
                                                             toggleMask
                                                             header={passwordHeader}
                                                             footer={passwordFooter} />
@@ -394,8 +393,11 @@ export const RegisterPerson = () => {
 
                                                 <div className="campo p-col-12 p-md-4">
                                                     <span className="p-float-label">
-                                                        <Dropdown id="dropP"
-                                                            value={user.rol} onChange={(e) => onInputChangeUsr(e.target.value, "rol")}
+                                                        <Dropdown id="password"
+                                                            value={{
+                                                                id: selectedRol?.rolId,
+                                                                label: `${selectedRol?.rolNombre}`,
+                                                            }} onChange={(e) => { onRolChange(e.value) }}
                                                             options={roles.map((item) => ({
                                                                 id: item.rolId,
                                                                 label: `${item.rolNombre}`,
@@ -408,8 +410,8 @@ export const RegisterPerson = () => {
                                                 <div className="campo p-col-12 p-md-4">
                                                     <span className="p-float-label">
                                                         <Password
-                                                            id="password" name="reppassword"
-                                                            value={user.password} onChange={(e) => onInputChangeUsr(e.target.value, "password")}
+                                                            id="password" name="password"
+                                                            value={password} onChange={(e) => setPassword(e.target.value)}
                                                             toggleMask
                                                             header={passwordHeader}
                                                             footer={passwordFooter} />
