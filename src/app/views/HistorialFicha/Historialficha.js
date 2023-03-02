@@ -72,7 +72,7 @@ peticionGet();
       </div>
 
      <div className="table-responsive">
-       <table id="my-table" className="table table-sm table-bordered">
+       <table className="table table-sm table-bordered">
          <thead>
            <tr>
              <th>ID</th>

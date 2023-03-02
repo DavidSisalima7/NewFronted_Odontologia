@@ -172,7 +172,7 @@ export default function FichaOdontologica() {
               <b>Datos del paciente</b>
             </div>
           </Divider>
-          <table>
+          <table id="tb12">
             <td>
               <span className="p-float-label">
                 <InputText
