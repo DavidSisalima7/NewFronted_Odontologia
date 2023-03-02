@@ -76,7 +76,7 @@ export const NavBar: React.FC = () => {
             <label htmlFor="drop" className="toggle">
             Cerrar Sesión
               </label>
-              <a href="/"><div className='Exit'></div></a>
+              <a href="/inicio"><div className='Exit'></div></a>
             </li>
           </ul>
         </nav>

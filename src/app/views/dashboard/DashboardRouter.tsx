@@ -9,6 +9,7 @@ import { PersonList } from "../Register-persona/components/ListPerson";
 import PiezaContextProvider from "../Odontograma/PiezaContext";
 import PersonContextProvider from "../Register-persona/contexts/PersonContext";
 import { Login } from "../auth/login/Login";
+import Bienvenida from '../ventanaInicial/Bienvenida';
 
 //import RegisterPerson from "../Register-persona/register-person";
 import User from "../../interfaces/user/User";

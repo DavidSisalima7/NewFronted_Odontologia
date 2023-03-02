@@ -50,7 +50,7 @@ const Bienvenida = () => {
               <label htmlFor="drop" className="toggle">
                 Login
               </label>
-              <a href="/login">
+              <a href="/auth/login">
                 <div className="">login</div>
               </a>
             </li>

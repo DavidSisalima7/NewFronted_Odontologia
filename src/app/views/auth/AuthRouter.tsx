@@ -6,11 +6,10 @@ import Bienvenida from '../ventanaInicial/Bienvenida';
 export function AuthRouter(){
    return (
       <Switch>
-         <Route exact path="/auth/inicio">
-            < Bienvenida/>
+         <Route exact path="/auth/login">
+            < Login/>
          </Route>
-
-         <Redirect to="/auth/inicio" />
+         <Redirect to="/auth/login" />
       </Switch>
    );
 }
