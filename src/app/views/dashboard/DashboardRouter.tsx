@@ -1,6 +1,7 @@
 import { Switch, Route, Redirect, Link } from "react-router-dom";
 import { NavBar } from "../../common/NavBar";
 import FichaOdontologica from "../FichaOdontologica/FichaOdontologica";
+import Historial_ficha from "../HistorialFicha/Historialficha";
 import { OdontogramList } from "../Odontograma/OdontogramList";
 import Home from "./home/Home";
 import { BrowserRouter as Router } from "react-router-dom";
@@ -39,6 +40,14 @@ export const DashboardRouter = () => {
                   <NavBar/>
                 )}
                 <FichaOdontologica />
+              </Route>
+              <Route path="/historial">
+              {rol==="admin" ? (
+                  <NavBarAdmin/>
+                ) : (
+                  <NavBar/>
+                )}
+                <Historial_ficha />
               </Route>
               <Route path="/list-person">
               {rol==="admin" ? (
