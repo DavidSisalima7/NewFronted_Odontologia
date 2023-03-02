@@ -68,7 +68,7 @@ export const NavBar: React.FC = () => {
                   <a href="/list-person">■ Paciente</a>
                 </li>
                 <li>
-                  <a href="">■ Historial Clínico Dental</a>
+                  <a href="/historial">■ Historial Clínico Dental</a>
                 </li>
               </ul>
             </li>
@@ -76,7 +76,7 @@ export const NavBar: React.FC = () => {
             <label htmlFor="drop" className="toggle">
             Cerrar Sesión
               </label>
-              <a href="/auth/login"><div className='Exit'></div></a>
+              <a href="/"><div className='Exit'></div></a>
             </li>
           </ul>
         </nav>

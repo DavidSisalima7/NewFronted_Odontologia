@@ -8,6 +8,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { PersonList } from "../Register-persona/components/ListPerson";
 import PiezaContextProvider from "../Odontograma/PiezaContext";
 import PersonContextProvider from "../Register-persona/contexts/PersonContext";
+import { Login } from "../auth/login/Login";
 
 //import RegisterPerson from "../Register-persona/register-person";
 import User from "../../interfaces/user/User";
@@ -43,7 +44,7 @@ export const DashboardRouter = () => {
               </Route>
               <Route path="/historial">
               {rol==="admin" ? (
-                  <NavBarAdmin/>
+                  <NavBar/>
                 ) : (
                   <NavBar/>
                 )}
@@ -61,6 +62,14 @@ export const DashboardRouter = () => {
               </Route>
 
               <Route path="/reg-person">
+              {rol==="admin" ? (
+                  <NavBar/>
+                ) : (
+                  <NavBar/>
+                )}
+                
+              </Route>
+              <Route path="/login">
               {rol==="admin" ? (
                   <NavBar/>
                 ) : (
