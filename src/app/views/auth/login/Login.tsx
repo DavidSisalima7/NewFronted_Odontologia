@@ -28,20 +28,22 @@ export function Login() {
     try {
       const username=auth.username
       if (auth.username==="admin" && auth.password==="claveadmin") {
-        history.replace("/dashboard/home");
+        
         sessionStorage.setItem(
           "user",
           JSON.stringify({ username, loggedIn: true })
         );
+        history.replace("/dashboard/home");
       }else{
         e.preventDefault();
         const resp = await AuthService.login(auth);
-        history.replace("/dashboard/home");
+       
         sessionStorage.setItem(
           "user",
           JSON.stringify({ username, loggedIn: true })
         );
         dispatchUser({ type: "login", payload: resp.data });
+        history.replace("/dashboard/home");
       }
        
     } catch (error) {
@@ -87,7 +89,7 @@ export function Login() {
               onChange={(e) => handleChange(e)}
             />
           </div>
-
+              
           <div className="mb-2 p-1 d-flex border rounded">
             <div className="mx-2 mt-1">
               <img className="img-fluid" src={passwordIcon} alt="iconUser" />
@@ -96,7 +98,7 @@ export function Login() {
               className="form-control border-0  txt-input"
               name="password"
               type="password"
-              placeholder="Password"
+              placeholder="Contraseña"
               onChange={(e) => handleChange(e)}
             />
           </div>
