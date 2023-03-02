@@ -8,8 +8,8 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { PersonList } from "../Register-persona/components/ListPerson";
 import PiezaContextProvider from "../Odontograma/PiezaContext";
 import PersonContextProvider from "../Register-persona/contexts/PersonContext";
-import { NavBarAdmin } from "../../commonAdmin/NavBarAdmin";
-import RegisterPerson from "../Register-persona/register-person";
+
+//import RegisterPerson from "../Register-persona/register-person";
 import User from "../../interfaces/user/User";
 
 export const DashboardRouter = () => {
@@ -26,7 +26,7 @@ export const DashboardRouter = () => {
             <Switch>
               <Route exact path="/dashboard/home">
                 {rol==="admin" ? (
-                  <NavBarAdmin/>
+                  <NavBar/>
                 ) : (
                   <NavBar/>
                 )}
@@ -35,7 +35,7 @@ export const DashboardRouter = () => {
 
               <Route path="/ficha">
               {rol==="admin" ? (
-                  <NavBarAdmin/>
+                  <NavBar/>
                 ) : (
                   <NavBar/>
                 )}
@@ -51,7 +51,7 @@ export const DashboardRouter = () => {
               </Route>
               <Route path="/list-person">
               {rol==="admin" ? (
-                  <NavBarAdmin/>
+                  <NavBar/>
                 ) : (
                   <NavBar/>
                 )}
@@ -62,16 +62,16 @@ export const DashboardRouter = () => {
 
               <Route path="/reg-person">
               {rol==="admin" ? (
-                  <NavBarAdmin/>
+                  <NavBar/>
                 ) : (
                   <NavBar/>
                 )}
-                <RegisterPerson />
+                
               </Route>
 
               <Route path="/odontograma">
               {rol==="admin" ? (
-                  <NavBarAdmin/>
+                  <NavBar/>
                 ) : (
                   <NavBar/>
                 )}
@@ -81,7 +81,7 @@ export const DashboardRouter = () => {
               </Route>
               <Route path="*">
               {rol==="admin" ? (
-                  <NavBarAdmin/>
+                  <NavBar/>
                 ) : (
                   <NavBar/>
                 )}
