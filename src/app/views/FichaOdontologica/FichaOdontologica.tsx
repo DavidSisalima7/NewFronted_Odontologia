@@ -76,7 +76,7 @@ export default function FichaOdontologica() {
       fecha_consulta: date,
       motivo_consulta: motivo,
       observaciones: observaciones,
-      habilitado:1,
+      habilitado: 1,
       persona: {
         id_persona: selectedPaciente?.id_persona,
       },
@@ -87,7 +87,7 @@ export default function FichaOdontologica() {
   const deleteFicha = async () => {
     const url = `http://localhost:8080/api/ficha/eliminar/${ficha?.id_ficha}`;
     const data = {
-      habilitado:0,
+      habilitado: 0,
     };
     const response = await axios.put(url, data);
   };
@@ -125,7 +125,7 @@ export default function FichaOdontologica() {
     setMotivo("");
     setObservaciones("");
     setSelectedPaciente(null);
-    setShowTable(false);  
+    setShowTable(false);
   }
 
   const selectedPacientTemplate = (option: any, props: any) => {
@@ -146,12 +146,11 @@ export default function FichaOdontologica() {
 
       <Card id="card1">
         <div className="container" id="container">
-        <Divider align="left">
+          <Divider align="left">
             <div className="inline-flex align-items-center">
               <b>Seleccione el paciente</b>
             </div>
           </Divider>
-
           <Dropdown
             filter
             valueTemplate={selectedPacientTemplate}
@@ -160,7 +159,10 @@ export default function FichaOdontologica() {
               id: selectedPaciente?.id_persona,
               label: `${selectedPaciente?.nombre} ${selectedPaciente?.apellido}`,
             }}
-            onChange={(e) => { onPacienteChange(e.value); setShowTable(true) }}
+            onChange={(e) => {
+              onPacienteChange(e.value);
+              setShowTable(true);
+            }}
             options={pacientes.map((item) => ({
               id: item.id_persona,
               label: `${item.nombre} ${item.apellido}`,
@@ -168,8 +170,8 @@ export default function FichaOdontologica() {
             optionLabel="label"
             placeholder="Seleccione un Paciente"
           />
-          <div>
-            <Button onClick={deleteFicha}></Button>
+          <div id="botonDiv">
+            <Button id="botonEliminar" label="Terminar Tratamiento" icon="pi pi-times" onClick={deleteFicha} outlined></Button>
           </div>
           <div>
             {show && (
