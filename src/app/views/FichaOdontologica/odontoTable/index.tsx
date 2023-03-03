@@ -31,42 +31,61 @@ function OdontoTable({ id_ficha }: { id_ficha: number | undefined }) {
     //     cara_pieza: data,
     //   }]);
     // });
-    console.log(piezaService.getAll().then((data:any) => {data.filter((p:any) => p.id_odontograma === 1)}))
+    // console.log(
+    //   piezaService.getAll().then((data: any) => {
+    //     data.filter((p: any) => p.id_odontograma === 1);
+    //   })
+    // );
     history.push({
       pathname: "/odontograma",
       state: { idF: odontogramas[0].id_odontograma },
     });
   }
-  function handleClickP() {
-    postOdontograma();
-    // history.push({
-    //   pathname: "/odontograma",
-    //   state: { idF: odontogramas[0].id_odontograma },
-    // });
-  }
+  // async function handleClickP() {
+  //   console.log("p1");
+  //   await postOdontograma();
+  //   console.log("p2");
+  //   await getOdontograma();
+  //   console.log("p3");
+  //   console.log("1", odontogramas);
+  //   history.push({
+  //     pathname: "/odontograma",
+  //     state: { idF: odontogramas[0]?.id_odontograma },
+  //   });
+  // }
+
+  console.log("fuera", odontogramas);
 
   const getOdontograma = async () => {
     const { data } = await axios.get(
       `http://localhost:8080/api/odontograma/buscar/${id_ficha}`
     );
-    setOdontograma(data as IOdontograma[]);
+    // setOdontograma(data as IOdontograma[]);
+    setOdontograma((prevState) => [...(data as IOdontograma[])]);
   };
 
   const date = new Date();
 
   const postOdontograma = async () => {
     const url = "http://localhost:8080/api/odontograma/crear";
-    const data = {
+    const odonto = {
       fecha_Odontograma: date,
       fichaOdontologica: {
         id_ficha: id_ficha,
       },
     };
+    const { data } = await axios.post(url, odonto);
 
-    const response = await axios.post(url, data);
+    history.push({
+      pathname: "/odontograma",
+      state: { idF: (data as IOdontograma)?.id_odontograma },
+    });
   };
+
   useEffect(() => {
-    getOdontograma();
+    if (id_ficha) {
+      getOdontograma();
+    }
   }, [id_ficha]);
 
   const header = (
@@ -99,7 +118,7 @@ function OdontoTable({ id_ficha }: { id_ficha: number | undefined }) {
           ></Column>
         </DataTable>
         <div className="btnOdonto">
-          <Button id="btnCrear" onClick={handleClickP}></Button>
+          <Button id="btnCrear" onClick={postOdontograma}></Button>
           <Button id="btnEditar" onClick={handleClick}></Button>
         </div>
       </div>

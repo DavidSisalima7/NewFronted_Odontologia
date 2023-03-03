@@ -58,15 +58,15 @@ export default function FichaOdontologica() {
   const save = async () => {
     if (ficha) {
       await putFicha();
-      toast.current?.show({
-        severity: "success",
-        summary: "Exito",
-        detail: "Operacion Exitosa",
-        life: 3000,
-      });
     } else {
       await postFicha();
     }
+    toast.current?.show({
+      severity: "success",
+      summary: "Exito",
+      detail: "Operacion Exitosa",
+      life: 3000,
+    });
   };
 
   const postFicha = async () => {
@@ -76,12 +76,22 @@ export default function FichaOdontologica() {
       fecha_consulta: date,
       motivo_consulta: motivo,
       observaciones: observaciones,
+      habilitado:1,
       persona: {
         id_persona: selectedPaciente?.id_persona,
       },
     };
     const response = await axios.post(url, data);
   };
+
+  const deleteFicha = async () => {
+    const url = `http://localhost:8080/api/ficha/eliminar/${ficha?.id_ficha}`;
+    const data = {
+      habilitado:0,
+    };
+    const response = await axios.put(url, data);
+  };
+
   const putFicha = async () => {
     const url = `http://localhost:8080/api/ficha/actualizar/${ficha?.id_ficha}`;
     const data = {
@@ -127,7 +137,6 @@ export default function FichaOdontologica() {
   };
 
   const pacientOptionTemplate = (option: any) => {
-    console.log(option.cedula);
     return <>{option.label}</>;
   };
   return (
@@ -137,7 +146,7 @@ export default function FichaOdontologica() {
 
       <Card id="card1">
         <div className="container" id="container">
-          <Divider align="left">
+        <Divider align="left">
             <div className="inline-flex align-items-center">
               <b>Seleccione el paciente</b>
             </div>
@@ -147,7 +156,6 @@ export default function FichaOdontologica() {
             filter
             valueTemplate={selectedPacientTemplate}
             itemTemplate={pacientOptionTemplate}
-            id="dropP"
             value={{
               id: selectedPaciente?.id_persona,
               label: `${selectedPaciente?.nombre} ${selectedPaciente?.apellido}`,
@@ -160,6 +168,9 @@ export default function FichaOdontologica() {
             optionLabel="label"
             placeholder="Seleccione un Paciente"
           />
+          <div>
+            <Button onClick={deleteFicha}></Button>
+          </div>
           <div>
             {show && (
               <div className="tableO">

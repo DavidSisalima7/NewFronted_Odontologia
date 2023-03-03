@@ -5,6 +5,7 @@ export interface IFicha{
     fecha_consulta: string;
     motivo_consulta: string;
     id_persona:number;
+    habilitado:boolean;
 }
 
 export interface IPaciente{
