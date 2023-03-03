@@ -13,6 +13,7 @@ import PersonContextProvider from "../Register-persona/contexts/PersonContext";
 import User from "../../interfaces/user/User";
 import RegisterPerson from "../Register-persona/register-person";
 import RolContextProvider from "../Register-persona/contexts/RolContext";
+import { HistorialPieza } from "../HistorialPieza/HistorialPieza";
 
 export const DashboardRouter = () => {
   //Datos del sessionStorage
@@ -73,6 +74,14 @@ export const DashboardRouter = () => {
                     <RegisterPerson />
                   </RolContextProvider>
                 </PersonContextProvider>
+              </Route>
+              <Route path="/historialPiezas">
+                {rol === "admin" ? (
+                  <NavBar />
+                ) : (
+                  <NavBar />
+                )}
+                < HistorialPieza/>
               </Route>
               <Route path="/login">
                 {rol === "admin" ? (

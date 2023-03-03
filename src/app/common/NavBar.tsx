@@ -69,7 +69,7 @@ export const NavBar: React.FC = () => {
                   <a href="/list-person">■ Usuario</a>
                 </li>
                 <li>
-                  <a href="ficha">■ Ficha Odontológica</a>
+                  <a href="/historialPiezas">■ Historial de Piezas</a>
                 </li>
               </ul>
             </li>
