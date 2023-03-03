@@ -4,8 +4,7 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
-import { useLocation } from "react-router-dom";
+ 
 export const HistorialPieza = () => {
 
   const [piezas, setPiezas] = useState([]);
@@ -15,7 +14,7 @@ export const HistorialPieza = () => {
     peticionGet();
   }, [])
   const peticionGet = async () => {
-    await axios.get("http://localhost:8080/api/pieza/listar")
+    await axios.get("http://localhost:8080/api/pieza/listarP")
       .then(response => {
         setPiezas(response.data);
         setTablaPiezas(response.data)
@@ -30,6 +29,8 @@ export const HistorialPieza = () => {
   const filtrar = (terminoBusqueda) => {
     var resultadosBusqueda = tablaPiezas.filter((elemento) => {
       if (elemento.tratamiento.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())
+      || elemento.odontograma.fecha_Odontograma.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())
+      // || elemento.persona.nombre.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())
       ) {
         return elemento;
       }
@@ -49,7 +50,7 @@ export const HistorialPieza = () => {
         <input
           className="form-control inputBuscar"
           value={busqueda}
-          placeholder="Búsqueda por Nombre"
+          placeholder="Búsqueda por Nombre, por fecha de odontograma"
           onChange={handleChange}
         />
       </div>
@@ -83,6 +84,9 @@ export const HistorialPieza = () => {
               <Column field="numero_pieza" header="PIEZA"></Column>
               <Column field="tratamiento" header="TRATAMIENTO"></Column>
               <Column field="cara_pieza" header="CARA"></Column>
+              <Column field="persona.nombre" header="NOMBREP"></Column>
+              <Column field="odontograma.id_odontograma" header="ODONTOGRAMA"></Column>
+              <Column field="odontograma.fecha_Odontograma" header="ODONTOGRAMA"></Column>
             </DataTable>
 
             <br />
