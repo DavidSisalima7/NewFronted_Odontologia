@@ -1,84 +1,98 @@
 import React, { useContext, useState } from "react";
-import { Panel } from 'primereact/panel'
-import { DataTable } from 'primereact/datatable'
-import { Column } from 'primereact/column'
+import { Panel } from "primereact/panel";
+import { DataTable } from "primereact/datatable";
+import { Column } from "primereact/column";
 
-import { FilterMatchMode } from 'primereact/api';
-import { InputText } from 'primereact/inputtext';
+import { FilterMatchMode } from "primereact/api";
+import { InputText } from "primereact/inputtext";
 import { PersonContext } from "../contexts/PersonContext";
 import PersonForm from "./RegisterPerson";
-import "../../../Styles/css/Register-person.css"
+import "../../../Styles/css/Register-person.css";
 
 export const PersonList = () => {
+  const { persons, findPerson } = useContext(PersonContext);
 
-    const { persons, findPerson } = useContext(PersonContext);
+  const [isVisible, setIsVisible] = useState(false);
 
-    const [isVisible, setIsVisible] = useState(false);
+  const [filters, setFilters] = useState({
+    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  });
 
-    const [filters, setFilters] = useState({
-        global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-    });
+  const [globalFilterValue, setGlobalFilterValue] = useState("");
 
-    const [globalFilterValue, setGlobalFilterValue] = useState('');
+  const onGlobalFilterChange = (e) => {
+    const value = e.target.value;
+    let _filters = { ...filters };
 
-    const onGlobalFilterChange = (e) => {
-        const value = e.target.value;
-        let _filters = { ...filters };
+    _filters["global"].value = value;
 
-        _filters['global'].value = value;
+    setFilters(_filters);
+    setGlobalFilterValue(value);
+  };
 
-        setFilters(_filters);
-        setGlobalFilterValue(value);
-    };
-
-    const renderHeader = () => {
-        return (
-            <div className="flex justify-content-end">
-                <span className="p-input-icon-left">
-                    <i className="pi pi-search" />
-                    <InputText value={globalFilterValue} onChange={onGlobalFilterChange} placeholder="Keyword Search" />
-                </span>
-            </div>
-        );
-    };
-
-    const header = renderHeader();
-
-    const savePerson = (id) => {
-
-        findPerson(id);
-        setIsVisible(true);
-    };
-
+  const renderHeader = () => {
     return (
-        <div className="fichaP">
-            <div className="container" id="container">
-
-                <Panel header="LISTA DE PERSONAS" style={{ textAlign: "center" }}>
-                    <DataTable paginator rows={10} dataKey="id" filters={filters}
-                        globalFilterFields={['cedula', 'nombre']} filterDisplay="row"
-                        header={header} emptyMessage="Ninguna Persona Encontrada"
-                        value={persons}
-                        selectionMode="single"
-                        onSelectionChange={(e) => savePerson(e.value.cedula)}>
-
-                        <Column field="cedula" header="N° Cédula" />
-                        <Column field="nombre" header="Nombres" />
-                        <Column field="apellido" header="Apellidos" />
-                        <Column field="email" header="Correo Electrónico" />
-                        <Column field="fechaNac" header="Fecha de Nacimiento" />
-                        <Column field="celular" header="N° Celular" />
-                        <Column field="direccion" header="Dirección" />
-                        <Column field="telefono" header="N° Teléfono" />
-                    </DataTable>
-                </Panel>
-
-                <PersonForm isVisible={isVisible} setIsVisible={setIsVisible} />
-
-            </div>
-
-        </div>
+      <div className="flex justify-content-end">
+        <span className="p-input-icon-left">
+          <i className="pi pi-search" />
+          <InputText
+            value={globalFilterValue}
+            onChange={onGlobalFilterChange}
+            placeholder="Keyword Search"
+          />
+        </span>
+      </div>
     );
-}
+  };
+
+  const header = renderHeader();
+
+  const savePerson = (id) => {
+    findPerson(id);
+    setIsVisible(true);
+  };
+
+  return (
+    <div className="fichaP">
+      <div className="container" id="container">
+        <Panel
+          header="LISTA DE PERSONAS"
+          style={{
+            textAlign: "center",
+            marginBottom: "200px",
+            marginTop: "100px",
+            marginLeft:"-200px",
+            width: "1300px"
+          }}
+        >
+          <DataTable
+            paginator
+            rows={10}
+            dataKey="id"
+            filters={filters}
+            globalFilterFields={["cedula", "nombre"]}
+            filterDisplay="row"
+            header={header}
+            emptyMessage="Ninguna Persona Encontrada"
+            value={persons}
+            selectionMode="single"
+            onSelectionChange={(e) => savePerson(e.value.cedula)}
+          >
+            <Column field="cedula" header="N° Cédula" />
+            <Column field="nombre" header="Nombres" />
+            <Column field="apellido" header="Apellidos" />
+            <Column field="email" header="Correo Electrónico" />
+            <Column field="fechaNac" header="Fecha de Nacimiento" />
+            <Column field="celular" header="N° Celular" />
+            <Column field="direccion" header="Dirección" />
+            <Column field="telefono" header="N° Teléfono" />
+          </DataTable>
+        </Panel>
+
+        <PersonForm isVisible={isVisible} setIsVisible={setIsVisible} />
+      </div>
+    </div>
+  );
+};
 
 export default PersonList;
