@@ -3,7 +3,7 @@ import logo from "../../../assets/img/smOdonto.png";
 import accountIcon from "../../../assets/icons/account.svg";
 import passwordIcon from "../../../assets/icons/password.svg";
 import React, { useContext, useRef, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../store/contexts/AuthContext";
 import { AuthService } from "../../../services/auth/AuthService";
 import { Toast } from "primereact/toast";
@@ -121,9 +121,6 @@ export function Login() {
             <button type="submit" className="btn btn-primary">
               Sign In
             </button>
-            {/*<button  type="submit" style={{background:"#05313A", color:"white", borderRadius:"45px" , height:"40px"}} >
-           Iniciar Sesión
-         </button> */}
           </div>
         </form>
       </AuthCard>
