@@ -2,6 +2,26 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Listas de Dependencias
+
+### `npm i`
+### `npm i @emotion/react`
+### `npm i @emotion/styled`
+### `npm i --save @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg-icons @fortawesome/react-fontawesome`
+### `npm i @mui/icons-material` 
+### `npm i @testing-library/jest-dom`
+### `npm i @mui/material`
+### `npm i axios bootstrap`
+### `npm i contextmenu`
+### `npm i formik`
+### `npm i primeicons `
+### `npm i primereact`
+### `npm i react-router-dom`
+### `npm i sweetalert2`
+### `npm i typescript`
+### `npm i web-vitals`
+### `npm i xlsx`
+
 ## Available Scripts
 
 In the project directory, you can run:
