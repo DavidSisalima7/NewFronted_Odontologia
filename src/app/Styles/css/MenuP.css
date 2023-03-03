@@ -1,76 +1,3 @@
-/* /////////////////////slider */
-.slider-frame {
-	width: 300px;
-    height: auto;
-  margin-top: 5px;
-margin-left: 85px;
-	overflow: hidden;
-}
-
-.slider-frame .ulS {
-	display: flex;
-	padding: 0;
-	width: 400%;
-	animation: slide 20s infinite alternate ease-in-out, floating 2s ease-in-out infinite;
-}
-
-.slider-frame .liS {
-	width: 100%;
-	list-style: none;
-}
-
-.slider-frame .Serv1 .Serv2 .Serv3 .Serv4 {
-	width: 100%;
-}
-
-
-@keyframes slide {
-	0% {margin-left: 0;}
-	20% {margin-left: 0;}
-	
-	25% {margin-left: -100%;}
-	45% {margin-left: -100%;}
-	
-	50% {margin-left: -200%;}
-	70% {margin-left: -200%;}
-	
-	75% {margin-left: -300%;}
-	100% {margin-left: -300%;}
-}
-
-.Serv1{
-  background: url(../../Image/serv/servicio1.jpg);
-  width: 267px;
-  height: 400px;
-  background-size: cover;
-  border-radius: 20px;
-
-}
-
-.Serv2{
-  background: url(../../Image/serv/servicio2.jpg);
-  width: 267px;
-  height: 400px;
-  background-size: cover;
-  border-radius: 20px;
-
-}
-.Serv3{
-  background: url(../../Image/serv/servicio3.jpg);
-  width: 267px;
-  height: 400px;
-  background-size: cover;
-  border-radius: 20px;
-}
-.Serv4{
-  background: url(../../Image/serv/servicio4.jpg);
-  width: 267px;
-  height: 400px;
-  background-size: cover;
-  border-radius: 20px;
-}
-
-
 
 
 /*=============== GOOGLE FONTS ===============*/
@@ -145,27 +72,13 @@ margin-left: 85px;
 html{
   scroll-behavior: smooth;
 }
-.fondo{
-  background: url(../../Image/serv/ComponenteH.png);
+.fondoM{
+  background: url(../../Image/serv/ComponentMen.png);
   height: 100%;  
   background-size: cover;
 
 }
-.fondo2{
-  background: url(../../Image/serv/ComponentF2.jpg);
-  width: 100%;
-  background-size: cover;
 
-}
-
-.Servabout{
-  background: url(../../Image/serv/fimg.png);
-  position:relative;
-  width: 200px;
-  height: 190px;
-  background-size: cover;
-  animation: floating 2s ease-in-out infinite;
-}
 
 
 body{
@@ -366,10 +279,12 @@ button{
   margin-bottom: var(--mb-1);
   font-weight: var(--font-medium);
   color: var(--title-color);
-  margin-left: 90px;
+  margin-left: 125px;
   margin-top: 20px;
 }
-
+.footer__logo:hover{
+  color:#6ea8bf;
+}
 .footer__logo-img{
   width: 20px;
 }
@@ -382,6 +297,7 @@ button{
   display: flex;
   column-gap: .75rem;
   margin-left: 150px;
+  color: #fff;
 }
 
 .footer__social-link{
@@ -389,17 +305,18 @@ button{
   background: var(--container-color);
   padding: .45rem;
   border-radius: .25rem;
-  color: var(--title-color);
+  color: #fff;
   font-size: 1rem;
   margin-left: 20px;
 }
 
 .footer__social-link:hover{
-  background: var(--body-color);
+  background: #fff;
+ 
 }
 
 .footer__title{
-  font-size: var(--h3-font-size);
+  font-size:17px;
   margin-bottom: var(--mb-1);
 }
 
@@ -425,35 +342,6 @@ button{
   margin-top: 4.5rem;
 }
 
-/*=============== SCROLL UP ===============*/
-.scrollup{
-  position: fixed;
-  background: var(--container-color);
-  right: 1rem;
-  bottom: -20%;
-  display: inline-flex;
-  padding: .3rem;
-  border-radius: .25rem;
-  z-index: var(--z-tooltip);
-  opacity: .8;
-  transition: .4s;
-}
-
-.scrollup__icon{
-  font-size: 1.25rem;
-  color: var(--title-color);
-}
-
-.scrollup:hover{
-  background: var(--container-color);
-  opacity: 1;
-}
-
-/* Show Scroll Up*/
-.show-scroll{
-  bottom: 3rem;
-}
-
 /*=============== SCROLL BAR ===============*/
 ::-webkit-scrollbar{
   width: 0.6rem;
@@ -467,43 +355,28 @@ button{
 
 /*===============  BREAKPOINTS ===============*/
 /* For small devices */
-@media screen and (max-width: 320px){
+@media screen and (min-width: 150px){
   .container{
     margin-left: var(--mb-1);
     margin-right: var(--mb-1);
   }
-
-  .home__img{
-    height: 200px;
-  }
-  .home__buttons{
-    flex-direction: column;
-    width: max-content;
-    row-gap: 1rem;
-  }
-
-  .category__container,
-  .trick__container{
-    grid-template-columns: .8fr;
-    justify-content: center;
-  }
- 
-}
-
-/* For medium devices */
-@media screen and (min-width: 576px){
   .about__container{
-    grid-template-columns: .8fr;
-    justify-content: center;
-  }
-
-  .newsletter__container{
-    display: grid;
     grid-template-columns: .7fr;
     justify-content: center;
   }
-  .newsletter__description{
-    padding: 0 3rem;
+.about__description{
+  font-size: 12px;
+}
+
+
+
+}
+
+/* For medium devices */
+@media screen and (min-width: 550px){
+  .about__container{
+    grid-template-columns: .8fr;
+    justify-content: center;
   }
   .slider-frame {
     width: 500px;
@@ -514,7 +387,7 @@ button{
   }
   .footer__logo{
     margin-top: 20px;
-    margin-left: 170px;
+    margin-left:200px;
   }
   
 .footer__social{
@@ -524,9 +397,10 @@ button{
   margin-left:15px ;
 }
 
+
 }
 
-@media screen and (min-width: 767px){
+@media screen and (min-width: 650px){
   body{
     margin: 0;
   }
@@ -561,53 +435,22 @@ button{
   .home__img{
     height: 300px;
   }
-  .swiper-pagination{
-    margin-top: var(--mb-2);
-  }
 
-  .category__container{
-    grid-template-columns: repeat(3, 200px);
-    justify-content: center;
-  }
 
   .about__container{
     grid-template-columns: repeat(2, 1fr);
     align-items: center;
   }
-  .about__title,
+
   .about__data{
     text-align: initial;
+  }
+  .about__title{
+    text-align: center;
   }
   .about__img{
     width: 250px;
   }
-
-  .trick__container{
-    grid-template-columns: repeat(3, 200px);
-    justify-content: center;
-    gap: 2rem;
-  }
-
-  .discount__container{
-    grid-template-columns: repeat(2, max-content);
-    justify-content: center;
-    align-items: center;
-    column-gap: 3rem;
-    padding: 3rem 0;
-    border-radius: 3rem;
-  }
-  .discount__img{
-    width: 350px;
-    order: -1;
-  }
-  .discount__data{
-    padding-right: 6rem;
-  }
-
-  .newsletter__container{
-    grid-template-columns: .5fr;
-  }
-
   .footer__container{
     grid-template-columns: repeat(4, 1fr);
     justify-items: center;
@@ -631,10 +474,12 @@ button{
   margin-left:15px ;
 }
 
+
 }
 
+
 /* For large devices */
-@media screen and (min-width: 992px){
+@media screen and (min-width: 900px){
   .container{
     margin-left: auto;
     margin-right: auto;
@@ -695,39 +540,6 @@ button{
     padding-right: 2rem;
   }
 
-  .trick__container{
-    gap: 3.5rem;
-  }
-  .trick__content{
-    border-radius: 1.5rem;
-  }
-  .trick__img{
-    width: 110px;
-  }
-  .trick__title{
-    font-size: var(--h3-font-size);
-  }
-
-  .discount__container{
-    column-gap: 7rem;
-  }
-
-  .new__content{
-    width: 310px;
-    border-radius: 1rem;
-    padding: 2rem 0;
-  }
-  .new__img{
-    width: 150px;
-  }
-  .new__img,
-  .new__subtitle{
-    margin-bottom: var(--mb-1);
-  }
-  .new__title{
-    font-size: var(--h3-font-size);
-  }
-
   .footer__copy{
     margin-top: 6rem;
   }
@@ -749,7 +561,7 @@ button{
   margin-left:50px ;
 }
 
-  
+    
 }
 
 @media screen and (min-width: 1200px){
@@ -762,23 +574,25 @@ button{
   .footer__img-one{
     width: 200px;
     height: 150px;
-    margin-right: 30px;
+    margin-right: 45px;
+    top: 30%;
   }
   .footer__img-two{
     width: 195px;
     height: 150px;
-    top: 30%;
-    left: -3%;
+    top: 35%;
+    left: 1%;
   }
   .slider-frame {
     width: 500px;
-      height: auto;
+    height: auto;
     margin-top: -90px;
-  margin-left: -100px;
+    margin-left: -100px;
     overflow: hidden;
   }
   .footer__logo{
-    margin-left: 30px;
+    margin-left: 50px;
+    text-align: center;
   }
   
 .footer__social{
@@ -787,7 +601,8 @@ button{
 .footer__description{
   margin-left:50px ;
 }
-  
+
+
 }
 
 /*=============== KEYFRAMES ===============*/
@@ -796,6 +611,49 @@ button{
   50%  { transform: translate(0, 15px); }
   100%   { transform: translate(0, -0px); }   
 }
-/* ///////////////////////////////////////////
- */
- 
+@keyframes floatPhone {
+  0% { transform: translate(0,  0px); }
+  50%  { transform: translate(5px, 0px); }
+  100%   { transform: translate(-0px, 0px); }   
+}
+
+
+
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;900&display=swap');
+  h1 {
+	font-size: 10px;
+	text-align: center;
+	color: #fff;
+  }
+
+  h2{
+	line-height: 34px;
+
+  }
+  h3 {
+	font-size: 10px;
+	line-height: 34px;
+	text-align: center;
+	color: #fff;
+  }
+  
+  h3 a {
+	color: #fff;
+  }
+  
+  a {
+	color: #fff;
+  }
+  
+  h1 {
+	margin-top: 100px;
+	text-align: center;
+	font-size: 20px;
+	line-height: 70px;
+
+  }
+  
+  p {
+	text-align: center;
+  }
+  

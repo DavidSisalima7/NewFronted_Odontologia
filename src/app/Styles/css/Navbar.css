@@ -7,7 +7,7 @@
 	background: url(../../Image/serv/Icono.png);
 	background-size: cover
   }
-  .Home{
+  .HomeM{
 	position: absolute;
 	width: 17px;
 	height: 17px;
@@ -15,14 +15,24 @@
 	background: url(../../Image/serv/home.png);
 	background-size: cover
   }
-  .Exit{
+  .HomeM:hover{
+	transform: translateY(-.2rem);
+  }
+  .ExitM:hover{
+	  transform: translateY(-.2rem);
+  }
+
+  .liExit{
+margin-right: 30px;
+  }
+  .ExitM{
 	position: absolute;
 	width: 17px;
 	height: 17px;
 	/* margin-right: 20px; */
 	margin-left: -15px;
 	background: url(../../Image/serv/Exit.png);
-	background-size: cover
+	background-size: cover;
   }
   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;900&display=swap');
   h1 {
