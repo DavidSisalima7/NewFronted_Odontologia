@@ -96,7 +96,7 @@ tbody tr:nth-child(even) {
   padding: 10px 20px; /* agregar relleno */
   cursor: pointer; /* agregar cursor de apuntador */
   animation-name: pulse;
-  animation-duration: 1s;
+  animation-duration: 5s;
   animation-iteration-count: infinite;
   animation-timing-function: ease-in-out;
 }

@@ -42,7 +42,7 @@ const handleChange=e=>{
 const filtrar=(terminoBusqueda)=>{
   var resultadosBusqueda=tablaFichas.filter((elemento)=>{
     if(elemento.id_ficha.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())
-    || elemento.persona.id_persona.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())
+    || elemento.persona.cedula.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())
     || elemento.fecha_consulta.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())
     || elemento.persona.nombre.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())+elemento.persona.apellido.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())
     ){
@@ -63,7 +63,7 @@ peticionGet();
         <input
           className="form-control inputBuscar"
           value={busqueda}
-          placeholder="Búsqueda por Id Ficha,Id Persona, Fecha, Nombre"
+          placeholder="Búsqueda por Id Ficha, Fecha, Cédula, Nombre"
           onChange={handleChange}
         />
         <button className="btn btn-success">
@@ -75,12 +75,12 @@ peticionGet();
        <table id="my-table"className="table table-sm table-bordered">
          <thead>
            <tr>
-             <th>ID</th>
-             <th>DIAGNOSTICO</th>
+             <th>ID FICHA</th>
+             <th>DIÁGNOSTICO</th>
              <th>FECHA</th>
              <th>MOTIVO</th>
              <th>OBSERVACIONES</th>
-             <th>ID PERSONA</th>
+             <th>CÉDULA</th>
              <th>NOMBRE</th>
            </tr>
          </thead>
@@ -95,7 +95,7 @@ peticionGet();
                <td>{ficha.fecha_consulta}</td>
                <td>{ficha.motivo_consulta}</td>
                <td>{ficha.observaciones}</td>
-               <td>{ficha.persona.id_persona}</td>
+               <td>{ficha.persona.cedula}</td>
                <td>{ficha.persona.nombre+" "+ficha.persona.apellido}</td>
              </tr>
            ))}
