@@ -82,6 +82,7 @@ export default function FichaOdontologica() {
       },
     };
     const response = await axios.post(url, data);
+    handleCancelar();
   };
 
   const deleteFicha = async () => {
@@ -90,6 +91,7 @@ export default function FichaOdontologica() {
       habilitado: 0,
     };
     const response = await axios.put(url, data);
+    handleCancelar();
   };
 
   const putFicha = async () => {
@@ -101,6 +103,8 @@ export default function FichaOdontologica() {
       observaciones: observaciones,
     };
     const response = await axios.put(url, data);
+    handleCancelar();
+
   };
 
   function onPacienteChange(paciente: any) {
