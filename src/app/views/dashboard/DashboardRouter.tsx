@@ -11,8 +11,8 @@ import PersonContextProvider from "../Register-persona/contexts/PersonContext";
 
 //import RegisterPerson from "../Register-persona/register-person";
 import User from "../../interfaces/user/User";
-import RegisterPerson from "../Register-persona/register-person";
 import RolContextProvider from "../Register-persona/contexts/RolContext";
+import RegisterPerson from "../Register-persona/register-person";
 
 export const DashboardRouter = () => {
   //Datos del sessionStorage

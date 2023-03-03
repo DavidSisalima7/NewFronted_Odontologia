@@ -3,9 +3,6 @@ import "primereact/resources/primereact.min.css";
 import 'bootstrap/dist/css/bootstrap.css';
 import "primeicons/primeicons.css";
 import React, { useEffect, useState, useContext } from "react";
-import "../../Styles/css/Register-person.css"
-import User from "../../interfaces/user/User";
-
 //Components
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from 'primereact/dropdown';
@@ -20,6 +17,7 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { PersonContext } from "./contexts/PersonContext";
 import { RolContext } from "./contexts/RolContext";
+import { Card } from "primereact/card";
 
 export const RegisterPerson = () => {
 
@@ -171,11 +169,9 @@ export const RegisterPerson = () => {
     );
 
     return (
-
-        <div className="container">
-
-            <div className="box">
-
+        <>
+         <div className="fichaP">   
+        <div className="container" id="container">
                 <TabView activeIndex={tab} onTabChange={(e) => setTab(e.index)}>
                     <TabPanel header="Registro Personas" leftIcon="pi pi-user">
 
@@ -461,6 +457,7 @@ export const RegisterPerson = () => {
 
             </div>
         </div>
+        </>
     );
 }
 
