@@ -177,13 +177,13 @@ export const RegisterPerson = () => {
                     <TabView activeIndex={tab} onTabChange={(e) => setTab(e.index)}>
                         <TabPanel header="Registro Personas" leftIcon="pi pi-user">
 
-                            <div className="form">
+                            <div className="formP">
 
                                 <Divider align="center" style={{ marginTop: '-25px' }}>
                                     <h2 className="text-center" style={{ color: "black" }}>Registrar Persona</h2>
                                 </Divider>
 
-                                <ScrollPanel style={{ width: '100%', height: '500px' }}>
+                                {/* <ScrollPanel style={{ width: '100%', height: '500px' }}> */}
 
                                     <form onSubmit={(e) => onSubmit(e)} className="p-fluid" style={{ marginTop: '-10px', marginBottom: 80 }}>
                                         <div className="row">
@@ -315,7 +315,7 @@ export const RegisterPerson = () => {
                                         </div>
 
                                     </form>
-                                </ScrollPanel>
+                                {/* </ScrollPanel> */}
 
                             </div>
 
@@ -323,14 +323,14 @@ export const RegisterPerson = () => {
 
                         <TabPanel header="Crear Usuario" rightIcon="pi pi-user">
 
-                            <div className="form">
+                            <div className="formU">
 
                                 <Divider align="center" style={{ marginTop: '-25px' }}>
                                     <h2 className="text-center">Crear Usuarios</h2>
 
                                 </Divider>
 
-                                <ScrollPanel style={{ width: '100%', height: '400px' }}>
+                                {/* <ScrollPanel style={{ width: '100%', height: '500px' }}> */}
 
                                     <form onSubmit={(e) => onSubmitUsr(e)} className="p-fluid" style={{ marginTop: '-18px', marginBottom: 80 }}>
 
@@ -451,7 +451,7 @@ export const RegisterPerson = () => {
                                             </div>
                                         </div>
                                     </div>
-                                </ScrollPanel>
+                                {/* </ScrollPanel> */}
                             </div>
                         </TabPanel>
 
