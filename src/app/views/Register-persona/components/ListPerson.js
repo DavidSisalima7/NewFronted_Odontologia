@@ -19,32 +19,30 @@ export const PersonList = () => {
     };
 
     return (
-        <div>
-            <div className="container">
+        <div className="fichaP">
+            <div className="container" id="container">
 
-                <div className="box" >
-                    <Panel header="LISTA DE PERSONAS" style={{ textAlign: "center" }}>
-                        <DataTable
-                            value={persons}
-                            selectionMode="single"
-                            onSelectionChange={(e) => savePerson(e.value.cedula)}>
-                                
-                            <Column field="cedula" header="N° Cédula" />
-                            <Column field="nombre" header="Nombres" />
-                            <Column field="apellido" header="Apellidos" />
-                            <Column field="email" header="Correo Electrónico" />
-                            <Column field="fechaNac" header="Fecha de Nacimiento" />
-                            <Column field="celular" header="N° Celular" />
-                            <Column field="direccion" header="Dirección" />
-                            <Column field="telefono" header="N° Teléfono" />
-                        </DataTable>
-                    </Panel>
+                <Panel header="LISTA DE PERSONAS" style={{ textAlign: "center" }}>
+                    <DataTable
+                        value={persons}
+                        selectionMode="single"
+                        onSelectionChange={(e) => savePerson(e.value.cedula)}>
 
-                    <PersonForm isVisible={isVisible} setIsVisible={setIsVisible} />
+                        <Column field="cedula" header="N° Cédula" />
+                        <Column field="nombre" header="Nombres" />
+                        <Column field="apellido" header="Apellidos" />
+                        <Column field="email" header="Correo Electrónico" />
+                        <Column field="fechaNac" header="Fecha de Nacimiento" />
+                        <Column field="celular" header="N° Celular" />
+                        <Column field="direccion" header="Dirección" />
+                        <Column field="telefono" header="N° Teléfono" />
+                    </DataTable>
+                </Panel>
 
-                </div>
+                <PersonForm isVisible={isVisible} setIsVisible={setIsVisible} />
 
             </div>
+
         </div>
     );
 }

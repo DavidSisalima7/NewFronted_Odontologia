@@ -169,10 +169,10 @@ export const RegisterPerson = () => {
     );
 
     return (
-        <body className="body1">
-            <div className="container">
 
-                <div className="box">
+        <>
+            <div className="fichaP">
+                <div className="container" id="container">
 
                     <TabView activeIndex={tab} onTabChange={(e) => setTab(e.index)}>
                         <TabPanel header="Registro Personas" leftIcon="pi pi-user">
@@ -459,8 +459,7 @@ export const RegisterPerson = () => {
 
                 </div>
             </div>
-        </body>
-
+        </>
     );
 }
 
