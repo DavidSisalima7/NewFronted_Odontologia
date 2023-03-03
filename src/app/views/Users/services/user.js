@@ -11,7 +11,7 @@ export class UserService {
 
     readAll() {
 
-        return axios.get(this.baseUrl + "users/all").then(res => res.data);
+        return axios.get(this.baseUrl + "users/list").then(res => res.data);
     }
 
     update(person) {

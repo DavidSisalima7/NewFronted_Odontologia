@@ -2,6 +2,9 @@ import React, { useContext, useState } from "react";
 import { Panel } from 'primereact/panel'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
+
+import { FilterMatchMode } from 'primereact/api';
+import { InputText } from 'primereact/inputtext';
 import { PersonContext } from "../contexts/PersonContext";
 import PersonForm from "./RegisterPerson";
 import "../../../Styles/css/Register-person.css"
@@ -11,6 +14,35 @@ export const PersonList = () => {
     const { persons, findPerson } = useContext(PersonContext);
 
     const [isVisible, setIsVisible] = useState(false);
+
+    const [filters, setFilters] = useState({
+        global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    });
+
+    const [globalFilterValue, setGlobalFilterValue] = useState('');
+
+    const onGlobalFilterChange = (e) => {
+        const value = e.target.value;
+        let _filters = { ...filters };
+
+        _filters['global'].value = value;
+
+        setFilters(_filters);
+        setGlobalFilterValue(value);
+    };
+
+    const renderHeader = () => {
+        return (
+            <div className="flex justify-content-end">
+                <span className="p-input-icon-left">
+                    <i className="pi pi-search" />
+                    <InputText value={globalFilterValue} onChange={onGlobalFilterChange} placeholder="Keyword Search" />
+                </span>
+            </div>
+        );
+    };
+
+    const header = renderHeader();
 
     const savePerson = (id) => {
 
@@ -23,7 +55,9 @@ export const PersonList = () => {
             <div className="container" id="container">
 
                 <Panel header="LISTA DE PERSONAS" style={{ textAlign: "center" }}>
-                    <DataTable
+                    <DataTable paginator rows={10} dataKey="id" filters={filters}
+                        globalFilterFields={['cedula', 'nombre']} filterDisplay="row"
+                        header={header} emptyMessage="Ninguna Persona Encontrada"
                         value={persons}
                         selectionMode="single"
                         onSelectionChange={(e) => savePerson(e.value.cedula)}>
