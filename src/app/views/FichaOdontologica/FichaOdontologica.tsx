@@ -104,7 +104,6 @@ export default function FichaOdontologica() {
     };
     const response = await axios.put(url, data);
     handleCancelar();
-
   };
 
   function onPacienteChange(paciente: any) {
@@ -174,8 +173,19 @@ export default function FichaOdontologica() {
             optionLabel="label"
             placeholder="Seleccione un Paciente"
           />
-          <div id="botonDiv">
-            <Button id="botonEliminar" label="Terminar Tratamiento" icon="pi pi-times" onClick={deleteFicha} outlined></Button>
+
+          <div>
+            {show && (
+              <div id="botonDiv">
+                <Button
+                  id="botonEliminar"
+                  label="Terminar Tratamiento"
+                  icon="pi pi-times"
+                  onClick={deleteFicha}
+                  outlined
+                ></Button>
+              </div>
+            )}
           </div>
           <div>
             {show && (

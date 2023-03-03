@@ -1037,8 +1037,8 @@ export const OdontogramList = () => {
             <br />
             <Divider />
             {/* Boton para Confirmar los cambios */}
-            <div style={{ paddingLeft: "40%" }}>
-              <Button label="GUARDAR" icon="pi pi-check" autoFocus onClick={redireccion}/>
+            <div style={{ paddingLeft: "40%", marginLeft:"50px"}}>
+              <Button label="GUARDAR" style={{backgroundColor:"#22C55E",borderColor:"#22C55E"}} icon="pi pi-check" autoFocus onClick={redireccion}/>
             </div>
           </Card>
         </div>
