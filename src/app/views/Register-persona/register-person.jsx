@@ -65,6 +65,18 @@ export const RegisterPerson = () => {
         direccion: ''
     };
 
+    const vaciarCampos = () => {
+        setPerson(initialPersonState);
+    }
+
+    const vaciarCamposUsr = () => {
+
+        setUsername('');
+        setPassword('');
+        setSelectedPersona(null);
+        setSelectedRol(null);
+    }
+
     const [person, setPerson] = useState({ initialPersonState });
 
     const onInputChange = (data, field) => {
@@ -78,9 +90,10 @@ export const RegisterPerson = () => {
 
         e.preventDefault();
         await axios.post("http://localhost:8080/api/persona/crear", person);
-        setTab(1)
-    };
 
+        vaciarCampos();
+        setTab(1)
+    };
     //DATOS DE ROL
 
     const initialRolState = {
@@ -104,7 +117,7 @@ export const RegisterPerson = () => {
     const onSubmitUsr = async () => {
 
         await postUser();
-
+        vaciarCamposUsr();
     };
 
     const [username, setUsername] = useState("");
@@ -307,7 +320,8 @@ export const RegisterPerson = () => {
                                                         background: "#ffff", width: "150px",
                                                         height: "40px", textAlign: "center",
                                                         color: "#292929",
-                                                    }} />
+                                                    }}
+                                                    onClick={() => vaciarCampos()} />
                                             </div>
                                         </div>
                                     </div>
@@ -445,7 +459,8 @@ export const RegisterPerson = () => {
                                                     background: "#ffff", width: "150px",
                                                     height: "40px", textAlign: "center",
                                                     color: "#292929",
-                                                }} />
+                                                }} 
+                                                onClick={() => vaciarCamposUsr()}/>
                                         </div>
                                     </div>
                                 </div>
