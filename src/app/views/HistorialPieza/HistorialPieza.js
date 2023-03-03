@@ -86,8 +86,8 @@ export const HistorialPieza = () => {
               <Column field="numero_pieza" header="PIEZA"></Column>
               <Column field="tratamiento" header="TRATAMIENTO"></Column>
               <Column field="cara_pieza" header="CARA"></Column>
-              <Column field="odontograma.fichaOdontologica.persona.cedula" header="NOMBREP"></Column>
-              <Column field="odontograma.fichaOdontologica.persona.nombre" header="NOMBREP"></Column>
+              <Column field="odontograma.fichaOdontologica.persona.cedula" header="CEDULA"></Column>
+              <Column field="odontograma.fichaOdontologica.persona.nombre" header="NOMBRE"></Column>
               <Column field="odontograma.id_odontograma" header="ODONTOGRAMA"></Column>
               <Column field="odontograma.fecha_Odontograma" header="ODONTOGRAMA"></Column>
             </DataTable>
