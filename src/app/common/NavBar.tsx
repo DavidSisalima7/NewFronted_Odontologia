@@ -62,6 +62,9 @@ export const NavBar: React.FC = () => {
                   <a href="/list-person">■ Paciente</a>
                 </li>
                 <li>
+                  <a href="/list-users">■ Usuarios</a>
+                </li>
+                <li>
                   <a href="/historialPiezas">■ Historial de Piezas</a>
                 </li>
               </ul>
