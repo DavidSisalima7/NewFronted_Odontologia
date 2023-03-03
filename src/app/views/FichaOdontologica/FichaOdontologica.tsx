@@ -46,7 +46,7 @@ export default function FichaOdontologica() {
 
   const getPaciente = async () => {
     const { data } = await axios.get(
-      "http://localhost:8080/api/persona/listar"
+      "http://localhost:8080/api/persona/listarP"
     );
     setPacientes(data as IPaciente[]);
   };

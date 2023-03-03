@@ -1,5 +1,5 @@
 import React from "react";
-import '../../../Styles/css/MenuP.css';
+import "../../../Styles/css/MenuP.css";
 //npm i -d sass - INSTALAR para usar el menu
 const Home = () => {
   //24-02-23
@@ -29,9 +29,7 @@ const Home = () => {
                   <section className="swiper-slide">
                     <div className="home__content grid">
                       <div className="home__group"></div>
-                      <div>
-                  
-                      </div>
+                      <div></div>
                     </div>
                   </section>
                 </div>
@@ -39,7 +37,6 @@ const Home = () => {
             </section>
           </div>
           <section></section>
-        
         </main>
         <body>
           <footer className="footer section" id="foot">
@@ -48,7 +45,8 @@ const Home = () => {
                 <a
                   href="https://goo.gl/maps/p52hmMxoGnToaB5D7"
                   target="_blank"
-                  className="footer__logo">  
+                  className="footer__logo"
+                >
                   Av. Américas Sector Entrada La Católica
                 </a>
                 <p className="footer__description">Od. Jonnathan SanMartin</p>
@@ -57,7 +55,8 @@ const Home = () => {
                   <a
                     href="https://www.facebook.com/profile.php?id=100088220704362"
                     target="_blank"
-                    className="footer__social-link">
+                    className="footer__social-link"
+                  >
                     <i className="bx bxl-facebook"></i>
                   </a>
                   <a
@@ -85,7 +84,7 @@ const Home = () => {
 
               <div className="footer__content">
                 <ul className="footer__links">
-                <li>
+                  <li>
                     <a className="footer__link">- Restauraciones</a>
                   </li>
                   <li>
@@ -105,7 +104,7 @@ const Home = () => {
 
               <div className="footer__content">
                 <ul className="footer__links">
-                <li>
+                  <li>
                     <a className="footer__link">- Odontopediatría</a>
                   </li>
                   <li>

@@ -1,6 +1,5 @@
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { Login } from './login/Login';
-import Bienvenida from '../ventanaInicial/Bienvenida';
 
 
 export function AuthRouter(){
