@@ -13,7 +13,7 @@ const PersonContextProvider = (props) => {
 
     useEffect(() => {
         personService.readAll().then(data => setPersons(data));
-    }, [/* personService, persons */]);
+    }, [personService, persons]);
 
     const createPerson = (person) => {
         personService.create(person).then(data => setPersons([...persons, data]))

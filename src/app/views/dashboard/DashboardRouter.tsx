@@ -8,10 +8,11 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { PersonList } from "../Register-persona/components/ListPerson";
 import PiezaContextProvider from "../Odontograma/PiezaContext";
 import PersonContextProvider from "../Register-persona/contexts/PersonContext";
-
-//import RegisterPerson from "../Register-persona/register-person";
 import User from "../../interfaces/user/User";
 import RolContextProvider from "../Register-persona/contexts/RolContext";
+import { HistorialPieza } from "../HistorialPieza/HistorialPieza";
+import UserContextProvider from "../Users/contexts/UserContext";
+import UserList from "../Users/components/ListUsers";
 import RegisterPerson from "../Register-persona/register-person";
 
 export const DashboardRouter = () => {
@@ -27,78 +28,56 @@ export const DashboardRouter = () => {
           <div>
             <Switch>
               <Route exact path="/dashboard/home">
-                {rol === "admin" ? (
-                  <NavBar />
-                ) : (
-                  <NavBar />
-                )}
+                {rol === "admin" ? <NavBar /> : <NavBar />}
                 <Home />
               </Route>
 
               <Route path="/ficha">
-                {rol === "admin" ? (
-                  <NavBar />
-                ) : (
-                  <NavBar />
-                )}
+                {rol === "admin" ? <NavBar /> : <NavBar />}
                 <FichaOdontologica />
               </Route>
               <Route path="/historial">
-                {rol === "admin" ? (
-                  <NavBar />
-                ) : (
-                  <NavBar />
-                )}
+                {rol === "admin" ? <NavBar /> : <NavBar />}
                 <Historial_ficha />
               </Route>
               <Route path="/list-person">
-                {rol === "admin" ? (
-                  <NavBar />
-                ) : (
-                  <NavBar />
-                )}
+                {rol === "admin" ? <NavBar /> : <NavBar />}
                 <PersonContextProvider>
                   <PersonList />
                 </PersonContextProvider>
               </Route>
 
+              <Route path="/list-users">
+                {rol === "admin" ? <NavBar /> : <NavBar />}
+                <UserContextProvider>
+                  <UserList />
+                </UserContextProvider>
+              </Route>
+
               <Route path="/reg-person">
-                {rol === "admin" ? (
-                  <NavBar />
-                ) : (
-                  <NavBar />
-                )}
+                {rol === "admin" ? <NavBar /> : <NavBar />}
                 <PersonContextProvider>
                   <RolContextProvider>
                     <RegisterPerson />
                   </RolContextProvider>
                 </PersonContextProvider>
               </Route>
+              <Route path="/historialPiezas">
+                {rol === "admin" ? <NavBar /> : <NavBar />}
+                <HistorialPieza />
+              </Route>
               <Route path="/login">
-                {rol === "admin" ? (
-                  <NavBar />
-                ) : (
-                  <NavBar />
-                )}
-
+                {rol === "admin" ? <NavBar /> : <NavBar />}
               </Route>
 
               <Route path="/odontograma">
-                {rol === "admin" ? (
-                  <NavBar />
-                ) : (
-                  <NavBar />
-                )}
+                {rol === "admin" ? <NavBar /> : <NavBar />}
                 <PiezaContextProvider>
                   <OdontogramList />
                 </PiezaContextProvider>
               </Route>
               <Route path="*">
-                {rol === "admin" ? (
-                  <NavBar />
-                ) : (
-                  <NavBar />
-                )}
+                {rol === "admin" ? <NavBar /> : <NavBar />}
                 <Redirect to="/dashboard/home" />
               </Route>
             </Switch>

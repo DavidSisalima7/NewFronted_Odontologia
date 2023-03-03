@@ -46,7 +46,7 @@ export default function FichaOdontologica() {
 
   const getPaciente = async () => {
     const { data } = await axios.get(
-      "http://localhost:8080/api/persona/listar"
+      "http://localhost:8080/api/persona/listarP"
     );
     setPacientes(data as IPaciente[]);
   };
@@ -58,15 +58,15 @@ export default function FichaOdontologica() {
   const save = async () => {
     if (ficha) {
       await putFicha();
-      toast.current?.show({
-        severity: "success",
-        summary: "Exito",
-        detail: "Operacion Exitosa",
-        life: 3000,
-      });
     } else {
       await postFicha();
     }
+    toast.current?.show({
+      severity: "success",
+      summary: "Exito",
+      detail: "Operacion Exitosa",
+      life: 3000,
+    });
   };
 
   const postFicha = async () => {
@@ -76,12 +76,24 @@ export default function FichaOdontologica() {
       fecha_consulta: date,
       motivo_consulta: motivo,
       observaciones: observaciones,
+      habilitado: 1,
       persona: {
         id_persona: selectedPaciente?.id_persona,
       },
     };
     const response = await axios.post(url, data);
+    handleCancelar();
   };
+
+  const deleteFicha = async () => {
+    const url = `http://localhost:8080/api/ficha/eliminar/${ficha?.id_ficha}`;
+    const data = {
+      habilitado: 0,
+    };
+    const response = await axios.put(url, data);
+    handleCancelar();
+  };
+
   const putFicha = async () => {
     const url = `http://localhost:8080/api/ficha/actualizar/${ficha?.id_ficha}`;
     const data = {
@@ -91,6 +103,8 @@ export default function FichaOdontologica() {
       observaciones: observaciones,
     };
     const response = await axios.put(url, data);
+    handleCancelar();
+
   };
 
   function onPacienteChange(paciente: any) {
@@ -115,7 +129,7 @@ export default function FichaOdontologica() {
     setMotivo("");
     setObservaciones("");
     setSelectedPaciente(null);
-    setShowTable(false);  
+    setShowTable(false);
   }
 
   const selectedPacientTemplate = (option: any, props: any) => {
@@ -127,7 +141,6 @@ export default function FichaOdontologica() {
   };
 
   const pacientOptionTemplate = (option: any) => {
-    console.log(option.cedula);
     return <>{option.label}</>;
   };
   return (
@@ -142,17 +155,18 @@ export default function FichaOdontologica() {
               <b>Seleccione el paciente</b>
             </div>
           </Divider>
-
           <Dropdown
             filter
             valueTemplate={selectedPacientTemplate}
             itemTemplate={pacientOptionTemplate}
-            id="dropP"
             value={{
               id: selectedPaciente?.id_persona,
               label: `${selectedPaciente?.nombre} ${selectedPaciente?.apellido}`,
             }}
-            onChange={(e) => { onPacienteChange(e.value); setShowTable(true) }}
+            onChange={(e) => {
+              onPacienteChange(e.value);
+              setShowTable(true);
+            }}
             options={pacientes.map((item) => ({
               id: item.id_persona,
               label: `${item.nombre} ${item.apellido}`,
@@ -160,6 +174,9 @@ export default function FichaOdontologica() {
             optionLabel="label"
             placeholder="Seleccione un Paciente"
           />
+          <div id="botonDiv">
+            <Button id="botonEliminar" label="Terminar Tratamiento" icon="pi pi-times" onClick={deleteFicha} outlined></Button>
+          </div>
           <div>
             {show && (
               <div className="tableO">

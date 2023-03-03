@@ -4,6 +4,7 @@ div.fichaP {
     align-items: center;
     flex-direction: column;
     background: white;
+
 }
 
 label.labelFicha {
@@ -20,7 +21,7 @@ div.container {
 h5.datos {
     color: #05313A;
     font-family: Poppins;
-    margin-left: 15px;
+    margin-left: 40px;
     margin-top: 5px;
     font-size: 23px;
     text-align: center;
@@ -38,10 +39,10 @@ label.InputS {
 
 h5.textI {
     color: #05313A;
-    font-family: "Poppins";
-    margin-left: "15px";
-    margin-top: "5px";
-    font-size: "20px";
+    font-family: Poppins;
+    margin-left: 15px;
+    margin-top: 5px;
+    font-size: 20px;
 }
 
 div.botones {
@@ -116,4 +117,13 @@ Button.BotonE {
     margin-bottom: -14px;
     margin-left: 74%;
     margin-top: -97px;
+}
+#botonEliminar{
+margin-left: 450px;
+margin-top: -25px;
+color: black;
+}
+
+#botonDiv{
+    margin-top: -25px;  
 }

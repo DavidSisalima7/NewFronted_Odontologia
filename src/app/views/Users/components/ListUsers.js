@@ -1,16 +1,17 @@
-import React, { useContext, useState } from "react";
-import { Panel } from "primereact/panel";
-import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
+import React, { useContext, useEffect, useState } from "react";
 
 import { FilterMatchMode } from "primereact/api";
 import { InputText } from "primereact/inputtext";
-import { PersonContext } from "../contexts/PersonContext";
-import PersonForm from "./RegisterPerson";
-import "../../../Styles/css/Register-person.css";
 
-export const PersonList = () => {
-  const { persons, findPerson } = useContext(PersonContext);
+import { Panel } from "primereact/panel";
+import { DataTable } from "primereact/datatable";
+import { Column } from "primereact/column";
+import "../../../Styles/css/Register-person.css";
+import { UserContext } from "../contexts/UserContext";
+import UserForm from "./FormUser";
+
+export const UserList = () => {
+  const { users, findUser } = useContext(UserContext);
 
   const [isVisible, setIsVisible] = useState(false);
 
@@ -47,8 +48,8 @@ export const PersonList = () => {
 
   const header = renderHeader();
 
-  const savePerson = (id) => {
-    findPerson(id);
+  const saveUser = (id) => {
+    findUser(id);
     setIsVisible(true);
   };
 
@@ -56,13 +57,11 @@ export const PersonList = () => {
     <div className="fichaP">
       <div className="container" id="container">
         <Panel
-          header="LISTA DE PERSONAS"
+          header="LISTA DE USUARIOS"
           style={{
             textAlign: "center",
             marginBottom: "200px",
             marginTop: "100px",
-            marginLeft:"-200px",
-            width: "1300px"
           }}
         >
           <DataTable
@@ -70,29 +69,37 @@ export const PersonList = () => {
             rows={10}
             dataKey="id"
             filters={filters}
-            globalFilterFields={["cedula", "nombre"]}
+            globalFilterFields={[
+              "username",
+              "persona.cedula" /* , 'persona.nombre', 'persona.apellido', 'rol.rolNombre', 'enabled' */,
+            ]}
             filterDisplay="row"
             header={header}
-            emptyMessage="Ninguna Persona Encontrada"
-            value={persons}
+            emptyMessage="Ningun Usuario Encontrado"
+            value={users}
             selectionMode="single"
-            onSelectionChange={(e) => savePerson(e.value.cedula)}
+            rowsPerPageOptions={[5, 10, 25, 50]}
+            responsiveLayout="scroll"
+            style={{ textAlign: "center" }}
+            onSelectionChange={(e) => saveUser(e.value.username)}
           >
-            <Column field="cedula" header="N° Cédula" />
-            <Column field="nombre" header="Nombres" />
-            <Column field="apellido" header="Apellidos" />
-            <Column field="email" header="Correo Electrónico" />
-            <Column field="fechaNac" header="Fecha de Nacimiento" />
-            <Column field="celular" header="N° Celular" />
-            <Column field="direccion" header="Dirección" />
-            <Column field="telefono" header="N° Teléfono" />
+            <Column
+              field="username"
+              header="Nombre de Usuario"
+              filterField="users.username"
+            />
+            <Column field="persona.cedula" header="N° de Cédula" />
+            <Column field="persona.nombre" header="Nombre" />
+            <Column field="persona.apellido" header="Apellido" />
+            <Column field="rol.rolNombre" header="Rol" />
+            <Column field="enabled" header="Habilitado" />
           </DataTable>
         </Panel>
 
-        <PersonForm isVisible={isVisible} setIsVisible={setIsVisible} />
+        <UserForm isVisible={isVisible} setIsVisible={setIsVisible} />
       </div>
     </div>
   );
 };
 
-export default PersonList;
+export default UserList;

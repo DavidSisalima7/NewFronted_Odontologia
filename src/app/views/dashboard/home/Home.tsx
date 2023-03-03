@@ -1,6 +1,6 @@
 import React from "react";
-import "../../../Styles/css/MenuP.css"
-//npm install boxicons --save
+import "../../../Styles/css/MenuP.css";
+//npm i -d sass - INSTALAR para usar el menu
 const Home = () => {
   //24-02-23
   return (
@@ -16,73 +16,20 @@ const Home = () => {
             href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
             rel="stylesheet"
           />
-             <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
-    />
           <link rel="stylesheet" href="../../Styles/css/MenuP.css" />
         </head>
 
         <header></header>
 
         <main>
-          <div className="fondo">
+          <div className="fondoM">
             <section className="home container1" id="home">
-              <div className="swiper home-swiper" id="swiper">
+              <div className="swiper home-swiper" id="wiper">
                 <div className="swiper-wrapper">
                   <section className="swiper-slide">
                     <div className="home__content grid">
                       <div className="home__group"></div>
-                      <div>
-                        <div className="slider-frame">
-                          <ul className="ulS">
-                            <li className="liS">
-                              <div className="Serv1"></div>
-                              <h3 className="home__subtitle">
-                              Carillas Dentales
-                              </h3>
-                              <p className="home__description">
-                              Son una buena opción para dientes fracturados, 
-                              espacios entre los dientes y para algunas situaciones 
-                              en las que la posición de los dientes se ve comprometida y 
-                              existen problemas menores relacionados con la oclusión.
-                              </p>
-                            </li>
-                            <li className="liS">
-                              <div className="Serv2"></div>
-                              <h3 className="home__subtitle">
-                              Ortodoncia
-                              </h3>
-                              <p className="home__description">
-                              El crecimiento y desarrollo de los dientes en una posición 
-                              errónea supone un riesgo para el cuidado de la higiene oral.
-                              </p>
-                            </li>
-                            <li className="liS">
-                              <div className="Serv3"></div>
-                              <h3 className="home__subtitle">
-                              Protesis Dentales
-                              </h3>
-                              <p className="home__description">
-                              La prótesis dental ayuda a evitar el desplazamiento de los dientes 
-                              naturales restantes. La presencia de la prótesis impide que los 
-                              dientes naturales se desplacen hacia la zona desdentada. 
-                              </p>
-                            </li>
-                            <li className="liS">
-                              <div className="Serv4"></div>
-                              <h3 className="home__subtitle">
-                              Profilaxis Dental
-                              </h3>
-                              <p className="home__description">
-                              Permite eliminar la placa y el sarro acumulado, previene la aparición de caries 
-                              y enfermedades periodontales, evita el temido mal aliento y, además, refuerza el 
-                              esmalte protegiendo a las piezas dentales. 
-                              </p>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
+                      <div></div>
                     </div>
                   </section>
                 </div>
@@ -91,7 +38,6 @@ const Home = () => {
           </div>
           <section></section>
         </main>
-        {/* //foooter */}
         <body>
           <footer className="footer section" id="foot">
             <div className="footer__container container grid">
@@ -101,14 +47,8 @@ const Home = () => {
                   target="_blank"
                   className="footer__logo"
                 >
-                  <img
-                    src="../../Image/iconos/marcador.png"
-                    alt=""
-                    className="footer__logo-img"
-                  />
                   Av. Américas Sector Entrada La Católica
                 </a>
-
                 <p className="footer__description">Od. Jonnathan SanMartin</p>
 
                 <div className="footer__social">
@@ -127,9 +67,10 @@ const Home = () => {
                     <i className="bx bxl-instagram-alt"></i>
                   </a>
                   <a
-                    href="https://wa.me/593990369421"
+                    href="https://wa.me/0990369421"
                     target="_blank"
-                    className="footer__social-link">
+                    className="footer__social-link"
+                  >
                     <i className="bx bxl-whatsapp"></i>
                   </a>
                 </div>
@@ -142,8 +83,10 @@ const Home = () => {
               </div>
 
               <div className="footer__content">
-                <a className="footer__link">- Restauraciones</a>
                 <ul className="footer__links">
+                  <li>
+                    <a className="footer__link">- Restauraciones</a>
+                  </li>
                   <li>
                     <a className="footer__link">- Profilaxis</a>
                   </li>
@@ -160,8 +103,10 @@ const Home = () => {
               </div>
 
               <div className="footer__content">
-                <a className="footer__link">- Odontopediatría</a>
                 <ul className="footer__links">
+                  <li>
+                    <a className="footer__link">- Odontopediatría</a>
+                  </li>
                   <li>
                     <a className="footer__link">- Endodoncia</a>
                   </li>
@@ -182,9 +127,6 @@ const Home = () => {
             <div className="footer__img-one"></div>
             <div className="footer__img-two"></div>
           </footer>
-          <a href="#" className="scrollup" id="scroll-up">
-            <i className="bx bx-up-arrow-alt scrollup__icon"></i>
-          </a>
         </body>
       </html>
     </div>

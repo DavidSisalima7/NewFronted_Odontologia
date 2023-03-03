@@ -74,14 +74,31 @@
   }
 }
 
-.form {
+.formP {
   position: relative;
   inset: 2px;
   border-radius: 8px;
   background: #ffffff;
   z-index: 10;
-  padding: 50px 40px;
+  padding: 21px 40px;
   display: flex;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  flex-direction: column;
+  overflow-x: none;
+  overflow-y: scroll;
+}
+
+.formU {
+  position: relative;
+  inset: 2px;
+  border-radius: 8px;
+  background: #ffffff;
+  z-index: 10;
+  padding: 37px 40px;
+  display: flex;
+  margin-bottom: 175px;
+  margin-top: 50px;
   flex-direction: column;
   overflow-x: none;
   overflow-y: scroll;

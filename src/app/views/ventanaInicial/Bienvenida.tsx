@@ -1,10 +1,11 @@
+import { padding } from "@mui/system";
 import React from "react";
 import "../../Styles/css/Bienvenida.css";
 
 const Bienvenida = () => {
   return (
     <div>
-      <body className="body2">
+      <body className="body2" id="Principal">
         <nav>
           <div className="icon_diente"></div>
           <div id="logo">Odontología Integral SM</div>
@@ -17,41 +18,34 @@ const Bienvenida = () => {
               <label htmlFor="drop" className="toggle">
                 Home
               </label>
-              <a href="/home">
+              <a href="#Principal">
                 <div className="Home"></div>
               </a>
             </li>
             <li>
-              <label htmlFor="drop-1" className="toggle">
-                Service
-              </label>
               <a href="#service">
-                <div className="">service</div>
+                <div className="">Services</div>
               </a>
             </li>
             <li>
-              <label htmlFor="drop-2" className="toggle">
-                About
-              </label>
               <a href="#about">
-                <div className="">about</div>
+                <div className="about">About Us</div>
               </a>
             </li>
             <li className="liP">
-              <label htmlFor="drop-3" className="toggle">
-                Contact
+            <label htmlFor="drop" className="toggle">
+                Contact Us
               </label>
               <a href="https://wa.me/593990369421" target="_blank" className="aPhone">
-                <div className="phone"></div> 
-                (+593)990369421
+                <div className="phone"></div>Contact Us
               </a>
             </li>
-            <li>
-              <label htmlFor="drop" className="toggle">
-                Login
+            <li className="liLog">
+            <label htmlFor="drop" className="toggle">
+               Login
               </label>
-              <a href="/auth/login">
-                <div className="">login</div>
+            <a href="/auth/login" className="aLog">
+                <div>Login</div>
               </a>
             </li>
           </ul>
@@ -152,7 +146,7 @@ const Bienvenida = () => {
         <div className="trick__container container grid">
           <div className="trick__content">
             <div className="S1"></div>
-            <h3 className="trick__title">Restauraciones Dentales</h3>
+            <h3 className="trick__title">Ortodoncia</h3>
           </div>
 
           <div className="trick__content">
@@ -177,7 +171,7 @@ const Bienvenida = () => {
 
           <div className="trick__content">
           <div className="S6"></div>
-            <h3 className="trick__title">Endodoncia</h3>
+            <h3 className="trick__title">Diagnóstico</h3>
           </div>
           <div className="trick__content">
           <div className="S7"></div>
@@ -185,7 +179,7 @@ const Bienvenida = () => {
           </div>
           <div className="trick__content">
           <div className="S8"></div>
-            <h3 className="trick__title">Endodoncia</h3>
+            <h3 className="trick__title">Extracciones</h3>
           </div>
         </div>
         </section>
@@ -199,10 +193,10 @@ const Bienvenida = () => {
               <div className="about__container container grid">
                 <div className="about__data">
                   <h2 className="section__title about__title">
-                    Acerca de Odontologia SM
+                    Acerca de Nosotros
                   </h2>
                   <p className="about__description">
-                    Odontologia Integral SM es una organización que pretende ser
+                    Odontologia Integral "SM" es una organización que pretende ser
                     un referente a seguir dentro del sector de la odontología,
                     por la calidad de su trabajo y actitud humana. Por ello,
                     prestamos especial atención al tratamiento deseado de
@@ -224,24 +218,16 @@ const Bienvenida = () => {
                 <a
                   href="https://goo.gl/maps/p52hmMxoGnToaB5D7"
                   target="_blank"
-                  className="footer__logo"
-                >
-                  <img
-                    src="../../Image/iconos/marcador.png"
-                    alt=""
-                    className="footer__logo-img"
-                  />
+                  className="footer__logo">  
                   Av. Américas Sector Entrada La Católica
                 </a>
-
                 <p className="footer__description">Od. Jonnathan SanMartin</p>
 
                 <div className="footer__social">
                   <a
                     href="https://www.facebook.com/profile.php?id=100088220704362"
                     target="_blank"
-                    className="footer__social-link"
-                  >
+                    className="footer__social-link">
                     <i className="bx bxl-facebook"></i>
                   </a>
                   <a
@@ -268,8 +254,10 @@ const Bienvenida = () => {
               </div>
 
               <div className="footer__content">
-                <a className="footer__link">- Restauraciones</a>
                 <ul className="footer__links">
+                <li>
+                    <a className="footer__link">- Restauraciones</a>
+                  </li>
                   <li>
                     <a className="footer__link">- Profilaxis</a>
                   </li>
@@ -286,8 +274,10 @@ const Bienvenida = () => {
               </div>
 
               <div className="footer__content">
-                <a className="footer__link">- Odontopediatría</a>
                 <ul className="footer__links">
+                <li>
+                    <a className="footer__link">- Odontopediatría</a>
+                  </li>
                   <li>
                     <a className="footer__link">- Endodoncia</a>
                   </li>
@@ -309,7 +299,7 @@ const Bienvenida = () => {
             <div className="footer__img-two"></div>
           </footer>
           <a href="#" className="scrollup" id="scroll-up">
-            <i className="bx bx-up-arrow-alt scrollup__icon"></i>
+            <div className="scrollicon"></div>
           </a>
         </body>
       </html>
