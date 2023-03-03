@@ -90,7 +90,7 @@ tbody tr:nth-child(even) {
 .mi-boton {
   background-color: #4A7180; /* color de fondo del botón */
   color: white; /* color de texto del botón */
-  font-size: 16px; /* tamaño de fuente del botón */
+  font-size: 12px; /* tamaño de fuente del botón */
   border: none; /* quitar borde */
   border-radius: 5px; /* agregar borde redondeado */
   padding: 7px 20px; /* agregar relleno */
