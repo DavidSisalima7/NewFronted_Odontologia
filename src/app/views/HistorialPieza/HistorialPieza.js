@@ -30,7 +30,7 @@ export const HistorialPieza = () => {
     var resultadosBusqueda = tablaPiezas.filter((elemento) => {
       if (elemento.tratamiento.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())
       || elemento.odontograma.fecha_Odontograma.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())
-      // || elemento.persona.nombre.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())
+      || elemento.odontograma.fichaOdontologica.persona.nombre.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())
       ) {
         return elemento;
       }
@@ -50,7 +50,7 @@ export const HistorialPieza = () => {
         <input
           className="form-control inputBuscar"
           value={busqueda}
-          placeholder="Búsqueda por Nombre, por fecha de odontograma"
+          placeholder="Búsqueda por Nombre, por fecha de odontograma, nombre de persona"
           onChange={handleChange}
         />
       </div>
@@ -84,7 +84,7 @@ export const HistorialPieza = () => {
               <Column field="numero_pieza" header="PIEZA"></Column>
               <Column field="tratamiento" header="TRATAMIENTO"></Column>
               <Column field="cara_pieza" header="CARA"></Column>
-              <Column field="persona.nombre" header="NOMBREP"></Column>
+              <Column field="odontograma.fichaOdontologica.persona.nombre" header="NOMBREP"></Column>
               <Column field="odontograma.id_odontograma" header="ODONTOGRAMA"></Column>
               <Column field="odontograma.fecha_Odontograma" header="ODONTOGRAMA"></Column>
             </DataTable>
