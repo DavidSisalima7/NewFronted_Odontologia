@@ -16,13 +16,6 @@ export const NavBar: React.FC = () => {
    const [confirm, setConfirm] = useState(false);
   return (
     <>
-           <head>
-          <link
-            href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-            rel="stylesheet"
-          />
-          <link rel="stylesheet" href="../../Styles/css/MenuP.css" />
-        </head>
        <div>
         <body className="body2">
         <nav>
@@ -50,7 +43,7 @@ export const NavBar: React.FC = () => {
               <input type="checkbox" id="drop-1" />
               <ul style={{zIndex:999}}>
                 <li >
-                  <a href="/reg-person">■ Usuario</a>
+                  <a href="/reg-person">■ Paciente</a>
                 </li>
                 <li>
                   <a href="/ficha">■ Ficha Odontológica</a>
@@ -66,7 +59,7 @@ export const NavBar: React.FC = () => {
               <ul style={{zIndex:999}}>
                 <li>
              
-                  <a href="/list-person">■ Usuario</a>
+                  <a href="/list-person">■ Paciente</a>
                 </li>
                 <li>
                   <a href="/historialPiezas">■ Historial de Piezas</a>
@@ -82,7 +75,7 @@ export const NavBar: React.FC = () => {
               <ul style={{zIndex:999}}>
                 <li>
             
-                  <a href="/list-person">■ Usuarios</a>
+                  <a href="/list-person">■ Paciente</a>
                 </li>
                 <li>
                   <a href="/historial">■ Historial Clínico Dental</a>
@@ -98,9 +91,7 @@ export const NavBar: React.FC = () => {
           </ul>
         </nav>
       </body>
-
     </div>
-  
      
     </>
   );
