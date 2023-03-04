@@ -26,9 +26,9 @@ const UserContextProvider = (props) => {
         setEditUsers(user);
     };
 
-    const updateUser = (person) => {
-        userService.update(person).then((data) => setUsers(
-            users.map((p => p.id_usuario === person.id_usuario ? data : p))
+    const updateUser = (user) => {
+        userService.update(user).then((data) => setUsers(
+            users.map((p => p.id_usuario === user.id_usuario ? data : p))
         ));
 
         setEditUsers(null)
