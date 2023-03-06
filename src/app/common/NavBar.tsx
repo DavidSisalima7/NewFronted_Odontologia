@@ -63,7 +63,7 @@ export const NavBar: React.FC = () => {
                 <label htmlFor="drop-3" className="toggle">
                   Historial
                 </label>
-                <a href="#">Historial Medico</a>
+                <a href="#">Historial Médico</a>
                 <input type="checkbox" id="drop-3" />
                 <ul style={{ zIndex: 999 }}>
                   <li>
