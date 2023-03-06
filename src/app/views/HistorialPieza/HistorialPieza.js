@@ -5,91 +5,155 @@ import { Column } from "primereact/column";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Divider } from "primereact/divider";
- 
-export const HistorialPieza = () => {
+import { FilterMatchMode, FilterOperator } from 'primereact/api';
+import { classNames } from 'primereact/utils';
+import { InputText } from 'primereact/inputtext';
+import { Calendar } from 'primereact/calendar';
+import { Button } from "primereact/button";
 
+export const HistorialPieza = () => {
+  const [date, setDate] = useState(null);
   const [piezas, setPiezas] = useState([]);
   const [tablaPiezas, setTablaPiezas] = useState([]);
-  const [busqueda, setBusqueda] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [globalFilterValue, setGlobalFilterValue] = useState('');
+
+  const [filters, setFilters] = useState({global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    name: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
+    representative: { value: null, matchMode: FilterMatchMode.IN },
+    date: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }] }});
+
   useEffect(() => {
     peticionGet();
+    setLoading(false);
   }, [])
   const peticionGet = async () => {
     await axios.get("http://localhost:8080/api/pieza/listarP")
       .then(response => {
+        response.fecha_creacion=new Date(response.fecha_creacion).toLocaleDateString;
         setPiezas(response.data);
-        setTablaPiezas(response.data)
+
       }).catch(error => {
         console.log(error);
       })
   }
-  const handleChange = e => {
-    setBusqueda(e.target.value);
-    filtrar(e.target.value);
-  }
-  const filtrar = (terminoBusqueda) => {
-    var resultadosBusqueda = tablaPiezas.filter((elemento) => {
-      if (
-        elemento.odontograma.fichaOdontologica.persona.cedula.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())
-      || elemento.odontograma.fecha_Odontograma.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())
-      || elemento.odontograma.fichaOdontologica.persona.nombre.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())
-      ) {
-        return elemento;
-      }
+  const clearFilter = () => {
+    initFilters();
+  };
+  const initFilters = () => {
+    setFilters({
+      global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+      date: {
+        operator: FilterOperator.AND,
+        constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }]
+      },
+      activity: { value: null, matchMode: FilterMatchMode.BETWEEN },
+      verified: { value: null, matchMode: FilterMatchMode.EQUALS }
     });
-    setPiezas(resultadosBusqueda);
-  }
-  const header = (
+    setGlobalFilterValue("");
+  };
+  const onGlobalFilterChange = (e) => {
+    const value = e.target.value;
+    let _filters = { ...filters };
+
+    _filters['global'].value = value;
+
+    setFilters(_filters);
+    setGlobalFilterValue(value);
+  };
+ 
+  const renderHeader = () => {
+    return (
+      <div className="flex justify-content-between">
+        <Button
+          type="button"
+          icon="pi pi-filter-slash"
+          label="Clear"
+          outlined
+          onClick={clearFilter}
+        />
+        <span className="p-input-icon-left">
+          <i className="pi pi-search" />
+          <InputText
+            value={globalFilterValue}
+            onChange={onGlobalFilterChange}
+            placeholder="Keyword Search"
+          />
+        </span>
+      </div>
+    );
+  };
+
+  const header = 
+  // renderHeader
+  (
     <div className="flex flex-wrap align-items-center justify-content-between gap-2">
       <span className="text-xl text-900 font-bold">Historial de Piezas</span>
 
     </div>
   );
+  const dateFilterTemplate = (options) => {
+    return <Calendar
+    value={options.value}
+    onChange={(e) => {
+      options.filterCallback(new Date(e.value), options.index);
+    }}
+    dateFormat="mm/dd/yy"
+    placeholder="mm/dd/yyyy"
+    mask="99/99/9999"
+  />
+  };
+  const dateBodyTemplate = (rowData) => {
+    const fecha = new Date(rowData.fecha_creacion);
+    return formatDate(fecha);
+  };
+  const formatDate = (value) => {
+    return value.toDateString();
+  };
+
   //HTML
   return (
+
     <>
-      <div className="containerInput">
-        <input
-          className="form-control inputBuscar"
-          value={busqueda}
-          placeholder="Búsqueda por cedula, por fecha de odontograma, nombre de persona"
-          onChange={handleChange}
-        />
-      </div>
-      <div className="card">
-        {/* Card de el odontograma y la tabla de piezas */}
+      <div >
         <div className="linea">
-          <Card className="table" header={header}>
-            {/* Tabla de piezas */}
+          <Card >
             <DataTable
               value={piezas
                 //Filtro para piezas con el id del odontograma
                 // .filter((p) => p.odontograma.id_odontograma === idondonto)
               }
               responsiveLayout="scroll"
-              style={{ textAlign: "center" }}
               selectionMode="single"
 
               paginator
               rows={5}
               rowsPerPageOptions={[5, 10, 25, 50]}
+              loading={loading}
+              header={header}
+              emptyMessage="No se encontraron piezas."
             >
-              <Column field="id_pieza" header="ID"></Column>
+              <Column field="id_pieza" header="ID" filter filterPlaceholder="Busqueda por id"></Column>
               <Column
-                field="fecha_creacion"
-                header="Fecha"
-                body={(rowData) => {
-                  const fecha = new Date(rowData.fecha_creacion);
-                  return fecha.toLocaleDateString();
-                }}
+                dataType="date"
+                filterField="fecha_creacion"
+                header="Fecha Pieza"
+                body=
+                {dateBodyTemplate}
+                // {(rowData) => {
+                //   const fecha = new Date(rowData.fecha_creacion);
+                //   return fecha.toLocaleTimeString;
+                // }}
+                filter filterElement={dateFilterTemplate}
               />
-              <Column field="numero_pieza" header="PIEZA"></Column>
-              <Column field="tratamiento" header="TRATAMIENTO"></Column>
-              <Column field="cara_pieza" header="CARA"></Column>
-              <Column field="odontograma.fichaOdontologica.persona.cedula" header="CEDULA"></Column>
-              <Column field="odontograma.fichaOdontologica.persona.nombre" header="NOMBRE"></Column>
-              <Column field="odontograma.id_odontograma" header="ODONTOGRAMA"></Column>
-              <Column field="odontograma.fecha_Odontograma" header="ODONTOGRAMA"></Column>
+
+              <Column field="numero_pieza" header="PIEZA" filter filterPlaceholder="Busqueda por N°-pieza"></Column>
+              <Column field="tratamiento" header="TRATAMIENTO" filter filterPlaceholder="Busqueda por tratamiento"></Column>
+              <Column field="cara_pieza" header="CARA" filter filterPlaceholder="Busqueda por cara"></Column>
+              <Column field="odontograma.fichaOdontologica.persona.cedula" header="CEDULA" filter filterPlaceholder="Busqueda por cedula"></Column>
+              <Column field="odontograma.fichaOdontologica.persona.nombre" header="NOMBRE" filter filterPlaceholder="Busqueda por nombre"></Column>
+              <Column field="odontograma.id_odontograma" header="ODONTOGRAMA" filter filterPlaceholder="Busqueda por id-Odontograma"></Column>
+              <Column field="odontograma.fecha_Odontograma" header="ODONTOGRAMA" filter filterPlaceholder="Busqueda por Fecha-Odontograma"></Column>
             </DataTable>
 
             <br />
@@ -109,7 +173,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -120,7 +184,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -131,7 +195,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -142,7 +206,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -153,7 +217,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -164,7 +228,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -175,7 +239,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -186,7 +250,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td className="LineaIzquierda">
@@ -197,7 +261,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -208,7 +272,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -219,7 +283,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -230,7 +294,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -241,7 +305,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -252,7 +316,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -263,7 +327,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -274,89 +338,89 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                 </tr>
                 <tr>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "18" ).length
+                      piezas.filter((p) => p.numero_pieza === "18").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "17" ).length
+                      piezas.filter((p) => p.numero_pieza === "17").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "16" ).length
+                      piezas.filter((p) => p.numero_pieza === "16").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "15" ).length
+                      piezas.filter((p) => p.numero_pieza === "15").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "14" ).length
+                      piezas.filter((p) => p.numero_pieza === "14").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "13" ).length
+                      piezas.filter((p) => p.numero_pieza === "13").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "12" ).length
+                      piezas.filter((p) => p.numero_pieza === "12").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "11" ).length
+                      piezas.filter((p) => p.numero_pieza === "11").length
                     )}
                   </td>
                   <td className="CantidadIncidencias LineaIzquierda">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "21" ).length
+                      piezas.filter((p) => p.numero_pieza === "21").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "22" ).length
+                      piezas.filter((p) => p.numero_pieza === "22").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "23" ).length
+                      piezas.filter((p) => p.numero_pieza === "23").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "24" ).length
+                      piezas.filter((p) => p.numero_pieza === "24").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "25" ).length
+                      piezas.filter((p) => p.numero_pieza === "25").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "26" ).length
+                      piezas.filter((p) => p.numero_pieza === "26").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "27" ).length
+                      piezas.filter((p) => p.numero_pieza === "27").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "28" ).length
+                      piezas.filter((p) => p.numero_pieza === "28").length
                     )}
                   </td>
                 </tr>
@@ -399,82 +463,82 @@ export const HistorialPieza = () => {
                 <tr>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "48" ).length
+                      piezas.filter((p) => p.numero_pieza === "48").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "47" ).length
+                      piezas.filter((p) => p.numero_pieza === "47").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "46" ).length
+                      piezas.filter((p) => p.numero_pieza === "46").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "45" ).length
+                      piezas.filter((p) => p.numero_pieza === "45").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "44" ).length
+                      piezas.filter((p) => p.numero_pieza === "44").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "43" ).length
+                      piezas.filter((p) => p.numero_pieza === "43").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "42" ).length
+                      piezas.filter((p) => p.numero_pieza === "42").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "41" ).length
+                      piezas.filter((p) => p.numero_pieza === "41").length
                     )}
                   </td>
                   <td className="CantidadIncidencias LineaIzquierda">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "31"  ).length
+                      piezas.filter((p) => p.numero_pieza === "31").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "32" ).length
+                      piezas.filter((p) => p.numero_pieza === "32").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "33" ).length
+                      piezas.filter((p) => p.numero_pieza === "33").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "34" ).length
+                      piezas.filter((p) => p.numero_pieza === "34").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "35" ).length
+                      piezas.filter((p) => p.numero_pieza === "35").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "36" ).length
+                      piezas.filter((p) => p.numero_pieza === "36").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "37" ).length
+                      piezas.filter((p) => p.numero_pieza === "37").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "38" ).length
+                      piezas.filter((p) => p.numero_pieza === "38").length
                     )}
                   </td>
                 </tr>
@@ -487,7 +551,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -498,7 +562,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -509,7 +573,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -520,7 +584,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -531,7 +595,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -542,7 +606,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -553,7 +617,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -564,7 +628,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td className="LineaIzquierda">
@@ -575,7 +639,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -586,7 +650,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -597,7 +661,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -608,7 +672,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -619,7 +683,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -630,7 +694,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -641,7 +705,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -652,7 +716,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                 </tr>
@@ -674,7 +738,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -685,7 +749,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -696,7 +760,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -707,7 +771,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -718,7 +782,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
 
@@ -730,7 +794,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -741,7 +805,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -752,7 +816,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -763,7 +827,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -774,7 +838,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
 
@@ -786,52 +850,52 @@ export const HistorialPieza = () => {
                   <td></td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "55" ).length
+                      piezas.filter((p) => p.numero_pieza === "55").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "54" ).length
+                      piezas.filter((p) => p.numero_pieza === "54").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "53" ).length
+                      piezas.filter((p) => p.numero_pieza === "53").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "52" ).length
+                      piezas.filter((p) => p.numero_pieza === "52").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "51" ).length
+                      piezas.filter((p) => p.numero_pieza === "51").length
                     )}
                   </td>
                   <td className="CantidadIncidencias LineaIzquierda">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "61" ).length
+                      piezas.filter((p) => p.numero_pieza === "61").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "62" ).length
+                      piezas.filter((p) => p.numero_pieza === "62").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "63" ).length
+                      piezas.filter((p) => p.numero_pieza === "63").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "64" ).length
+                      piezas.filter((p) => p.numero_pieza === "64").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "65" ).length
+                      piezas.filter((p) => p.numero_pieza === "65").length
                     )}
                   </td>
                   <td></td>
@@ -874,52 +938,52 @@ export const HistorialPieza = () => {
                   <td></td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "85" ).length
+                      piezas.filter((p) => p.numero_pieza === "85").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "84" ).length
+                      piezas.filter((p) => p.numero_pieza === "84").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "83" ).length
+                      piezas.filter((p) => p.numero_pieza === "83").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "82" ).length
+                      piezas.filter((p) => p.numero_pieza === "82").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "81" ).length
+                      piezas.filter((p) => p.numero_pieza === "81").length
                     )}
                   </td>
                   <td className="CantidadIncidencias LineaIzquierda">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "71" ).length
+                      piezas.filter((p) => p.numero_pieza === "71").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "72" ).length
+                      piezas.filter((p) => p.numero_pieza === "72").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "73" ).length
+                      piezas.filter((p) => p.numero_pieza === "73").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "74" ).length
+                      piezas.filter((p) => p.numero_pieza === "74").length
                     )}
                   </td>
                   <td className="CantidadIncidencias">
                     {"x".repeat(
-                      piezas.filter((p) => p.numero_pieza === "75"  ).length
+                      piezas.filter((p) => p.numero_pieza === "75").length
                     )}
                   </td>
                   <td></td>
@@ -936,7 +1000,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -947,7 +1011,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -958,7 +1022,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -969,7 +1033,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -980,7 +1044,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td className="LineaIzquierda">
@@ -991,7 +1055,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -1002,7 +1066,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -1013,7 +1077,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -1024,7 +1088,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td>
@@ -1035,7 +1099,7 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-                      
+
                     />
                   </td>
                   <td></td>
