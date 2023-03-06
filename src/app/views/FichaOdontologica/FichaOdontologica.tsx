@@ -32,7 +32,7 @@ export default function FichaOdontologica() {
 
   const [show, setShowTable] = useState(false);
 
-  const date = new Date();
+  const date = new Date();  
 
   const getFicha = async (id_persona: number) => {
     const { data } = await axios.get(

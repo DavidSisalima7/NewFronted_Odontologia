@@ -5,159 +5,165 @@ import { Column } from "primereact/column";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Divider } from "primereact/divider";
-import { FilterMatchMode, FilterOperator } from 'primereact/api';
-import { classNames } from 'primereact/utils';
-import { InputText } from 'primereact/inputtext';
-import { Calendar } from 'primereact/calendar';
-import { Button } from "primereact/button";
 
 export const HistorialPieza = () => {
-  const [date, setDate] = useState(null);
   const [piezas, setPiezas] = useState([]);
   const [tablaPiezas, setTablaPiezas] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [globalFilterValue, setGlobalFilterValue] = useState('');
-
-  const [filters, setFilters] = useState({global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-    name: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
-    representative: { value: null, matchMode: FilterMatchMode.IN },
-    date: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }] }});
-
+  const [busqueda, setBusqueda] = useState("");
   useEffect(() => {
     peticionGet();
-    setLoading(false);
-  }, [])
+  }, []);
   const peticionGet = async () => {
-    await axios.get("http://localhost:8080/api/pieza/listarP")
-      .then(response => {
-        response.fecha_creacion=new Date(response.fecha_creacion).toLocaleDateString;
+    await axios
+      .get("http://localhost:8080/api/pieza/listarP")
+      .then((response) => {
         setPiezas(response.data);
-
-      }).catch(error => {
-        console.log(error);
+        setTablaPiezas(response.data);
       })
-  }
-  const clearFilter = () => {
-    initFilters();
+      .catch((error) => {
+        console.log(error);
+      });
   };
-  const initFilters = () => {
-    setFilters({
-      global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-      date: {
-        operator: FilterOperator.AND,
-        constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }]
-      },
-      activity: { value: null, matchMode: FilterMatchMode.BETWEEN },
-      verified: { value: null, matchMode: FilterMatchMode.EQUALS }
+  const handleChange = (e) => {
+    setBusqueda(e.target.value);
+    filtrar(e.target.value);
+  };
+  const filtrar = (terminoBusqueda) => {
+    var resultadosBusqueda = tablaPiezas.filter((elemento) => {
+      if (
+        elemento.odontograma.fichaOdontologica.persona.cedula
+          .toString()
+          .toLowerCase()
+          .includes(terminoBusqueda.toLowerCase()) ||
+        elemento.odontograma.fecha_Odontograma
+          .toString()
+          .toLowerCase()
+          .includes(terminoBusqueda.toLowerCase()) ||
+        elemento.odontograma.fichaOdontologica.persona.nombre
+          .toString()
+          .toLowerCase()
+          .includes(terminoBusqueda.toLowerCase()) ||
+        elemento.odontograma.id_odontograma
+          .toString()
+          .includes(terminoBusqueda.toLowerCase())
+      ) {
+        return elemento;
+      }
     });
-    setGlobalFilterValue("");
+    setPiezas(resultadosBusqueda);
   };
-  const onGlobalFilterChange = (e) => {
-    const value = e.target.value;
-    let _filters = { ...filters };
-
-    _filters['global'].value = value;
-
-    setFilters(_filters);
-    setGlobalFilterValue(value);
-  };
- 
-  const renderHeader = () => {
-    return (
-      <div className="flex justify-content-between">
-        <Button
-          type="button"
-          icon="pi pi-filter-slash"
-          label="Clear"
-          outlined
-          onClick={clearFilter}
-        />
-        <span className="p-input-icon-left">
-          <i className="pi pi-search" />
-          <InputText
-            value={globalFilterValue}
-            onChange={onGlobalFilterChange}
-            placeholder="Keyword Search"
-          />
-        </span>
-      </div>
-    );
-  };
-
-  const header = 
-  // renderHeader
-  (
+  const header = (
     <div className="flex flex-wrap align-items-center justify-content-between gap-2">
       <span className="text-xl text-900 font-bold">Historial de Piezas</span>
-
+      <Divider />
+      <div
+        id="busqueda"
+        className="containerInput"
+        style={{ alignItems: "center" }}
+      >
+        <input
+          className="form-control inputBuscar"
+          value={busqueda}
+          placeholder="Búsqueda por cedula, por fecha de odontograma, nombre de persona"
+          onChange={handleChange}
+        />
+      </div>
     </div>
   );
-  const dateFilterTemplate = (options) => {
-    return <Calendar
-    value={options.value}
-    onChange={(e) => {
-      options.filterCallback(new Date(e.value), options.index);
-    }}
-    dateFormat="mm/dd/yy"
-    placeholder="mm/dd/yyyy"
-    mask="99/99/9999"
-  />
-  };
-  const dateBodyTemplate = (rowData) => {
-    const fecha = new Date(rowData.fecha_creacion);
-    return formatDate(fecha);
-  };
-  const formatDate = (value) => {
-    return value.toDateString();
-  };
-
   //HTML
   return (
-
     <>
-      <div >
+      <div>
+        {/* Card de el odontograma y la tabla de piezas */}
+
         <div className="linea">
-          <Card >
+          <Card className="table">
+            {/* Tabla de piezas */}
             <DataTable
-              value={piezas
+              header={header}
+              value={
+                piezas
                 //Filtro para piezas con el id del odontograma
                 // .filter((p) => p.odontograma.id_odontograma === idondonto)
               }
               responsiveLayout="scroll"
+              style={{ textAlign: "center",}}
               selectionMode="single"
-
               paginator
               rows={5}
               rowsPerPageOptions={[5, 10, 25, 50]}
-              loading={loading}
-              header={header}
-              emptyMessage="No se encontraron piezas."
             >
-              <Column field="id_pieza" header="ID" filter filterPlaceholder="Busqueda por id"></Column>
               <Column
-                dataType="date"
-                filterField="fecha_creacion"
-                header="Fecha Pieza"
-                body=
-                {dateBodyTemplate}
-                // {(rowData) => {
-                //   const fecha = new Date(rowData.fecha_creacion);
-                //   return fecha.toLocaleTimeString;
-                // }}
-                filter filterElement={dateFilterTemplate}
+                style={{
+                  textAlign: "center",
+                }}
+                field="id_pieza"
+                header="ID"
+              ></Column>
+              <Column
+                style={{
+                  textAlign: "center",
+                }}
+                field="fecha_creacion"
+                header="Fecha"
+                body={(rowData) => {
+                  const fecha = new Date(rowData.fecha_creacion);
+                  return fecha.toLocaleDateString();
+                }}
               />
-
-              <Column field="numero_pieza" header="PIEZA" filter filterPlaceholder="Busqueda por N°-pieza"></Column>
-              <Column field="tratamiento" header="TRATAMIENTO" filter filterPlaceholder="Busqueda por tratamiento"></Column>
-              <Column field="cara_pieza" header="CARA" filter filterPlaceholder="Busqueda por cara"></Column>
-              <Column field="odontograma.fichaOdontologica.persona.cedula" header="CEDULA" filter filterPlaceholder="Busqueda por cedula"></Column>
-              <Column field="odontograma.fichaOdontologica.persona.nombre" header="NOMBRE" filter filterPlaceholder="Busqueda por nombre"></Column>
-              <Column field="odontograma.id_odontograma" header="ODONTOGRAMA" filter filterPlaceholder="Busqueda por id-Odontograma"></Column>
-              <Column field="odontograma.fecha_Odontograma" header="ODONTOGRAMA" filter filterPlaceholder="Busqueda por Fecha-Odontograma"></Column>
+              <Column
+                style={{
+                  textAlign: "center",
+                }}
+                field="numero_pieza"
+                header="PIEZA"
+              ></Column>
+              <Column
+                style={{
+                  textAlign: "center",
+                }}
+                field="tratamiento"
+                header="TRATAMIENTO"
+              ></Column>
+              <Column
+                style={{
+                  textAlign: "center",
+                }}
+                field="cara_pieza"
+                header="CARA"
+              ></Column>
+              <Column
+                style={{
+                  textAlign: "center",
+                }}
+                field="odontograma.fichaOdontologica.persona.cedula"
+                header="CÉDULA"
+              ></Column>
+              <Column
+                style={{
+                  textAlign: "center",
+                }}
+                field="odontograma.fichaOdontologica.persona.nombre"
+                header="NOMBRE"
+              ></Column>
+              <Column
+                style={{
+                  textAlign: "center",
+                }}
+                field="odontograma.id_odontograma"
+                header="ODONTOGRAMA"
+              ></Column>
+              <Column
+                style={{
+                  textAlign: "center"
+                }}
+                field="odontograma.fecha_Odontograma"
+                header="FECHA ODONTOGRAMA"
+              ></Column>
             </DataTable>
 
             <br />
-            <Divider align="left">
+            <Divider align="center">
               <div className="inline-flex align-items-center">
                 <b>ODONTOGRAMA</b>
               </div>
@@ -173,7 +179,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -184,7 +189,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -195,7 +199,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -206,7 +209,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -217,7 +219,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -228,7 +229,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -239,7 +239,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -250,7 +249,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td className="LineaIzquierda">
@@ -261,7 +259,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -272,7 +269,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -283,7 +279,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -294,7 +289,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -305,7 +299,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -316,7 +309,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -327,7 +319,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -338,7 +329,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                 </tr>
@@ -551,7 +541,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -562,7 +551,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -573,7 +561,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -584,7 +571,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -595,7 +581,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -606,7 +591,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -617,7 +601,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -628,7 +611,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td className="LineaIzquierda">
@@ -639,7 +621,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -650,7 +631,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -661,7 +641,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -672,7 +651,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -683,7 +661,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -694,7 +671,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -705,7 +681,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -716,7 +691,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                 </tr>
@@ -738,7 +712,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -749,7 +722,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -760,7 +732,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -771,7 +742,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -782,7 +752,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
 
@@ -794,7 +763,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -805,7 +773,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -816,7 +783,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -827,7 +793,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -838,7 +803,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
 
@@ -1000,7 +964,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -1011,7 +974,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -1022,7 +984,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -1033,7 +994,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -1044,7 +1004,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td className="LineaIzquierda">
@@ -1055,7 +1014,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -1066,7 +1024,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -1077,7 +1034,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -1088,7 +1044,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td>
@@ -1099,7 +1054,6 @@ export const HistorialPieza = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modalpieza"
                       alt="odontograma"
-
                     />
                   </td>
                   <td></td>
