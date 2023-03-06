@@ -33,6 +33,7 @@ export const HistorialPieza = () => {
         elemento.odontograma.fichaOdontologica.persona.cedula.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())
       || elemento.odontograma.fecha_Odontograma.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())
       || elemento.odontograma.fichaOdontologica.persona.nombre.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())
+      || elemento.odontograma.id_odontograma.toString().includes(terminoBusqueda.toLowerCase())
       ) {
         return elemento;
       }
