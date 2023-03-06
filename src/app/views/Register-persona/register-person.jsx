@@ -19,10 +19,13 @@ import { PersonContext } from "./contexts/PersonContext";
 import { RolContext } from "./contexts/RolContext";
 import { Card } from "primereact/card";
 import { Toast } from "primereact/toast";
+import { claseValidaciones } from "../../Validaciones/ClaseValidaciones";
 
 export const RegisterPerson = () => {
 
     const toast = useRef(null);
+
+    const validate = new claseValidaciones();
 
     /* MENSAJES EMERGENTES */
 
@@ -94,8 +97,9 @@ export const RegisterPerson = () => {
 
     const vaciarCamposUsr = () => {
 
-        setUsername("");
-        setPassword("");
+        setUsername1("");
+        setPassword1("");
+        setRepPassword1("");
         setSelectedPersona(null);
         setSelectedRol(null);
     };
@@ -115,13 +119,24 @@ export const RegisterPerson = () => {
             && person.fechaNac != null && person.genero != null && person.celular != null && person.telefono != null
             && person.direccion != null) {
 
-            await axios.post("http://localhost:8080/api/persona/crear", person);
+            if (validate.validarCedulaTs(person.cedula)) {
 
-            vaciarCampos();
+                if (validate.validarEmail(person.email)) {
 
-            showSuccess("OK", "Registro Exitoso");
+                    await axios.post("http://localhost:8080/api/persona/crear", person);
 
-            setTab(1);
+                    vaciarCampos();
+
+                    showSuccess("OK", "Registro Exitoso");
+
+                    setTab(1);
+                } else {
+                    showError("ERROR", "Cédula Digitada Errónea");
+                }
+            } else {
+
+                showError("ERROR", "Cédula Digitada Errónea");
+            }
         } else {
 
             showError("ERROR", 'Llene Todos Los Campos')
@@ -129,12 +144,30 @@ export const RegisterPerson = () => {
 
     };
 
+
+    const validarcedul = (cedula) => {
+        if (cedula.length === 10) {
+            return true;
+        } else {
+            // Imprimimos en consola si la cedula tiene mas o menos de 10 digitos
+            return false;
+        }
+    }
+
+    //Validacion de cedula useEfect
+    useEffect(() => {
+        if (person.cedula !== undefined) {
+            if (validarcedul(person.cedula) && validate.validarCedulaTs(person.cedula) == false) {
+                return showError('OK', 'Cedula Incorrecta')
+            }
+        }
+
+    }, [person.cedula])
     //DATOS DE USUARIO
 
-    const [username, setUsername] = useState("");
-
-    const [password, setPassword] = useState("");
-    const [repPassword, setRepPassword] = useState("");
+    const [username, setUsername1] = useState("");
+    const [password, setPassword1] = useState("");
+    const [repPassword, setRepPassword1] = useState("");
 
     const postUser = async () => {
         const url = "http://localhost:8080/usuarios/signup";
@@ -142,7 +175,7 @@ export const RegisterPerson = () => {
         const data = {
             username: username,
             password: password,
-            enabled: true,
+            enabled: null,
             persona: {
                 id_persona: selectedPersona?.id_persona,
             },
@@ -184,6 +217,7 @@ export const RegisterPerson = () => {
     const generos = ["Masculino", "Femenino", "Otro"];
 
     const selectedPersonTemplate = (option, props) => {
+
         if (option) {
             return <div className="flex align-items-center">{option.label}</div>;
         }
@@ -200,6 +234,10 @@ export const RegisterPerson = () => {
     const blockSpecial = RegExp(
         /^[^<>*!#@$%^_=+?`\|{}[\]~"'\.\,=0123456789/;:]+$/
     );
+
+    //Registrar fechas maximo 3 años antes de la fecha actual
+    const maxDate = new Date();
+    maxDate.setFullYear(maxDate.getFullYear() - 3);
 
     const show = () => {
         toast.current.show({ severity: 'success', summary: 'Form Submitted', detail: formik.values.value });
@@ -378,16 +416,13 @@ export const RegisterPerson = () => {
                                             <div className="campo p-col-12 p-md-4">
                                                 <span className="p-float-label">
                                                     <Calendar
-                                                        value={
-                                                            person.fechaNac &&
-                                                            new Date(person.fechaNac + " ")
-                                                        }
+                                                        value={person.fechaNac && new Date(person.fechaNac + " ")}
                                                         onChange={(e) =>
                                                             onInputChange(
                                                                 e.target.value.toISOString().substring(0, 10),
                                                                 "fechaNac"
                                                             )
-                                                        }
+                                                        } maxDate={maxDate}
                                                         dateFormat="yy-mm-dd"
                                                     />
                                                     <label htmlFor="fechaNac">
@@ -507,10 +542,10 @@ export const RegisterPerson = () => {
                                                     <span className="p-float-label">
                                                         <InputText
                                                             id="float-input"
-                                                            name="username"
+                                                            name="username2"
                                                             type={"text"}
                                                             value={username}
-                                                            onChange={(e) => setUsername(e.target.value)}
+                                                            onChange={(e) => setUsername1(e.target.value)}
                                                         />
                                                         <label htmlFor="username">Username:</label>
                                                     </span>
@@ -520,9 +555,9 @@ export const RegisterPerson = () => {
                                                     <span className="p-float-label">
                                                         <Password
                                                             id="password"
-                                                            name="password"
+                                                            name="password2"
                                                             value={password}
-                                                            onChange={(e) => setPassword(e.target.value)}
+                                                            onChange={(e) => setPassword1(e.target.value)}
                                                             toggleMask
                                                             promptLabel="Ingrese una Contraseña" weakLabel="Debil" mediumLabel="Medio"
                                                             strongLabel="Fuerte"
@@ -562,7 +597,7 @@ export const RegisterPerson = () => {
                                                             id="password"
                                                             name="password"
                                                             value={repPassword}
-                                                            onChange={(e) => setRepPassword(e.target.value)}
+                                                            onChange={(e) => setRepPassword1(e.target.value)}
                                                             toggleMask feedback={false} />
                                                         <label htmlFor="password">
                                                             Repetir Contraseña
