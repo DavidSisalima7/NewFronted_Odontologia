@@ -14,48 +14,107 @@ import { HistorialPieza } from "../HistorialPieza/HistorialPieza";
 import UserContextProvider from "../Users/contexts/UserContext";
 import UserList from "../Users/components/ListUsers";
 import RegisterPerson from "../Register-persona/register-person";
+import { ApiResponse } from "../../interfaces/response/ApiResponse";
+import { Toast } from "primereact/toast";
+import React, {useRef } from "react";
+import { NavBarPaciente } from "../../common/NavBarPaciente";
+import { NavBarUserDisabled } from "../../common/NavBarUserDisabled";
 
 export const DashboardRouter = () => {
   //Datos del sessionStorage
-  const dataT = sessionStorage.getItem("user");
-  const objetoDatos: User = dataT ? JSON.parse(dataT || "{}") : null;
-  const rol = objetoDatos?.username;
+  const userData = sessionStorage.getItem("user");
+  const userObj = JSON.parse(userData|| "{}");
+  const rol=userObj.rol;
+  const enabled=userObj.enabled;
+  const toast = useRef<Toast>(null);
 
+  const showError = (errorPrincipal: string, detalleError: string) => {
+    toast.current?.show({
+      severity: "error",
+      summary: errorPrincipal,
+      detail: detalleError,
+      life: 3000,
+    });
+  };
+ 
   return (
     <>
+     <Toast ref={toast} />
       <main>
         <div>
           <div>
             <Switch>
               <Route exact path="/dashboard/home">
-                {rol === "admin" ? <NavBar /> : <NavBar />}
+                {rol === 1 && enabled===true?(
+                <NavBarPaciente/>
+                ):rol === 2 && enabled===true?(
+                 <NavBar />
+                 
+                 ):(
+                   <NavBarUserDisabled/>
+                 )}
                 <Home />
               </Route>
 
               <Route path="/ficha">
-                {rol === "admin" ? <NavBar /> : <NavBar />}
+              {rol === 1 && enabled===true?(
+                <NavBarPaciente/>
+                ):rol === 2 && enabled===true?(
+                 <NavBar />
+                 
+                 ):(
+                   <NavBarUserDisabled/>
+                 )}
                 <FichaOdontologica />
               </Route>
               <Route path="/historial">
-                {rol === "admin" ? <NavBar /> : <NavBar />}
+              {rol === 1 && enabled===true?(
+                <NavBarPaciente/>
+                ):rol === 2 && enabled===true?(
+                 <NavBar />
+                 
+                 ):(
+                   <NavBarUserDisabled/>
+                 )}
                 <Historial_ficha />
               </Route>
               <Route path="/list-person">
-                {rol === "admin" ? <NavBar /> : <NavBar />}
+              {rol === 1 && enabled===true?(
+                <NavBarPaciente/>
+                ):rol === 2 && enabled===true?(
+                 <NavBar />
+                 
+                 ):(
+                   <NavBarUserDisabled/>
+                 )}
                 <PersonContextProvider>
                   <PersonList />
                 </PersonContextProvider>
               </Route>
 
               <Route path="/list-users">
-                {rol === "admin" ? <NavBar /> : <NavBar />}
+              {rol === 1 && enabled===true?(
+                <NavBarPaciente/>
+                ):rol === 2 && enabled===true?(
+                 <NavBar />
+                 
+                 ):(
+                   <NavBarUserDisabled/>
+                 )}
                 <UserContextProvider>
                   <UserList />
                 </UserContextProvider>
               </Route>
 
               <Route path="/reg-person">
-                {rol === "admin" ? <NavBar /> : <NavBar />}
+              {rol === 1 && enabled===true?(
+                <NavBarPaciente/>
+                ):rol === 2 && enabled===true?(
+                 <NavBar />
+                 
+                 ):(
+                   <NavBarUserDisabled/>
+                 )}
                 <PersonContextProvider>
                   <RolContextProvider>
                     <RegisterPerson />
@@ -63,21 +122,49 @@ export const DashboardRouter = () => {
                 </PersonContextProvider>
               </Route>
               <Route path="/historialPiezas">
-                {rol === "admin" ? <NavBar /> : <NavBar />}
+              {rol === 1 && enabled===true?(
+                <NavBarPaciente/>
+                ):rol === 2 && enabled===true?(
+                 <NavBar />
+                 
+                 ):(
+                   <NavBarUserDisabled/>
+                 )}
                 <HistorialPieza />
               </Route>
               <Route path="/login">
-                {rol === "admin" ? <NavBar /> : <NavBar />}
+              {rol === 1 && enabled===true?(
+                <NavBarPaciente/>
+                ):rol === 2 && enabled===true?(
+                 <NavBar />
+                 
+                 ):(
+                   <NavBarUserDisabled/>
+                 )}
               </Route>
 
               <Route path="/odontograma">
-                {rol === "admin" ? <NavBar /> : <NavBar />}
+              {rol === 1 && enabled===true?(
+                <NavBarPaciente/>
+                ):rol === 2 && enabled===true?(
+                 <NavBar />
+                 
+                 ):(
+                   <NavBarUserDisabled/>
+                 )}
                 <PiezaContextProvider>
                   <OdontogramList />
                 </PiezaContextProvider>
               </Route>
               <Route path="*">
-                {rol === "admin" ? <NavBar /> : <NavBar />}
+              {rol === 1 && enabled===true?(
+                <NavBarPaciente/>
+                ):rol === 2 && enabled===true?(
+                 <NavBar />
+                 
+                 ):(
+                   <NavBarUserDisabled/>
+                 )}
                 <Redirect to="/dashboard/home" />
               </Route>
             </Switch>

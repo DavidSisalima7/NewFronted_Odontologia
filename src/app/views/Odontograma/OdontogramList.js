@@ -46,7 +46,7 @@ export const OdontogramList = () => {
   //HTML
   return (
     <>
-      <div className="card">
+      <div >
         <Toast ref={toast} />
         {/* Card de el odontograma y la tabla de piezas */}
         <div className="linea">
