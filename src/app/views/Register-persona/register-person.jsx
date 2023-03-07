@@ -144,7 +144,6 @@ export const RegisterPerson = () => {
 
     };
 
-
     const validarcedul = (cedula) => {
         if (cedula.length === 10) {
             return true;
@@ -163,6 +162,8 @@ export const RegisterPerson = () => {
         }
 
     }, [person.cedula])
+
+
     //DATOS DE USUARIO
 
     const [username, setUsername1] = useState("");
@@ -422,7 +423,7 @@ export const RegisterPerson = () => {
                                                                 e.target.value.toISOString().substring(0, 10),
                                                                 "fechaNac"
                                                             )
-                                                        } maxDate={maxDate}
+                                                        } maxDate={maxDate} showIcon readOnlyInput
                                                         dateFormat="yy-mm-dd"
                                                     />
                                                     <label htmlFor="fechaNac">
