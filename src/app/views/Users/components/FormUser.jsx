@@ -6,6 +6,7 @@ import { Divider } from "primereact/divider";
 import { Password } from 'primereact/password';
 import { UserContext } from "../contexts/UserContext";
 import { Toast } from "primereact/toast";
+import { confirmDialog, ConfirmDialog } from "primereact/confirmdialog";
 
 export const UserForm = (props) => {
 
@@ -31,6 +32,28 @@ export const UserForm = (props) => {
             life: 3000,
         });
     };
+
+    const confirmSubmitUsr = () => {
+        confirmDialog({
+            message: 'Esta seguro de modificar la información?',
+            header: 'Confirmación',
+            icon: 'pi pi-exclamation-triangle',
+            accept,
+            reject
+        });
+    };
+
+    const reject = () => {
+
+        toast.current.show({ severity: 'warn', summary: 'Cancelado', detail: 'Continue con el registro', life: 3000 });
+    }
+
+    const accept = () => {
+
+        if (confirmSubmitUsr) {
+            saveUser();
+        }
+    }
 
     const { isVisible, setIsVisible } = props;
 
@@ -61,6 +84,27 @@ export const UserForm = (props) => {
         console.log(userData);
     };
 
+    const [valid, setValid] = useState(false);
+    const [strength, setStrength] = useState(0);
+
+    const handleChange = (event) => {
+        updateField(event.target.value, "password");
+        const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+        setValid(pattern.test(event.target.value));
+
+        let newStrength = 0;
+        if (pattern.test(event.target.value)) {
+            newStrength = 100;
+            if (event.target.value.length > 8) {
+                newStrength += 50;
+            }
+            if (event.target.value.match(/[!@#$%^&*(),.?":{}|<>]/)) {
+                newStrength += 50;
+            }
+        }
+        setStrength(newStrength);
+    };
+
     const ChangeEnabled = () => {
         if (userData.enabled == true) {
             updateField(userData.enabled == false, "enabled");
@@ -74,14 +118,26 @@ export const UserForm = (props) => {
             createUser(userData);
         } else {
 
-            if (userData.password == confPassword) {
-                updateUser(userData);
-                setUserData(initialUserState);
-                setIsVisible(false);
-                setConfirmPassword('');
-                showSuccess("OK", "Usuario Actualizado Correctamente");
+            if (userData.username == '' && userData.password == '') {
+
+                if (valid) {
+
+                    if (userData.password == confPassword) {
+                        updateUser(userData);
+                        setUserData(initialUserState);
+                        setIsVisible(false);
+                        setConfirmPassword('');
+                        showSuccess("OK", "Usuario Actualizado Correctamente");
+                    } else {
+                        showError("ERROR", 'Las Contraseñas no Coinciden')
+                    }
+                } else {
+                    showError('ERROR', 'Tome en cuenta las sugerencias de contraseña')
+                }
+
             } else {
-                showError("ERROR", 'Las Contraseñas no Coinciden')
+
+                showError("ERROR", 'Llene Todos Los Campos')
             }
         }
     };
@@ -94,8 +150,9 @@ export const UserForm = (props) => {
     const dialogFooter = (
 
         <div className="ui-dialog-buttonpane p-clearfix">
+            <ConfirmDialog />
             <Button label="Eliminar" icon="pi pi-times" onClick={ChangeEnabled} />
-            <Button label="Guardar" icon="pi pi-check" onClick={saveUser} />
+            <Button label="Guardar" icon="pi pi-check" onClick={confirmSubmitUsr} />
         </div>
     );
 
@@ -146,7 +203,7 @@ export const UserForm = (props) => {
                                     <span className="p-float-label">
                                         <Password
                                             id="password" name="password"
-                                            value={userData.password} onChange={(e) => updateField(e.target.value, "password")}
+                                            value={userData.password} onChange={handleChange}
                                             toggleMask
                                             promptLabel="Ingrese una Contraseña" weakLabel="Debil" mediumLabel="Medio"
                                             strongLabel="Fuerte"

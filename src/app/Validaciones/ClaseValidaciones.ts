@@ -4,7 +4,7 @@ export class claseValidaciones{
     validarCedulaTs = (cedula: string) => {
         let estado = true;
         // Preguntamos si la cedula consta de 10 digitos
-        if (cedula.length === 10) {
+        if (cedula.length == 10) {
 
             // Obtenemos el digito de la region que sonlos dos primeros digitos
             const digitoRegion = cedula.substring(0, 2);

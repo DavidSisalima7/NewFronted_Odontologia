@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import { Dialog } from 'primereact/dialog'
 import { Button } from 'primereact/button'
 import { InputText } from 'primereact/inputtext';
@@ -6,8 +6,60 @@ import { Dropdown } from 'primereact/dropdown';
 import { InputMask } from "primereact/inputmask";
 import { Calendar } from 'primereact/calendar'
 import { PersonContext } from "../contexts/PersonContext";
+import { Toast } from "primereact/toast";
+import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
+import { claseValidaciones } from "../../../Validaciones/ClaseValidaciones";
 
 export const PersonForm = (props) => {
+
+    const toast = useRef(null);
+
+    /* MENSAJES EMERGENTES */
+
+    // Validates Persona
+
+    const validate = new claseValidaciones();
+
+    const showError = (errorPrincipal, detalleError) => {
+        toast.current?.show({
+            severity: "error",
+            summary: errorPrincipal,
+            detail: detalleError,
+            life: 3000,
+        });
+    };
+
+    const showSuccess = (mensajePrincipal, detallePrincipal) => {
+        toast.current?.show({
+            severity: "success",
+            summary: mensajePrincipal,
+            detail: detallePrincipal,
+            life: 3000,
+        });
+    };
+
+    const confirmSubmit = () => {
+        confirmDialog({
+            message: 'Esta seguro de modificar la información?',
+            header: 'Confirmación',
+            icon: 'pi pi-exclamation-triangle',
+            accept,
+            reject
+        });
+    };
+
+    const accept = () => {
+
+        if (confirmSubmit) {
+            savePerson();
+        }
+    }
+
+    const reject = () => {
+
+        toast.current.show({ severity: 'warn', summary: 'Cancelado', detail: 'Continue con el registro', life: 3000 });
+    }
+
 
     const { isVisible, setIsVisible } = props;
 
@@ -60,10 +112,25 @@ export const PersonForm = (props) => {
         if (!editPerson) {
             createPerson(personData);
         } else {
-            updatePerson(personData);
+
+            if (personData.nombre != '' && personData.apellido != '' && personData.email != ''
+                && personData.celular != '' && personData.telefono != ''
+                && personData.direccion != '') {
+
+                if (validate.validarEmail(personData.email)) {
+
+                    updatePerson(personData);
+                    setPersonData(initialPersonState);
+                    setIsVisible(false);
+                    showSuccess("OK", "Registro Actualizado Correctamente");
+                } else {
+                    showError("ERROR", "Correo Digitado Errónea");
+                }
+            } else {
+
+                showError("ERROR", 'Llene Todos Los Campos')
+            }
         }
-        setPersonData(initialPersonState);
-        setIsVisible(false);
     };
 
     const clearSelected = () => {
@@ -74,141 +141,145 @@ export const PersonForm = (props) => {
     const dialogFooter = (
 
         <div className="ui-dialog-buttonpane p-clearfix">
+            <ConfirmDialog />
             <Button label="Eliminar" icon="pi pi-times" onClick={_deletePerson} />
-            <Button label="Guardar" icon="pi pi-check" onClick={savePerson} />
+            <Button label="Guardar" icon="pi pi-check" onClick={confirmSubmit} />
         </div>
     );
 
     return (
-        <div >
-            <Dialog
-                visible={isVisible}
-                modal={true}
-                style={{ width: "700px" }}
-                contentStyle={{ overflow: "visible" }}
-                header="Información Persona"
-                onHide={() => clearSelected()}
-                footer={dialogFooter}>
+        <>
+            <Toast ref={toast} />
+            <div >
+                <Dialog
+                    visible={isVisible}
+                    modal={true}
+                    style={{ width: "700px" }}
+                    contentStyle={{ overflow: "visible" }}
+                    header="Información Persona"
+                    onHide={() => clearSelected()}
+                    footer={dialogFooter}>
 
-                <div className="p-grid p-fluid" >
+                    <div className="p-grid p-fluid" >
 
-                    <div className="row">
-                        <div className="col">
+                        <div className="row">
+                            <div className="col">
 
-                            <br />
-                            <br />
-                            <div className="p-float-label">
-                                <span className="p-float-label">
-                                    <InputText id="float-input" name="cedula" disabled value={personData.cedula}
-                                        onChange={(e) => updateField(e.target.value, "cedula")} type={"text"} keyfilter="int" />
-                                    <label htmlFor="cedula">
-                                        Cédula:
-                                    </label>
-                                </span>
+                                <br />
+                                <br />
+                                <div className="p-float-label">
+                                    <span className="p-float-label">
+                                        <InputText id="float-input" name="cedula" disabled value={personData.cedula}
+                                            onChange={(e) => updateField(e.target.value, "cedula")} type={"text"} keyfilter="int" />
+                                        <label htmlFor="cedula">
+                                            Cédula:
+                                        </label>
+                                    </span>
+                                </div>
+
+                                <br />
+                                <br />
+                                <div className="p-float-label">
+                                    <span className="p-float-label">
+                                        <InputText id="float-input" type="text" name="apellido" value={personData.apellido}
+                                            onChange={(e) => updateField(e.target.value, "apellido")} keyfilter={blockSpecial} />
+                                        <label htmlFor="nombre" >
+                                            Apellidos:
+                                        </label>
+                                    </span>
+                                </div>
+
+                                <br />
+                                <br />
+                                <div className="p-float-label">
+                                    <span className="p-float-label">
+                                        <InputText id="float-input" type="text" value={personData.email}
+                                            onChange={(e) => updateField(e.target.value, "email")} name="email" />
+                                        <label htmlFor="email" >
+                                            Correo Electrónico:
+                                        </label>
+                                    </span>
+                                </div>
+
+                                <br />
+                                <br />
+                                <div className="p-float-label">
+                                    <span className="p-float-label">
+                                        <InputMask id="float-input" name="celular" value={personData.celular}
+                                            onChange={(e) => updateField(e.target.value, "celular")}
+                                            mask="9999999999" placeholder="9999999999" />
+                                        <label htmlFor="celular">
+                                            Número Celular:
+                                        </label>
+                                    </span>
+                                </div>
+
+                                <br />
+                                <br />
+                                <div className="p-float-label">
+                                    <span className="p-float-label">
+                                        <InputText id="float-input" type="text" name="direccion" value={personData.direccion}
+                                            onChange={(e) => updateField(e.target.value, "direccion")} />
+                                        <label htmlFor="direccion">
+                                            Dirección:
+                                        </label>
+                                    </span>
+                                </div>
                             </div>
 
-                            <br />
-                            <br />
-                            <div className="p-float-label">
-                                <span className="p-float-label">
-                                    <InputText id="float-input" type="text" name="apellido" value={personData.apellido}
-                                        onChange={(e) => updateField(e.target.value, "apellido")} keyfilter={blockSpecial} />
-                                    <label htmlFor="nombre" >
-                                        Apellidos:
-                                    </label>
-                                </span>
-                            </div>
+                            <div className="col">
 
-                            <br />
-                            <br />
-                            <div className="p-float-label">
+                                <br />
+                                <br />
                                 <span className="p-float-label">
-                                    <InputText id="float-input" type="text" value={personData.email}
-                                        onChange={(e) => updateField(e.target.value, "email")} name="email" />
-                                    <label htmlFor="email" >
-                                        Correo Electrónico:
+                                    <InputText id="float-input" name="nombre" value={personData.nombre}
+                                        onChange={(e) => updateField(e.target.value, "nombre")} type="text" keyfilter={blockSpecial} />
+                                    <label htmlFor="name">
+                                        Nombres:
                                     </label>
                                 </span>
-                            </div>
 
-                            <br />
-                            <br />
-                            <div className="p-float-label">
-                                <span className="p-float-label">
-                                    <InputMask id="float-input" name="celular" value={personData.celular}
-                                        onChange={(e) => updateField(e.target.value, "celular")}
-                                        mask="9999999999" placeholder="9999999999" />
-                                    <label htmlFor="celular">
-                                        Número Celular:
-                                    </label>
-                                </span>
-                            </div>
+                                <br />
+                                <br />
+                                <div className="p-float-label">
+                                    <Calendar
+                                        value={personData.fechaNac && new Date(personData.fechaNac + " ")}
+                                        onChange={(e) => updateField(e.target.value.toISOString().substring(0, 10), "fechaNac")}
+                                        dateFormat="yy-mm-dd" disabled />
+                                    <label>Fecha de Nacimiento: </label>
+                                </div>
 
-                            <br />
-                            <br />
-                            <div className="p-float-label">
-                                <span className="p-float-label">
-                                    <InputText id="float-input" type="text" name="direccion" value={personData.direccion}
-                                        onChange={(e) => updateField(e.target.value, "direccion")} />
-                                    <label htmlFor="direccion">
-                                        Dirección:
-                                    </label>
-                                </span>
+                                <br />
+                                <br />
+                                <div className="p-float-label">
+                                    <span className="p-float-label">
+                                        <Dropdown id="float-input" name="genero" value={personData.genero}
+                                            onChange={(e) => updateField(e.target.value, "genero")} options={generos}
+                                            placeholder="Género" className="w-full md:w-14rem" />
+                                        <label htmlFor="float-input">Género:</label>
+                                    </span>
+                                </div>
+
+                                <br />
+                                <br />
+                                <div className="p-float-label">
+                                    <span className="p-float-label">
+                                        <InputMask id="float-input" name="telefono" value={personData.telefono}
+                                            onChange={(e) => updateField(e.target.value, "telefono")} mask="99-9999999"
+                                            placeholder="99-9999999" />
+                                        <label htmlFor="telefono">
+                                            Número Telefónico:
+                                        </label>
+                                    </span>
+                                </div>
                             </div>
                         </div>
 
-                        <div className="col">
-
-                            <br />
-                            <br />
-                            <span className="p-float-label">
-                                <InputText id="float-input" name="nombre" value={personData.nombre}
-                                    onChange={(e) => updateField(e.target.value, "nombre")} type="text" keyfilter={blockSpecial} />
-                                <label htmlFor="name">
-                                    Nombres:
-                                </label>
-                            </span>
-
-                            <br />
-                            <br />
-                            <div className="p-float-label">
-                                <Calendar
-                                    value={personData.fechaNac && new Date(personData.fechaNac + " ")}
-                                    onChange={(e) => updateField(e.target.value.toISOString().substring(0, 10), "fechaNac")}
-                                    dateFormat="yy-mm-dd" />
-                                <label>Fecha de Nacimiento: </label>
-                            </div>
-
-                            <br />
-                            <br />
-                            <div className="p-float-label">
-                                <span className="p-float-label">
-                                    <Dropdown id="float-input" name="genero" value={personData.genero}
-                                        onChange={(e) => updateField(e.target.value, "genero")} options={generos}
-                                        placeholder="Género" className="w-full md:w-14rem" />
-                                    <label htmlFor="float-input">Género:</label>
-                                </span>
-                            </div>
-
-                            <br />
-                            <br />
-                            <div className="p-float-label">
-                                <span className="p-float-label">
-                                    <InputMask id="float-input" name="telefono" value={personData.telefono}
-                                        onChange={(e) => updateField(e.target.value, "telefono")} mask="99-9999999"
-                                        placeholder="99-9999999" />
-                                    <label htmlFor="telefono">
-                                        Número Telefónico:
-                                    </label>
-                                </span>
-                            </div>
-                        </div>
                     </div>
 
-                </div>
-
-            </Dialog>
-        </div>
+                </Dialog>
+            </div>
+        </>
     );
 }
 

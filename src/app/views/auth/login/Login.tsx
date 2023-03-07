@@ -27,17 +27,17 @@ export function Login() {
 
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     try {
-        e.preventDefault();
-        const resp = await AuthService.login(auth);
-        const rol=resp.rol.rolId;
-        const enabled=resp.enabled;
-        sessionStorage.setItem(
-          "user",
-          JSON.stringify({rol,enabled, loggedIn: true })
-        )
-        dispatchUser({type:'login', payload:resp.data }); 
-        history.replace("/dashboard/home");
-      
+      e.preventDefault();
+      const resp = await AuthService.login(auth);
+      const rol = resp.rol.rolId;
+      const enabled = resp.enabled;
+      sessionStorage.setItem(
+        "user",
+        JSON.stringify({ rol, enabled, loggedIn: true })
+      )
+      dispatchUser({ type: 'login', payload: resp.data });
+      history.replace("/dashboard/home");
+
     } catch (error) {
       showError("ERROR", "Credenciales incorrectas");
     }

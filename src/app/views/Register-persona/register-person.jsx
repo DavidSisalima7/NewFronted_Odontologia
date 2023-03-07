@@ -14,12 +14,13 @@ import { Password } from "primereact/password";
 import { useFormik } from 'formik';
 import { TabView, TabPanel } from "primereact/tabview";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { PersonContext } from "./contexts/PersonContext";
 import { RolContext } from "./contexts/RolContext";
 import { Card } from "primereact/card";
 import { Toast } from "primereact/toast";
 import { claseValidaciones } from "../../Validaciones/ClaseValidaciones";
+import { PersonService } from "./services/persona";
 
 export const RegisterPerson = () => {
 
@@ -48,9 +49,72 @@ export const RegisterPerson = () => {
         });
     };
 
+    const confirmSubmit = () => {
+        confirmDialog({
+            message: 'Crear Registro.?',
+            header: 'Confirmación',
+            icon: 'pi pi-exclamation-triangle',
+            accept,
+            reject
+        });
+    };
+
+    const confirmCancel = () => {
+        confirmDialog({
+            message: 'Esta seguro de cancelar registro.?',
+            header: 'Borrar Confirmación',
+            icon: 'pi pi-info-circle',
+            acceptClassName: 'p-button-danger',
+            accept,
+            reject
+        });
+    };
+
+    const confirmSubmitUsr = () => {
+        confirmDialog({
+            message: 'Crear Usuario.?',
+            header: 'Confirmación',
+            icon: 'pi pi-exclamation-triangle',
+            accept,
+            reject
+        });
+    };
+
+    const confirmCancelUsr = () => {
+        confirmDialog({
+            message: 'Esta seguro de cancelar registro.?',
+            header: 'Borrar Confirmación',
+            icon: 'pi pi-info-circle',
+            acceptClassName: 'p-button-danger',
+            accept,
+            reject
+        });
+    };
+
+    const accept = () => {
+
+        if (confirmCancel) {
+            vaciarCampos();
+        }
+        if (confirmSubmit && person.cedula != '') {
+            onSubmit();
+        }
+        if (confirmCancelUsr) {
+            vaciarCamposUsr();
+        }
+        if (confirmSubmitUsr && username != '') {
+            onSubmitUsr();
+        }
+    }
+
+    const reject = () => {
+
+        toast.current.show({ severity: 'warn', summary: 'Cancelado', detail: 'Continue con el registro', life: 3000 });
+    }
+
     /* MENSAJES EMERGENTES */
 
-    const { persons } = useContext(PersonContext);
+    const { persons, findPerson } = useContext(PersonContext);
 
     const { roles } = useContext(RolContext);
 
@@ -76,7 +140,25 @@ export const RegisterPerson = () => {
 
     //DATOS DE PERSONA
 
+    const initialPerson2State = {
+
+        nombre: "",
+        apellido: "",
+        email: "",
+        fechaNac: "",
+        genero: "",
+        celular: '',
+        telefono: '',
+        direccion: "",
+    };
+
+    const vaciarCampos2 = () => {
+
+        setPerson(initialPerson2State);
+    };
+
     const initialPersonState = {
+
         id_persona: "",
         cedula: "",
         nombre: "",
@@ -92,13 +174,12 @@ export const RegisterPerson = () => {
     const vaciarCampos = () => {
 
         setPerson(initialPersonState);
-
     };
 
     const vaciarCamposUsr = () => {
 
-        setUsername1("");
-        setPassword1("");
+        setUsername("");
+        setPassword("");
         setRepPassword1("");
         setSelectedPersona(null);
         setSelectedRol(null);
@@ -112,34 +193,90 @@ export const RegisterPerson = () => {
         console.log(person);
     };
 
-    const onSubmit = async (e) => {
-        e.preventDefault();
+    const [cedul, setCedul] = useState("");
 
-        if (person.nombre != null && person.cedula != null && person.apellido != null && person.email != null
-            && person.fechaNac != null && person.genero != null && person.celular != null && person.telefono != null
-            && person.direccion != null) {
+    const getCedul = async (cedula) => {
 
-            if (validate.validarCedulaTs(person.cedula)) {
+        if (person.cedula !== undefined) {
 
-                if (validate.validarEmail(person.email)) {
+            if (validarcedul(person.cedula)) {
 
-                    await axios.post("http://localhost:8080/api/persona/crear", person);
+                const { data } = await axios.get(
+                    `http://localhost:8080/api/persona/buscarcedul/${cedula}`
+                );
+                /* console.log(data.cedula) */
+                setCedul(data.cedula);
+                setPerson(data);
 
-                    vaciarCampos();
+                console.log(data.cedula);
+            } else {
+                vaciarCampos2();
+            }
+        }
+    };
 
-                    showSuccess("OK", "Registro Exitoso");
+    useEffect(() => {
 
-                    setTab(1);
+        if (getCedul(person.cedula)) {
+        }
+
+        
+
+    }, [person.cedula])
+
+    const [usern, setUsern] = useState();
+    const [idper, setIdper] = useState();
+
+    const getUsername = async (user) => {
+
+        const { data } = await axios.get(
+            `http://localhost:8080/usuarios/search/${user}`
+        );
+        /* console.log(data.cedula) */
+        setUsern(data.username);
+        setIdper(data.id_persona);
+        console.log(data.username);
+        console.log(data.id_persona);
+    };
+
+    const onSubmit = async () => {
+
+        if (tab == 0) {
+            console.log('Entro');
+            if (person.nombre != '' && person.cedula != '' && person.apellido != '' && person.email != ''
+                && person.fechaNac != '' && person.genero != '' && person.celular != '' && person.telefono != ''
+                && person.direccion != '') {
+
+                console.log(person.cedula);
+
+                if (validate.validarCedulaTs(person.cedula)) {
+
+                    if (cedul != person.cedula) {
+
+                        if (validate.validarEmail(person.email)) {
+
+                            await axios.post("http://localhost:8080/api/persona/crear", person);
+
+                            vaciarCampos();
+
+                            showSuccess("OK", "Registro Exitoso");
+
+                            setTab(1);
+                        } else {
+                            showError("ERROR", "Correo Digitado Errónea");
+                        }
+                    } else {
+
+                        showError("ERROR", "Ya cuenta con un registro");
+                    }
                 } else {
+
                     showError("ERROR", "Cédula Digitada Errónea");
                 }
             } else {
 
-                showError("ERROR", "Cédula Digitada Errónea");
+                showError("ERROR", 'Llene Todos Los Campos')
             }
-        } else {
-
-            showError("ERROR", 'Llene Todos Los Campos')
         }
 
     };
@@ -155,28 +292,36 @@ export const RegisterPerson = () => {
 
     //Validacion de cedula useEfect
     useEffect(() => {
+
         if (person.cedula !== undefined) {
             if (validarcedul(person.cedula) && validate.validarCedulaTs(person.cedula) == false) {
-                return showError('OK', 'Cedula Incorrecta')
+                return showError('OK', 'Cédula Incorrecta')
             }
         }
-
     }, [person.cedula])
 
+    const [tab, setTab] = useState(0);
 
     //DATOS DE USUARIO
 
-    const [username, setUsername1] = useState("");
-    const [password, setPassword1] = useState("");
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
     const [repPassword, setRepPassword1] = useState("");
 
+    useEffect(() => {
+
+        if (getUsername(username)) {
+        }
+    }, [username])
+
     const postUser = async () => {
+
         const url = "http://localhost:8080/usuarios/signup";
 
         const data = {
             username: username,
             password: password,
-            enabled: null,
+            enabled: true,
             persona: {
                 id_persona: selectedPersona?.id_persona,
             },
@@ -190,29 +335,43 @@ export const RegisterPerson = () => {
 
     const onSubmitUsr = async () => {
 
-        if (username != '' && password != '' && repPassword != '') {
+        console.log('Entro aca ');
 
-            if (selectedPersona?.id_persona != null && selectedRol?.rolId != null) {
+        if (tab == 1) {
 
-                if (password == repPassword) {
+            if (username != '' && password != '' && repPassword != '') {
 
-                    await postUser();
-                    vaciarCamposUsr();
-                    showSuccess("OK", "Usuario Creado Correctamente");
+                if (selectedPersona?.id_persona != null && selectedRol?.rolId != null) {
+
+                    if (usern != username) {
+
+                        if (valid) {
+
+                            if (password == repPassword) {
+
+                                await postUser();
+                                vaciarCamposUsr();
+                                showSuccess("OK", "Usuario Creado Correctamente");
+
+                            } else {
+                                showError("ERROR", 'Las Contraseñas no Coinciden')
+                            }
+                        } else {
+                            showError('ERROR', 'Tome en cuenta las sugerencias de contraseña')
+                        }
+                    } else {
+                        showError("ERROR", 'El usuario ya cuenta con un registro')
+                    }
                 } else {
-                    showError("ERROR", 'Las Contraseñas no Coinciden')
+                    showError("ERROR", 'Otorgue un Rol o Identificador de Usuario')
                 }
             } else {
-                showError("ERROR", 'Otorgue un Rol o Identificador de Usuario')
-            }
-        } else {
 
-            showError("ERROR", 'Llene Todos Los Campos')
+                showError("ERROR", 'Llene Todos Los Campos')
+            }
         }
 
     };
-
-    const [tab, setTab] = useState(0);
 
     //Datos Dropdown
     const generos = ["Masculino", "Femenino", "Otro"];
@@ -240,33 +399,25 @@ export const RegisterPerson = () => {
     const maxDate = new Date();
     maxDate.setFullYear(maxDate.getFullYear() - 3);
 
-    const show = () => {
-        toast.current.show({ severity: 'success', summary: 'Form Submitted', detail: formik.values.value });
-    };
+    const [valid, setValid] = useState(false);
+    const [strength, setStrength] = useState(0);
 
-    const formik = useFormik({
-        initialValues: {
-            value: ''
-        },
-        validate: (data) => {
-            let errors = {};
+    const handleChange = (event) => {
+        setPassword(event.target.value);
+        const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+        setValid(pattern.test(event.target.value));
 
-            if (!data.value) {
-                errors.value = 'Name - Surname is required.';
+        let newStrength = 0;
+        if (pattern.test(event.target.value)) {
+            newStrength = 100;
+            if (event.target.value.length > 8) {
+                newStrength += 50;
             }
-
-            return errors;
-        },
-        onSubmit: (data) => {
-            data && show(data);
-            formik.resetForm();
+            if (event.target.value.match(/[!@#$%^&*(),.?":{}|<>]/)) {
+                newStrength += 50;
+            }
         }
-    });
-
-    const isFormFieldInvalid = (name) => !!(formik.touched[name] && formik.errors[name]);
-
-    const getFormErrorMessage = (name) => {
-        return isFormFieldInvalid(name) ? <small className="p-error">{formik.errors[name]}</small> : <small className="p-error">&nbsp;</small>;
+        setStrength(newStrength);
     };
 
     const passwordFooter = (
@@ -285,6 +436,7 @@ export const RegisterPerson = () => {
     return (
         <>
             <Toast ref={toast} />
+            <ConfirmDialog />
             <div className="fichaP">
                 <div className="container" id="container">
                     <TabView activeIndex={tab} onTabChange={(e) => setTab(e.index)}>
@@ -460,11 +612,12 @@ export const RegisterPerson = () => {
                                     <div className="row text-center">
                                         <div className="col">
                                             <div style={{ justifyContent: "center", alignItems: "center", }}>
+
                                                 <Button
-                                                    type="submit"
+                                                    type="button"
                                                     label="Guardar"
-                                                    onClick={(e) => onSubmit(e)}
                                                     className="mt-2"
+                                                    id="boton1"
                                                     style={{
                                                         background: "#ffff",
                                                         width: "150px",
@@ -472,6 +625,7 @@ export const RegisterPerson = () => {
                                                         textAlign: "center",
                                                         color: "#292929",
                                                     }}
+                                                    onClick={confirmSubmit}
                                                 />
                                             </div>
                                         </div>
@@ -488,7 +642,7 @@ export const RegisterPerson = () => {
                                                         textAlign: "center",
                                                         color: "#292929",
                                                     }}
-                                                    onClick={() => vaciarCampos()}
+                                                    onClick={confirmCancel}
                                                 />
                                             </div>
                                         </div>
@@ -546,7 +700,7 @@ export const RegisterPerson = () => {
                                                             name="username2"
                                                             type={"text"}
                                                             value={username}
-                                                            onChange={(e) => setUsername1(e.target.value)}
+                                                            onChange={(e) => setUsername(e.target.value)}
                                                         />
                                                         <label htmlFor="username">Username:</label>
                                                     </span>
@@ -558,8 +712,8 @@ export const RegisterPerson = () => {
                                                             id="password"
                                                             name="password2"
                                                             value={password}
-                                                            onChange={(e) => setPassword1(e.target.value)}
-                                                            toggleMask
+                                                            onChange={handleChange}
+                                                            toggleMask strength={strength}
                                                             promptLabel="Ingrese una Contraseña" weakLabel="Debil" mediumLabel="Medio"
                                                             strongLabel="Fuerte"
                                                             footer={passwordFooter}
@@ -624,9 +778,10 @@ export const RegisterPerson = () => {
                                             }}
                                         >
                                             <Button
-                                                type="submit"
-                                                onClick={(e) => onSubmitUsr(e)}
+                                                type="button"
+                                                onClick={confirmSubmitUsr}
                                                 label="Guardar"
+                                                id="boton2"
                                                 className="mt-2"
                                                 style={{
                                                     background: "#ffff",
@@ -651,7 +806,7 @@ export const RegisterPerson = () => {
                                                     textAlign: "center",
                                                     color: "#292929",
                                                 }}
-                                                onClick={() => vaciarCamposUsr()}
+                                                onClick={confirmCancelUsr}
                                             />
                                         </div>
                                     </div>
