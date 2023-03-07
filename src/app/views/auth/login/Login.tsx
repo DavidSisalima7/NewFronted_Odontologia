@@ -24,28 +24,20 @@ export function Login() {
   const [auth, setAuth] = useState({ username: "", password: "" });
   const history = useHistory();
 
+
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     try {
-      const username=auth.username
-      if (auth.username==="admin" && auth.password==="claveadmin") {
-        
-        sessionStorage.setItem(
-          "user",
-          JSON.stringify({ username, loggedIn: true })
-        );
-        history.replace("/dashboard/home");
-      }else{
         e.preventDefault();
         const resp = await AuthService.login(auth);
-       
+        const rol=resp.rol.rolId;
+        const enabled=resp.enabled;
         sessionStorage.setItem(
           "user",
-          JSON.stringify({ username, loggedIn: true })
-        );
-        dispatchUser({ type: "login", payload: resp.data });
+          JSON.stringify({rol,enabled, loggedIn: true })
+        )
+        dispatchUser({type:'login', payload:resp.data }); 
         history.replace("/dashboard/home");
-      }
-       
+      
     } catch (error) {
       showError("ERROR", "Credenciales incorrectas");
     }
@@ -89,7 +81,7 @@ export function Login() {
               onChange={(e) => handleChange(e)}
             />
           </div>
-              
+
           <div className="mb-2 p-1 d-flex border rounded">
             <div className="mx-2 mt-1">
               <img className="img-fluid" src={passwordIcon} alt="iconUser" />

@@ -1,4 +1,5 @@
 import { ApiResponse } from "../../interfaces/response/ApiResponse";
+
 import { User } from "../../interfaces/user/User";
 import { fasicellService } from "../FasicellService";
 
@@ -8,4 +9,5 @@ export class AuthService{
       //return (await fasicellService.post('/login', obj)).data
       return (await fasicellService.post('/signin', obj)).data
    }
+
 }
