@@ -31,9 +31,11 @@ export function Login() {
       const resp = await AuthService.login(auth);
       const rol = resp.rol.rolId;
       const enabled = resp.enabled;
+      const id= resp.persona.id_persona;
+
       sessionStorage.setItem(
         "user",
-        JSON.stringify({ rol, enabled, loggedIn: true })
+        JSON.stringify({ id,rol, enabled,loggedIn: true })
       )
       dispatchUser({ type: 'login', payload: resp.data });
       history.replace("/dashboard/home");
