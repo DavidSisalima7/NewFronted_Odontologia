@@ -140,23 +140,6 @@ export const RegisterPerson = () => {
 
     //DATOS DE PERSONA
 
-    const initialPerson2State = {
-
-        nombre: "",
-        apellido: "",
-        email: "",
-        fechaNac: "",
-        genero: "",
-        celular: '',
-        telefono: '',
-        direccion: "",
-    };
-
-    const vaciarCampos2 = () => {
-
-        setPerson(initialPerson2State);
-    };
-
     const initialPersonState = {
 
         id_persona: "",
@@ -174,6 +157,23 @@ export const RegisterPerson = () => {
     const vaciarCampos = () => {
 
         setPerson(initialPersonState);
+    };
+
+    const initialPersonState2 = {
+
+        nombre: "",
+        apellido: "",
+        email: "",
+        fechaNac: "",
+        genero: "",
+        celular: '',
+        telefono: '',
+        direccion: "",
+    };
+
+    const vaciarCampos2 = () => {
+
+        setPerson(initialPersonState2);
     };
 
     const vaciarCamposUsr = () => {
@@ -195,53 +195,44 @@ export const RegisterPerson = () => {
 
     const [cedul, setCedul] = useState("");
 
-    const getCedul = async (cedula) => {
+    useEffect(() => {
 
-        if (person.cedula !== undefined) {
+        const getCedul = async (cedula) => {
 
-            if (validarcedul(person.cedula)) {
+            if (person.cedula !== undefined) {
 
                 const { data } = await axios.get(
                     `http://localhost:8080/api/persona/buscarcedul/${cedula}`
                 );
-                /* console.log(data.cedula) */
-                setCedul(data.cedula);
-                setPerson(data);
 
-                console.log(data.cedula);
-            } else {
-                vaciarCampos2();
+                if (validarcedul(person.cedula) && data.id_persona != null) {
+
+                    console.log('llego');
+                    console.log(person.cedula);
+                    setCedul(data.cedula);
+                    /* setPerson(data); */
+                } else {
+
+                    console.log('No llego');
+                    console.log(person.cedula);
+                    /* vaciarCampos2(); */
+
+                }
             }
-        }
-    };
+        };
 
-    useEffect(() => {
-
-        if (getCedul(person.cedula)) {
-        }
-
-        
+        getCedul(person.cedula);
 
     }, [person.cedula])
 
     const [usern, setUsern] = useState();
-    const [idper, setIdper] = useState();
-
-    const getUsername = async (user) => {
-
-        const { data } = await axios.get(
-            `http://localhost:8080/usuarios/search/${user}`
-        );
-        /* console.log(data.cedula) */
-        setUsern(data.username);
-        setIdper(data.id_persona);
-        console.log(data.username);
-        console.log(data.id_persona);
-    };
 
     const onSubmit = async () => {
 
         if (tab == 0) {
+
+            onInputChange(person.cedula, 'cedula');
+
             console.log('Entro');
             if (person.nombre != '' && person.cedula != '' && person.apellido != '' && person.email != ''
                 && person.fechaNac != '' && person.genero != '' && person.celular != '' && person.telefono != ''
@@ -263,7 +254,7 @@ export const RegisterPerson = () => {
 
                             setTab(1);
                         } else {
-                            showError("ERROR", "Correo Digitado Errónea");
+                            showError("ERROR", "Correo Digitado Erróneo");
                         }
                     } else {
 
@@ -308,11 +299,32 @@ export const RegisterPerson = () => {
     const [password, setPassword] = useState("");
     const [repPassword, setRepPassword1] = useState("");
 
+    const [idper, setIdper] = useState();
+
     useEffect(() => {
 
-        if (getUsername(username)) {
-        }
-    }, [username])
+        const getCedul = async (cedula) => {
+
+            const { data } = await axios.get(
+                `http://localhost:8080/api/persona/buscarcedul/${cedula}`
+            );
+
+            setIdper(data.id_persona);
+        };
+
+        const getUsername = async (user) => {
+
+            const { data } = await axios.get(
+                `http://localhost:8080/usuarios/search/${user}`
+            );
+
+            setUsern(data.username);
+        };
+
+        getCedul(selectedPersona?.cedula);
+        getUsername(username);
+
+    }, [username, selectedPersona?.cedula])
 
     const postUser = async () => {
 
@@ -335,8 +347,6 @@ export const RegisterPerson = () => {
 
     const onSubmitUsr = async () => {
 
-        console.log('Entro aca ');
-
         if (tab == 1) {
 
             if (username != '' && password != '' && repPassword != '') {
@@ -345,22 +355,27 @@ export const RegisterPerson = () => {
 
                     if (usern != username) {
 
-                        if (valid) {
+                        if (idper != selectedPersona?.id_persona) {
 
-                            if (password == repPassword) {
+                            if (valid) {
 
-                                await postUser();
-                                vaciarCamposUsr();
-                                showSuccess("OK", "Usuario Creado Correctamente");
+                                if (password == repPassword) {
 
+                                    await postUser();
+                                    vaciarCamposUsr();
+                                    showSuccess("OK", "Usuario Creado Correctamente");
+
+                                } else {
+                                    showError("ERROR", 'Las Contraseñas no Coinciden')
+                                }
                             } else {
-                                showError("ERROR", 'Las Contraseñas no Coinciden')
+                                showError('ERROR', 'Tome en cuenta las sugerencias de contraseña')
                             }
                         } else {
-                            showError('ERROR', 'Tome en cuenta las sugerencias de contraseña')
+                            showError('ERROR', 'El registro ya cuenta con un usuario')
                         }
                     } else {
-                        showError("ERROR", 'El usuario ya cuenta con un registro')
+                        showError("ERROR", 'Nombre de usuario en uso')
                     }
                 } else {
                     showError("ERROR", 'Otorgue un Rol o Identificador de Usuario')
@@ -370,7 +385,6 @@ export const RegisterPerson = () => {
                 showError("ERROR", 'Llene Todos Los Campos')
             }
         }
-
     };
 
     //Datos Dropdown
@@ -546,7 +560,7 @@ export const RegisterPerson = () => {
                                                             onInputChange(e.target.value, "email")
                                                         }
                                                     />
-                                                    <label htmlFor="email">Correo Electronico:</label>
+                                                    <label htmlFor="email">Correo Electrónico:</label>
                                                 </span>
                                             </div>
 
