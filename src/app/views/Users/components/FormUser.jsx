@@ -48,9 +48,11 @@ export const UserForm = (props) => {
         toast.current.show({ severity: 'warn', summary: 'Cancelado', detail: 'Continue con el registro', life: 3000 });
     }
 
+    const [confPassword, setConfirmPassword] = useState("");
+
     const accept = () => {
 
-        if (confirmSubmitUsr) {
+        if (confirmSubmitUsr && confPassword != '') {
             saveUser();
         }
     }
@@ -58,19 +60,20 @@ export const UserForm = (props) => {
     const { isVisible, setIsVisible } = props;
 
     const {
-        createUser, editUser, deleteUser, updateUser
+        createUser, editUser, updateUser
     } = useContext(UserContext);
 
     const initialUserState = {
+
         id_usuario: null,
         username: "",
         password: "",
-        enabled: true
+        enabled: null
     };
 
-    const [confPassword, setConfirmPassword] = useState("");
-
     const [userData, setUserData] = useState(initialUserState);
+
+    const [label, setLab] = useState("Deshabilitar");
 
     useEffect(() => {
         if (editUser)
@@ -105,29 +108,42 @@ export const UserForm = (props) => {
         setStrength(newStrength);
     };
 
-    const ChangeEnabled = () => {
+    const ChangeEnabled = async () => {
+
         if (userData.enabled == true) {
-            updateField(userData.enabled == false, "enabled");
-        } else {
-            updateField(userData.enabled == true, "enabled");
+            console.log("entro");
+            updateField(false, "enabled");
+            setLab('Habilitar');
+            showSuccess("OK", "Usuario Deshabilitado");
+        } else if (userData.enabled == false) {
+            console.log("no entro ");
+            updateField(true, "enabled");
+            setLab('Deshabilitar');
+            showSuccess("OK", "Usuario Habilitado");
         }
+        updateUser(userData);
     };
+
+    const actualizar = () => {
+        updateUser(userData);
+        setUserData(initialUserState);
+        setIsVisible(false);
+        setConfirmPassword('');
+        showSuccess("OK", "Usuario Actualizado Correctamente");
+    }
 
     const saveUser = () => {
         if (!editUser) {
+            console.log("entro aqui");
             createUser(userData);
         } else {
-
-            if (userData.username == '' && userData.password == '') {
+            console.log("entro aca");
+            if (userData.username != '' && userData.password != '') {
 
                 if (valid) {
 
                     if (userData.password == confPassword) {
-                        updateUser(userData);
-                        setUserData(initialUserState);
-                        setIsVisible(false);
-                        setConfirmPassword('');
-                        showSuccess("OK", "Usuario Actualizado Correctamente");
+                        actualizar();
                     } else {
                         showError("ERROR", 'Las Contraseñas no Coinciden')
                     }
@@ -151,7 +167,7 @@ export const UserForm = (props) => {
 
         <div className="ui-dialog-buttonpane p-clearfix">
             <ConfirmDialog />
-            <Button label="Eliminar" icon="pi pi-times" onClick={ChangeEnabled} />
+            <Button label={label} icon="pi pi-times" onClick={ChangeEnabled} />
             <Button label="Guardar" icon="pi pi-check" onClick={confirmSubmitUsr} />
         </div>
     );
@@ -179,7 +195,7 @@ export const UserForm = (props) => {
                     modal={true}
                     style={{ width: "700px" }}
                     contentStyle={{ overflow: "visible" }}
-                    header="Información Usera"
+                    header="Información User"
                     onHide={() => clearSelected()}
                     footer={dialogFooter}>
 
@@ -191,7 +207,7 @@ export const UserForm = (props) => {
 
                                 <div className="campo p-col-12 p-md-4">
                                     <span className="p-float-label">
-                                        <InputText id="float-input" name="username" type={"text"}
+                                        <InputText id="float-input" name="username" type={"text"} disabled
                                             value={userData.username} onChange={(e) => updateField(e.target.value, "username")} />
                                         <label htmlFor="username">
                                             Username:

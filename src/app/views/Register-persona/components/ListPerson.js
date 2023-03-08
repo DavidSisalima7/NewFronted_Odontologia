@@ -38,7 +38,7 @@ export const PersonList = () => {
           <InputText
             value={globalFilterValue}
             onChange={onGlobalFilterChange}
-            placeholder="Keyword Search"
+            placeholder="Dato a Consultar"
           />
         </span>
       </div>

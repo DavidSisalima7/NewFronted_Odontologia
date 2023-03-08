@@ -17,7 +17,6 @@ import axios from "axios";
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { PersonContext } from "./contexts/PersonContext";
 import { RolContext } from "./contexts/RolContext";
-import { Card } from "primereact/card";
 import { Toast } from "primereact/toast";
 import { claseValidaciones } from "../../Validaciones/ClaseValidaciones";
 import { PersonService } from "./services/persona";
@@ -231,14 +230,9 @@ export const RegisterPerson = () => {
 
         if (tab == 0) {
 
-            onInputChange(person.cedula, 'cedula');
-
-            console.log('Entro');
             if (person.nombre != '' && person.cedula != '' && person.apellido != '' && person.email != ''
                 && person.fechaNac != '' && person.genero != '' && person.celular != '' && person.telefono != ''
                 && person.direccion != '') {
-
-                console.log(person.cedula);
 
                 if (validate.validarCedulaTs(person.cedula)) {
 
