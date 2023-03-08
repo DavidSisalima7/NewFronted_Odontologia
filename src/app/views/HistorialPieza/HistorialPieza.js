@@ -7,6 +7,18 @@ import axios from "axios";
 import { Divider } from "primereact/divider";
 
 export const HistorialPieza = () => {
+
+  //Capturar id_persona de session Storage
+  const userData = sessionStorage.getItem("user");
+  const userObj = JSON.parse(userData|| "{}");
+  const id_persona=userObj.id;
+
+  //Eliminar solo es un log para ver si recibe el id_persona
+  useEffect((()=>{
+    console.log(id_persona); 
+  }))
+  
+
   const [piezas, setPiezas] = useState([]);
   const [tablaPiezas, setTablaPiezas] = useState([]);
   const [busqueda, setBusqueda] = useState("");

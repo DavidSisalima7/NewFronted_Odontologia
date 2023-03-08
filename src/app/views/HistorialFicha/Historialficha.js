@@ -7,7 +7,18 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import * as XLSX from 'xlsx/xlsx.mjs';
 
 function Historial_ficha() {
+  
+  //Capturar id_persona de session Storage
+  const userData = sessionStorage.getItem("user");
+  const userObj = JSON.parse(userData|| "{}");
+  const id_persona=userObj.id;
 
+  //Eliminar solo es un log para ver si recibe el id_persona
+  useEffect((()=>{
+    console.log(id_persona); 
+  }))
+
+  
   const [ficha, setFichas]= useState([]);
   const [tablaFichas, setTablaFichas]= useState([]);
   const [busqueda, setBusqueda]= useState("");
