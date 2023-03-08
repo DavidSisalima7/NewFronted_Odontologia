@@ -34,7 +34,7 @@ const PiezasForm = (props) => {
   } = useContext(PiezaContext);
   const initialPiezaState = {
     numero_pieza: "",
-    tratamiento: "Apiceptomia",
+    tratamiento: "Apiceptomía",
     cara_pieza: "Vestibular",
     odontograma: {
       id_odontograma: location.state.idF,
@@ -90,7 +90,7 @@ const PiezasForm = (props) => {
     "Carillas",
     "Cirugía",
     "Contanto Alimento",
-    "Cororona",
+    "Corona",
     "Curetaje",
     "Endodoncia",
     "Esquelético",
