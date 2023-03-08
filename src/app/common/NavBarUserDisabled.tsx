@@ -1,5 +1,5 @@
 import React, {  useState } from "react";
-import "../Styles/css/Navbar.css";
+import "../Styles/css/NavbarDesh.css";
 
 export const NavBarUserDisabled: React.FC = () => {
   const eliminarUser = () => {
@@ -30,6 +30,8 @@ export const NavBarUserDisabled: React.FC = () => {
             </ul>
           </nav>
         </body>
+        <div className="FondoDeshabilitado">
+        </div>
       </div>
     </>
   );
