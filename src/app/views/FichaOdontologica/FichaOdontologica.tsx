@@ -2,7 +2,7 @@ import "primeicons/primeicons.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.css";
 import { InputText } from "primereact/inputtext";
-import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
+import { Dropdown } from "primereact/dropdown";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { Toast } from "primereact/toast";
@@ -32,7 +32,7 @@ export default function FichaOdontologica() {
 
   const [show, setShowTable] = useState(false);
 
-  const date = new Date();  
+  const date = new Date();
 
   const getFicha = async (id_persona: number) => {
     const { data } = await axios.get(
@@ -55,18 +55,36 @@ export default function FichaOdontologica() {
     getPaciente();
   }, []);
 
-  const save = async () => {
-    if (ficha) {
-      await putFicha();
-    } else {
-      await postFicha();
-    }
+  const showError = (errorPrincipal: any, detalleError: any) => {
     toast.current?.show({
-      severity: "success",
-      summary: "Exito",
-      detail: "Operacion Exitosa",
+      severity: "error",
+      summary: errorPrincipal,
+      detail: detalleError,
       life: 3000,
     });
+  };
+
+  const showSuccess = (mensajePrincipal: any, detallePrincipal: any) => {
+    toast.current?.show({
+      severity: "success",
+      summary: mensajePrincipal,
+      detail: detallePrincipal,
+      life: 3000,
+    });
+  };
+
+  const save = async () => {
+    if (antecedentes !== '' && motivo !== '' && observaciones !== '') {
+      if (ficha) {
+        await putFicha();
+        showSuccess("OK", "Ficha Registrada Correctamente");
+      } else {
+        await postFicha();
+        showSuccess("OK", "Ficha Registrada Modificada");
+      }
+    } else {
+      showError("Error!", "Revizar que todos los campos esten llenos");
+    }
   };
 
   const postFicha = async () => {
@@ -286,7 +304,7 @@ export default function FichaOdontologica() {
               onChange={(e) => setAntecedente(e.target.value)}
               rows={3}
               cols={30}
-              className="p-inputtextarea p-inputtext p-component p-inputtextarea-resizable"
+              className="p-inputtextarea p-inputtext p-component p-inputtextarea-resizable "
             ></textarea>
             <h5 className="textI">Motivo de Consulta</h5>
             <textarea

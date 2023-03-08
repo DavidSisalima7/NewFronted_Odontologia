@@ -349,7 +349,7 @@ export const RegisterPerson = () => {
 
         if (tab == 1) {
 
-            if (username != '' && password != '' && repPassword != '') {
+            if (username !== '' && password !== '' && repPassword !== '') {
 
                 if (selectedPersona?.id_persona != null && selectedRol?.rolId != null) {
 
