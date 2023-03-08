@@ -46,98 +46,152 @@ export const DashboardRouter = () => {
             <Switch>
               <Route exact path="/dashboard/home">
                 {rol === 1 && enabled===true?(
+                  <>
                 <NavBarPaciente/>
-                ):rol === 2 && enabled===true?(
-                 <NavBar />
-                 
-                 ):(
-                   <NavBarUserDisabled/>
-                 )}
                 <Home />
+                </>
+                ):rol === 2 && enabled===true?(
+                  <>
+                 <NavBar />
+                 <Home />
+                 </>
+                 ):(
+                  <>
+                   <NavBarUserDisabled/>
+                   </>
+                 )}
+               
               </Route>
 
               <Route path="/ficha">
               {rol === 1 && enabled===true?(
+                  <>
                 <NavBarPaciente/>
-                ):rol === 2 && enabled===true?(
-                 <NavBar />
-                 
-                 ):(
-                   <NavBarUserDisabled/>
-                 )}
                 <FichaOdontologica />
+                </>
+                ):rol === 2 && enabled===true?(
+                  <>
+                 <NavBar />
+                 <FichaOdontologica />
+                 </>
+                 ):(
+                  <>
+                   <NavBarUserDisabled/>
+                   </>
+                 )}
+                
               </Route>
               <Route path="/historial">
               {rol === 1 && enabled===true?(
+                  <>
                 <NavBarPaciente/>
-                ):rol === 2 && enabled===true?(
-                 <NavBar />
-                 
-                 ):(
-                   <NavBarUserDisabled/>
-                 )}
                 <Historial_ficha />
+                </>
+                ):rol === 2 && enabled===true?(
+                  <>
+                 <NavBar />
+                 <Historial_ficha />
+                 </>
+                 ):(
+                  <>
+                   <NavBarUserDisabled/>
+                   </>
+                 )}
+               
               </Route>
               <Route path="/list-person">
               {rol === 1 && enabled===true?(
+                  <>
                 <NavBarPaciente/>
-                ):rol === 2 && enabled===true?(
-                 <NavBar />
-                 
-                 ):(
-                   <NavBarUserDisabled/>
-                 )}
                 <PersonContextProvider>
                   <PersonList />
                 </PersonContextProvider>
+                </>
+                ):rol === 2 && enabled===true?(
+                  <>
+                 <NavBar />
+                 <PersonContextProvider>
+                  <PersonList />
+                </PersonContextProvider>
+                 </>
+                 ):(
+                  <>
+                   <NavBarUserDisabled/>
+                   </>
+                 )}
+                
               </Route>
 
               <Route path="/list-users">
               {rol === 1 && enabled===true?(
+                  <>
                 <NavBarPaciente/>
-                ):rol === 2 && enabled===true?(
-                 <NavBar />
-                 
-                 ):(
-                   <NavBarUserDisabled/>
-                 )}
                 <UserContextProvider>
                   <UserList />
                 </UserContextProvider>
+                </>
+                ):rol === 2 && enabled===true?(
+                  <>
+                 <NavBar />
+                 <UserContextProvider>
+                  <UserList />
+                </UserContextProvider>
+                 </>
+                 ):(
+                  <>
+                   <NavBarUserDisabled/>
+                   </>
+                 )} 
               </Route>
-
               <Route path="/reg-person">
               {rol === 1 && enabled===true?(
+                  <>
                 <NavBarPaciente/>
-                ):rol === 2 && enabled===true?(
-                 <NavBar />
-                 
-                 ):(
-                   <NavBarUserDisabled/>
-                 )}
                 <PersonContextProvider>
                   <RolContextProvider>
                     <RegisterPerson />
                   </RolContextProvider>
                 </PersonContextProvider>
+                </>
+                ):rol === 2 && enabled===true?(
+                  <>
+                 <NavBar />
+                 <PersonContextProvider>
+                  <RolContextProvider>
+                    <RegisterPerson />
+                  </RolContextProvider>
+                </PersonContextProvider>
+                 </>
+                 ):(
+                  <>
+                   <NavBarUserDisabled/>
+                   </>
+                 )}
+                
               </Route>
               <Route path="/historialPiezas">
               {rol === 1 && enabled===true?(
+                  <>
                 <NavBarPaciente/>
-                ):rol === 2 && enabled===true?(
-                 <NavBar />
-                 
-                 ):(
-                   <NavBarUserDisabled/>
-                 )}
                 <HistorialPieza />
+                </>
+                ):rol === 2 && enabled===true?(
+                  <>
+                 <NavBar />
+                 <HistorialPieza />
+                 </>
+                 ):(
+                  <>
+                   <NavBarUserDisabled/>
+                   </>
+                 )}
+               
               </Route>
               <Route path="/login">
               {rol === 1 && enabled===true?(
                 <NavBarPaciente/>
                 ):rol === 2 && enabled===true?(
                  <NavBar />
-                 
                  ):(
                    <NavBarUserDisabled/>
                  )}
@@ -145,16 +199,24 @@ export const DashboardRouter = () => {
 
               <Route path="/odontograma">
               {rol === 1 && enabled===true?(
+                  <>
                 <NavBarPaciente/>
-                ):rol === 2 && enabled===true?(
-                 <NavBar />
-                 
-                 ):(
-                   <NavBarUserDisabled/>
-                 )}
                 <PiezaContextProvider>
                   <OdontogramList />
                 </PiezaContextProvider>
+                </>
+                ):rol === 2 && enabled===true?(
+                  <>
+                 <NavBar />
+                 <PiezaContextProvider>
+                  <OdontogramList />
+                </PiezaContextProvider>
+                 </>
+                 ):(
+                  <>
+                   <NavBarUserDisabled/>
+                   </>
+                 )}   
               </Route>
               <Route path="*">
               {rol === 1 && enabled===true?(
