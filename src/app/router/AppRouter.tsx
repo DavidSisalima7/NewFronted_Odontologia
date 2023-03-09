@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { BrowserRouter as Router, Switch, Route, Redirect, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { AuthRouter } from '../views/auth/AuthRouter';
 import { DashboardRouter } from '../views/dashboard/DashboardRouter';
 import { AuthContext } from '../views/store/contexts/AuthContext';

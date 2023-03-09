@@ -24,22 +24,20 @@ export function Login() {
   const [auth, setAuth] = useState({ username: "", password: "" });
   const history = useHistory();
 
-
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
       const resp = await AuthService.login(auth);
       const rol = resp.rol.rolId;
       const enabled = resp.enabled;
-      const id= resp.persona.id_persona;
+      const id = resp.persona.id_persona;
 
       sessionStorage.setItem(
         "user",
-        JSON.stringify({ id,rol, enabled,loggedIn: true })
-      )
-      dispatchUser({ type: 'login', payload: resp.data });
+        JSON.stringify({ id, rol, enabled, loggedIn: true })
+      );
+      dispatchUser({ type: "login", payload: resp.data });
       history.replace("/dashboard/home");
-
     } catch (error) {
       showError("ERROR", "Credenciales incorrectas");
     }

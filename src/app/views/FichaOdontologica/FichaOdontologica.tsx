@@ -74,7 +74,7 @@ export default function FichaOdontologica() {
   };
 
   const save = async () => {
-    if (antecedentes !== '' && motivo !== '' && observaciones !== '') {
+    if (antecedentes !== "" && motivo !== "" && observaciones !== "") {
       if (ficha) {
         await putFicha();
         showSuccess("OK", "Ficha Registrada Correctamente");
