@@ -10,6 +10,7 @@ import PiezaContextProvider from "../Odontograma/PiezaContext";
 import PersonContextProvider from "../Register-persona/contexts/PersonContext";
 import RolContextProvider from "../Register-persona/contexts/RolContext";
 import { HistorialPieza } from "../HistorialPieza/HistorialPieza";
+import { HistorialPiezaP } from "../HistorialPiezaP/HistorialPieza";
 import UserContextProvider from "../Users/contexts/UserContext";
 import UserList from "../Users/components/ListUsers";
 import RegisterPerson from "../Register-persona/register-person";
@@ -171,7 +172,7 @@ export const DashboardRouter = () => {
                 ) : rol === 2 && enabled === true ? (
                   <>
                     <NavBar />
-                    <HistorialPieza />
+                    <HistorialPiezaP />
                   </>
                 ) : (
                   <>
