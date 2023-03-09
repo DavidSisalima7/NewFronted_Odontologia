@@ -167,12 +167,12 @@ export const DashboardRouter = () => {
                 {rol === 1 && enabled === true ? (
                   <>
                     <NavBarPaciente />
-                    <HistorialPieza />
+                    <HistorialPiezaP />
                   </>
                 ) : rol === 2 && enabled === true ? (
                   <>
                     <NavBar />
-                    <HistorialPiezaP />
+                    <HistorialPieza />
                   </>
                 ) : (
                   <>
