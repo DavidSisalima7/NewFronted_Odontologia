@@ -97,8 +97,8 @@ peticionGet();
          </thead>
 
          <tbody>
-           {ficha && 
-           ficha.map((ficha)=>(
+           {tablaFichas && 
+           tablaFichas.map((ficha)=>(
              <tr key={ficha.id_ficha}>
                <td>{ficha.id_ficha}</td>
                <td>{ficha.diagnostico}</td>
