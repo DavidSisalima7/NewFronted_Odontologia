@@ -12,7 +12,7 @@ const PersonContextProvider = (props) => {
     const [editPerson, setEditPersons] = useState(null);
 
     useEffect(() => {
-        personService.readAll().then(data => setPersons(data));
+        personService.readAll().then(data => { setPersons(data) });
     }, [personService, persons]);
 
     const createPerson = (person) => {
@@ -34,7 +34,7 @@ const PersonContextProvider = (props) => {
     const updatePerson = (person) => {
         personService.update(person).then((data) => setPersons(
             persons.map((p => p.id_persona === person.id_persona ? data : p))
-            ));
+        ));
 
         setEditPersons(null)
     };
@@ -44,7 +44,7 @@ const PersonContextProvider = (props) => {
         <PersonContext.Provider
             value={{
                 createPerson, deletePerson, findPerson,
-                updatePerson, editPerson, persons
+                updatePerson, editPerson, persons, setEditPersons
             }}>
 
             {props.children}

@@ -113,7 +113,7 @@ export const RegisterPerson = () => {
 
     /* MENSAJES EMERGENTES */
 
-    const { persons, findPerson } = useContext(PersonContext);
+    const { persons, findPerson, setEditPersons } = useContext(PersonContext);
 
     const { roles } = useContext(RolContext);
 
@@ -294,6 +294,7 @@ export const RegisterPerson = () => {
     const [repPassword, setRepPassword1] = useState("");
 
     const [idper, setIdper] = useState();
+    const [idperUsr, setIdperUsr] = useState();
 
     useEffect(() => {
 
@@ -311,6 +312,8 @@ export const RegisterPerson = () => {
             const { data } = await axios.get(
                 `http://localhost:8080/usuarios/search/${user}`
             );
+
+            setIdperUsr(data.persona?.id_persona)
 
             setUsern(data.username);
         };
@@ -349,7 +352,7 @@ export const RegisterPerson = () => {
 
                     if (usern != username) {
 
-                        if (idper != selectedPersona?.id_persona) {
+                        if (idper != idperUsr) {
 
                             if (valid) {
 
@@ -357,6 +360,7 @@ export const RegisterPerson = () => {
 
                                     await postUser();
                                     vaciarCamposUsr();
+                                    setEditPersons(false);
                                     showSuccess("OK", "Usuario Creado Correctamente");
 
                                 } else {
@@ -396,6 +400,107 @@ export const RegisterPerson = () => {
     const personOptionTemplate = (option) => {
         console.log(option.cedula);
         return <>{option.label}</>;
+    };
+
+    const [isValid, setIsValid] = useState("p-valid");
+    const [isValidP, setIsValidP] = useState("p-valid");
+    const [isValidA, setIsValidA] = useState("p-valid");
+    const [isValidE, setIsValidE] = useState("p-valid");
+    const [isValidF, setIsValidF] = useState("p-valid");
+    const [isValidC, setIsValidC] = useState("p-valid");
+    const [isValidT, setIsValidT] = useState("p-valid");
+    const [isValidD, setIsValidD] = useState("p-valid");
+    const [isValidG, setIsValidG] = useState("p-valid");
+    const inputRef = useRef(null);
+
+    useEffect(() => {
+        if (person.cedula?.trim() === '') {
+            setIsValid("p-invalid"); // valida que el campo no esté vacío
+        } else {
+            setIsValid("p-valid");
+        }
+
+        if (person.nombre?.trim() === '') {
+            setIsValidP("p-invalid"); // valida que el campo no esté vacío
+        } else {
+            setIsValidP("p-valid");
+        }
+
+        if (person.apellido?.trim() === '') {
+            setIsValidA("p-invalid"); // valida que el campo no esté vacío
+        } else {
+            setIsValidA("p-valid");
+        }
+
+        if (person.email?.trim() === '') {
+            setIsValidE("p-invalid"); // valida que el campo no esté vacío
+        } else {
+            setIsValidE("p-valid");
+        }
+
+        if (person.genero?.trim() === '') {
+            setIsValidG("p-invalid"); // valida que el campo no esté vacío
+        } else {
+            setIsValidG("p-valid");
+        }
+
+        if (person.celular?.trim() === '') {
+            setIsValidC("p-invalid"); // valida que el campo no esté vacío
+        } else {
+            setIsValidC("p-valid");
+        }
+
+        if (person.telefono?.trim() === '') {
+            setIsValidT("p-invalid"); // valida que el campo no esté vacío
+        } else {
+            setIsValidT("p-valid");
+        }
+
+        if (person.direccion?.trim() === '') {
+            setIsValidD("p-invalid"); // valida que el campo no esté vacío
+        } else {
+            setIsValidD("p-valid");
+        }
+
+    }, [person.cedula, person.nombre, person.apellido, person.email,
+    person.genero, person.fechaNac, person.celular, person.telefono, person.direccion]);
+
+    const handleInputClick = () => {
+        if (person.cedula?.trim() !== '') {
+
+            setIsValid('p-invalid');
+            inputRef.current.focus();
+        }
+
+        if (person.nombre?.trim() !== '') {
+
+            setIsValidP('p-invalid');
+            inputRef.current.focus();
+        }
+
+        if (person.fechaNac == null) {
+            setIsValidF("p-invalid"); // valida que el campo no esté vacío
+        } else {
+            setIsValidF("p-valid");
+        }
+        /* if (person.apellido?.trim() !== '') {
+
+            setIsValid('p-invalid');
+            inputRef.current.focus();
+        }
+
+
+        if (person.email?.trim() !== '') {
+
+            setIsValid('p-invalid');
+            inputRef.current.focus();
+        }
+
+        if (person.genero?.trim() !== '') {
+
+            setIsValid('p-invalid');
+            inputRef.current.focus();
+        } */
     };
 
     // Reestringir campos
@@ -473,6 +578,7 @@ export const RegisterPerson = () => {
                                                         onChange={(e) =>
                                                             onInputChange(e.target.value, "cedula")
                                                         }
+                                                        className={isValid}
                                                     />
                                                     <label htmlFor="name">Cédula:</label>
                                                 </span>
@@ -487,6 +593,7 @@ export const RegisterPerson = () => {
                                                         onChange={(e) =>
                                                             onInputChange(e.target.value, "nombre")
                                                         }
+                                                        className={isValidP}
                                                         type="text"
                                                         keyfilter={blockSpecial}
                                                     />
@@ -502,10 +609,10 @@ export const RegisterPerson = () => {
                                                         onChange={(e) =>
                                                             onInputChange(e.target.value, "genero")
                                                         }
+                                                        className={isValidG}
                                                         value={person.genero}
                                                         options={generos}
                                                         placeholder="Seleccione Género"
-                                                        className="w-full md:w-14rem"
                                                     />
                                                     <label htmlFor="genero">Género:</label>
                                                 </span>
@@ -520,6 +627,7 @@ export const RegisterPerson = () => {
                                                         onChange={(e) =>
                                                             onInputChange(e.target.value, "celular")
                                                         }
+                                                        className={isValidC}
                                                         mask="9999999999"
                                                         placeholder="9999999999"
                                                     />
@@ -537,6 +645,7 @@ export const RegisterPerson = () => {
                                                         onChange={(e) =>
                                                             onInputChange(e.target.value, "direccion")
                                                         }
+                                                        className={isValidD}
                                                     />
                                                     <label htmlFor="direccion">Dirección:</label>
                                                 </span>
@@ -553,6 +662,7 @@ export const RegisterPerson = () => {
                                                         onChange={(e) =>
                                                             onInputChange(e.target.value, "email")
                                                         }
+                                                        className={isValidE}
                                                     />
                                                     <label htmlFor="email">Correo Electrónico:</label>
                                                 </span>
@@ -568,6 +678,7 @@ export const RegisterPerson = () => {
                                                         onChange={(e) =>
                                                             onInputChange(e.target.value, "apellido")
                                                         }
+                                                        className={isValidA}
                                                         keyfilter={blockSpecial}
                                                     />
                                                     <label htmlFor="apellido">Apellidos:</label>
@@ -584,6 +695,7 @@ export const RegisterPerson = () => {
                                                                 "fechaNac"
                                                             )
                                                         } maxDate={maxDate} showIcon readOnlyInput
+                                                        className={isValidF}
                                                         dateFormat="yy-mm-dd"
                                                     />
                                                     <label htmlFor="fechaNac">
@@ -601,6 +713,7 @@ export const RegisterPerson = () => {
                                                         onChange={(e) =>
                                                             onInputChange(e.target.value, "telefono")
                                                         }
+                                                        className={isValidT}
                                                         mask="99-9999999"
                                                         placeholder="99-9999999"
                                                     />

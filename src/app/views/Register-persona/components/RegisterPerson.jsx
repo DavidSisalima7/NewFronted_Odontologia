@@ -64,7 +64,7 @@ export const PersonForm = (props) => {
     const { isVisible, setIsVisible } = props;
 
     const {
-        createPerson, deletePerson, editPerson, updatePerson
+        createPerson, deletePerson, editPerson, updatePerson, setEditPersons
     } = useContext(PersonContext);
 
     const blockSpecial = new RegExp(/^[^<>*!#@$%^_=+?`\|{}[\]~"'\.\,=0123456789/;:]+$/);
@@ -89,8 +89,7 @@ export const PersonForm = (props) => {
     const [personData, setPersonData] = useState(initialPersonState);
 
     useEffect(() => {
-        if (editPerson)
-            setPersonData(editPerson);
+        if (editPerson) setPersonData(editPerson);
     }, [editPerson]);
 
     const updateField = (data, field) => {
@@ -135,7 +134,8 @@ export const PersonForm = (props) => {
 
     const clearSelected = () => {
         setIsVisible(false);
-        setPersonData(initialPersonState);
+        setEditPersons(false);
+        /* setPersonData(initialPersonState); */
     };
 
     const dialogFooter = (

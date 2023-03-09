@@ -13,6 +13,7 @@ const PiezasForm = (props) => {
   const { isVisible, setIsVisible, seleccion, toast, idondonto } = props;
   const [confirm, setConfirm] = useState(false);
   console.log(idondonto);
+
   useEffect(() => {
     setPiezaData({
       ...piezaData,
@@ -21,6 +22,7 @@ const PiezasForm = (props) => {
       // ["id_odontograma"]: Varible_Del_Odontograma enviada,
     });
   }, [seleccion, isVisible]);
+  
   //Aqui llega el id de odontograma
   let location = useLocation();
   console.log(location.state.idF);

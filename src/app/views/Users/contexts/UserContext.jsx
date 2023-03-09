@@ -13,7 +13,7 @@ const UserContextProvider = (props) => {
 
     useEffect(() => {
         userService.readAll().then(data => setUsers(data));
-    }, [userService, users]);
+    }, [/* userService, users */]);
 
     const createUser = (user) => {
         userService.create(user).then(data => setUsers([...users, data]))
@@ -44,7 +44,7 @@ const UserContextProvider = (props) => {
         <UserContext.Provider
             value={{
                 createUser, findUser, deleteUser,
-                updateUser, editUser, users
+                updateUser, editUser, users, setEditUsers
             }}>
 
             {props.children}

@@ -60,7 +60,7 @@ export const UserForm = (props) => {
     const { isVisible, setIsVisible } = props;
 
     const {
-        createUser, editUser, updateUser
+        createUser, editUser, updateUser, setEditUsers
     } = useContext(UserContext);
 
     const initialUserState = {
@@ -73,11 +73,12 @@ export const UserForm = (props) => {
 
     const [userData, setUserData] = useState(initialUserState);
 
-    const [label, setLab] = useState("Deshabilitar");
+    const [label, setLab] = useState("Habilitar/Deshabilitar");
 
     useEffect(() => {
         if (editUser)
             setUserData(editUser);
+
     }, [editUser]);
 
     const updateField = (data, field) => {
@@ -111,15 +112,15 @@ export const UserForm = (props) => {
     const ChangeEnabled = async () => {
 
         if (userData.enabled == true) {
-            console.log("entro");
             updateField(false, "enabled");
-            setLab('Habilitar');
-            showSuccess("OK", "Usuario Deshabilitado");
-        } else if (userData.enabled == false) {
-            console.log("no entro ");
-            updateField(true, "enabled");
-            setLab('Deshabilitar');
+            //setLab('Habilitar');
+            //showSuccess("OK", "Usuario Deshabilitado");
             showSuccess("OK", "Usuario Habilitado");
+        } else if (userData.enabled == false) {
+            updateField(true, "enabled");
+            //setLab('Deshabilitar');
+            showSuccess("OK", "Usuario Deshabilitado");
+            //showSuccess("OK", "Usuario Habilitado");
         }
         updateUser(userData);
     };
@@ -134,13 +135,13 @@ export const UserForm = (props) => {
 
     const saveUser = () => {
         if (!editUser) {
-            console.log("entro aqui");
+
             createUser(userData);
         } else {
             console.log("entro aca");
             if (userData.username != '' && userData.password != '') {
 
-                if (valid) {
+                if (valid && userData.password) {
 
                     if (userData.password == confPassword) {
                         actualizar();
@@ -160,7 +161,8 @@ export const UserForm = (props) => {
 
     const clearSelected = () => {
         setIsVisible(false);
-        setUserData(initialUserState);
+        setEditUsers(false);
+        /* setUserData(initialUserState); */
     };
 
     const dialogFooter = (
