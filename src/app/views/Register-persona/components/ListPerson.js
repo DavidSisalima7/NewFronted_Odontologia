@@ -38,7 +38,7 @@ export const PersonList = () => {
           <InputText
             value={globalFilterValue}
             onChange={onGlobalFilterChange}
-            placeholder="Dato a Consultar"
+            placeholder="Buscar por N° Cédula o Nombre"
           />
         </span>
       </div>
@@ -73,7 +73,7 @@ export const PersonList = () => {
             globalFilterFields={["cedula", "nombre"]}
             filterDisplay="row"
             header={header}
-            emptyMessage="Ninguna Persona Encontrada"
+            emptyMessage="Cero Datos Encontrados"
             value={persons}
             selectionMode="single"
             onSelectionChange={(e) => savePerson(e.value.cedula)}

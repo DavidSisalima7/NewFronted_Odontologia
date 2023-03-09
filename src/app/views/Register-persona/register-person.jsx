@@ -242,25 +242,30 @@ export const RegisterPerson = () => {
 
                             await axios.post("http://localhost:8080/api/persona/crear", person);
 
+                            handleInputClick();
                             vaciarCampos();
-
+                            setEditPersons(null);
                             showSuccess("OK", "Registro Exitoso");
 
                             setTab(1);
                         } else {
+
+                            handleInputClick();
                             showError("ERROR", "Correo Digitado Erróneo");
                         }
                     } else {
 
+                        handleInputClick();
                         showError("ERROR", "Ya cuenta con un registro");
                     }
                 } else {
 
+                    handleInputClick();
                     showError("ERROR", "Cédula Digitada Errónea");
                 }
             } else {
 
-                /* handleInputClick(); */
+                handleInputClick();
                 showError("ERROR", 'Llene Todos Los Campos')
             }
         }
@@ -403,11 +408,11 @@ export const RegisterPerson = () => {
         return <>{option.label}</>;
     };
 
-    /* const [isValid, setIsValid] = useState("p-valid");
+    const [isValid, setIsValid] = useState("p-valid");
     const [isValidP, setIsValidP] = useState("p-valid");
     const [isValidA, setIsValidA] = useState("p-valid");
     const [isValidE, setIsValidE] = useState("p-valid");
-    const [isValidF, setIsValidF] = useState("p-valid");
+    /* const [isValidF, setIsValidF] = useState("p-valid"); */
     const [isValidC, setIsValidC] = useState("p-valid");
     const [isValidT, setIsValidT] = useState("p-valid");
     const [isValidD, setIsValidD] = useState("p-valid");
@@ -463,7 +468,7 @@ export const RegisterPerson = () => {
         }
 
     }, [person.cedula, person.nombre, person.apellido, person.email,
-    person.genero, person.fechaNac, person.celular, person.telefono, person.direccion]);
+    person.genero, person.celular, person.telefono, person.direccion]);
 
     const handleInputClick = () => {
         if (person.cedula?.trim() !== '') {
@@ -474,12 +479,6 @@ export const RegisterPerson = () => {
         if (person.nombre?.trim() !== '') {
 
             setIsValidP('p-invalid');
-        }
-
-        if (person.fechaNac == null) {
-            setIsValidF("p-invalid"); // valida que el campo no esté vacío
-        } else {
-            setIsValidF("p-valid");
         }
 
         if (person.nombre?.trim() === '') {
@@ -523,7 +522,7 @@ export const RegisterPerson = () => {
         } else {
             setIsValidD("p-valid");
         }
-    }; */
+    };
 
     // Reestringir campos
     const blockSpecial = RegExp(
@@ -600,7 +599,7 @@ export const RegisterPerson = () => {
                                                         onChange={(e) =>
                                                             onInputChange(e.target.value, "cedula")
                                                         }
-                                                        /* className={isValid} */
+                                                    className={isValid}
                                                     />
                                                     <label htmlFor="name">Cédula:</label>
                                                 </span>
@@ -615,7 +614,7 @@ export const RegisterPerson = () => {
                                                         onChange={(e) =>
                                                             onInputChange(e.target.value, "nombre")
                                                         }
-                                                        /* className={isValidP} */
+                                                        className={isValidP}
                                                         type="text"
                                                         keyfilter={blockSpecial}
                                                     />
@@ -631,7 +630,7 @@ export const RegisterPerson = () => {
                                                         onChange={(e) =>
                                                             onInputChange(e.target.value, "genero")
                                                         }
-                                                        /* className={isValidG} */
+                                                        className={isValidG}
                                                         value={person.genero}
                                                         options={generos}
                                                         placeholder="Seleccione Género"
@@ -649,7 +648,7 @@ export const RegisterPerson = () => {
                                                         onChange={(e) =>
                                                             onInputChange(e.target.value, "celular")
                                                         }
-                                                        /* className={isValidC} */
+                                                        className={isValidC}
                                                         mask="9999999999"
                                                         placeholder="9999999999"
                                                     />
@@ -667,7 +666,7 @@ export const RegisterPerson = () => {
                                                         onChange={(e) =>
                                                             onInputChange(e.target.value, "direccion")
                                                         }
-                                                        /* className={isValidD} */
+                                                    className={isValidD}
                                                     />
                                                     <label htmlFor="direccion">Dirección:</label>
                                                 </span>
@@ -684,7 +683,7 @@ export const RegisterPerson = () => {
                                                         onChange={(e) =>
                                                             onInputChange(e.target.value, "email")
                                                         }
-                                                      /* className={isValidE} */
+                                                    className={isValidE}
                                                     />
                                                     <label htmlFor="email">Correo Electrónico:</label>
                                                 </span>
@@ -700,7 +699,7 @@ export const RegisterPerson = () => {
                                                         onChange={(e) =>
                                                             onInputChange(e.target.value, "apellido")
                                                         }
-                                                       /* className={isValidA} */
+                                                        className={isValidA}
                                                         keyfilter={blockSpecial}
                                                     />
                                                     <label htmlFor="apellido">Apellidos:</label>
@@ -735,7 +734,7 @@ export const RegisterPerson = () => {
                                                         onChange={(e) =>
                                                             onInputChange(e.target.value, "telefono")
                                                         }
-                                                        /* className={isValidT} */
+                                                        className={isValidT}
                                                         mask="99-9999999"
                                                         placeholder="99-9999999"
                                                     />

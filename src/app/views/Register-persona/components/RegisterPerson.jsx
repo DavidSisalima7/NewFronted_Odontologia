@@ -103,8 +103,8 @@ export const PersonForm = (props) => {
         if (editPerson) {
             deletePerson(personData.id_persona);
             setPersonData(initialPersonState);
+            setIsVisible(false);
         }
-        setIsVisible(false);
     };
 
     const savePerson = () => {
@@ -142,7 +142,7 @@ export const PersonForm = (props) => {
 
         <div className="ui-dialog-buttonpane p-clearfix">
             <ConfirmDialog />
-            <Button label="Eliminar" icon="pi pi-times" onClick={_deletePerson} />
+            <Button label="Eliminar" icon="pi pi-times" onClick={_deletePerson} autoFocus/>
             <Button label="Guardar" icon="pi pi-check" onClick={confirmSubmit} />
         </div>
     );

@@ -39,7 +39,7 @@ export const UserList = () => {
           <InputText
             value={globalFilterValue}
             onChange={onGlobalFilterChange}
-            placeholder="Dato a Consultar"
+            placeholder="Buscar por N° de Cédula o Nombre de Usuario"
           />
         </span>
       </div>
