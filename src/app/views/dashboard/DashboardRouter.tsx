@@ -2,6 +2,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import { NavBar } from "../../common/NavBar";
 import FichaOdontologica from "../FichaOdontologica/FichaOdontologica";
 import Historial_ficha from "../HistorialFicha/Historialficha";
+import Historial_fichaP from "../HistorialFichaP/Historialficha";
 import { OdontogramList } from "../Odontograma/OdontogramList";
 import Home from "./home/Home";
 import { PersonList } from "../Register-persona/components/ListPerson";
@@ -80,7 +81,7 @@ export const DashboardRouter = () => {
                 {rol === 1 && enabled === true ? (
                   <>
                     <NavBarPaciente />
-                    <Historial_ficha />
+                    <Historial_fichaP />
                   </>
                 ) : rol === 2 && enabled === true ? (
                   <>
