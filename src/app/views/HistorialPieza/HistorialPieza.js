@@ -117,10 +117,21 @@ export const HistorialPieza = () => {
                   textAlign: "center",
                 }}
                 field="fecha_creacion"
-                header="Fecha"
+                header="FECHA PIEZA"
                 body={(rowData) => {
                   const fecha = new Date(rowData.fecha_creacion);
-                  return fecha.toLocaleDateString();
+                  return fecha.toLocaleDateString().toString();
+                }}
+              />
+              <Column
+                style={{
+                  textAlign: "center",
+                }}
+                field="fecha_creacion"
+                header="HORA PIEZA"
+                body={(rowData) => {
+                  const fecha = new Date(rowData.fecha_creacion);
+                  return fecha.toLocaleTimeString().toString();
                 }}
               />
               <Column
@@ -171,7 +182,13 @@ export const HistorialPieza = () => {
                 }}
                 field="odontograma.fecha_Odontograma"
                 header="FECHA ODONTOGRAMA"
+                // body={(rowData) => {
+                //   const fecha = new Date(rowData.fecha_creacion);
+                //   return fecha.toLocaleDateString();
+                // }}
               ></Column>
+              
+              
             </DataTable>
 
             <br />
