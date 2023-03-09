@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import "../Styles/css/Navbar.css";
 
 export const NavBar: React.FC = () => {
@@ -89,29 +89,3 @@ export const NavBar: React.FC = () => {
     </>
   );
 };
-{
-  /* Dialogo Salir */
-}
-//   <Dialog
-//   header="Está seguro de cerrar sesión?"
-//   visible={confirm}
-//   style={{ width: "25vw" }}
-//   onHide={() => setConfirm(false)}
-// >
-//   <div >
-
-//     <Button
-//       label="Cancelar"
-//       icon="pi pi-times"
-
-//       className="p-button-text"
-//     />
-//     <Button
-//       label="Confirmar"
-//       icon="pi pi-check"
-//       ref={"/inicio"}
-//       onClick={eliminarUser}
-//       autoFocus
-//     />
-//   </div>
-// </Dialog>

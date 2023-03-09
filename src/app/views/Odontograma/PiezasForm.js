@@ -147,7 +147,7 @@ const PiezasForm = (props) => {
         contentStyle={{ overflow: "visible" }}
         onHide={() => {
           setIsVisible(false);
-          setEditPieza(false);
+          setEditPieza(null);
         }}
       >
         <Divider />

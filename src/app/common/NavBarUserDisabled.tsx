@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import "../Styles/css/NavbarDesh.css";
 
 export const NavBarUserDisabled: React.FC = () => {
@@ -30,11 +30,8 @@ export const NavBarUserDisabled: React.FC = () => {
             </ul>
           </nav>
         </body>
-        <div className="FondoDeshabilitado">
-        </div>
+        <div className="FondoDeshabilitado"></div>
       </div>
     </>
   );
 };
-{
-}

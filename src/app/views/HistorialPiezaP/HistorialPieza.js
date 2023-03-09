@@ -6,7 +6,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Divider } from "primereact/divider";
 
-export const HistorialPieza = () => {
+export const HistorialPiezaP = () => {
 
   //Capturar id_persona de session Storage
   const userData = sessionStorage.getItem("user");
@@ -25,9 +25,10 @@ export const HistorialPieza = () => {
   useEffect(() => {
     peticionGet();
   }, []);
+  
   const peticionGet = async () => {
     await axios
-      .get("http://localhost:8080/api/pieza/listarP")
+      .get("http://localhost:8080/api/pieza/listarID/"+id_persona)
       .then((response) => {
         setPiezas(response.data);
         setTablaPiezas(response.data);

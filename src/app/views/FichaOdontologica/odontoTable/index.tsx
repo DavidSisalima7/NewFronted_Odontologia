@@ -7,7 +7,6 @@ import { Button } from "primereact/button";
 import { useEffect, useState } from "react";
 import { Card } from "@mui/material";
 import { useHistory } from "react-router-dom";
-import { Divider } from "primereact/divider";
 import { PiezaService } from "../../../services/PiezaService";
 
 function OdontoTable({ id_ficha }: { id_ficha: number | undefined }) {
@@ -16,43 +15,15 @@ function OdontoTable({ id_ficha }: { id_ficha: number | undefined }) {
 
   const piezaService = new PiezaService();
 
-  // const guardar = () => {
-  //   setContador(contador + 1);
-  //   setVisible(false)
-  // }
 
   function handleClick() {
-    // postOdontograma()
-    // piezaService.getAll().then((data) => {
-    //   setPieza(pieza => [...pieza, {
-    //     id_odontograma: nuevo,
-    //     numero_pieza: data,
-    //     tratamiento: data,
-    //     cara_pieza: data,
-    //   }]);
-    // });
-    // console.log(
-    //   piezaService.getAll().then((data: any) => {
-    //     data.filter((p: any) => p.id_odontograma === 1);
-    //   })
-    // );
+
     history.push({
       pathname: "/odontograma",
       state: { idF: odontogramas[0].id_odontograma },
     });
   }
-  // async function handleClickP() {
-  //   console.log("p1");
-  //   await postOdontograma();
-  //   console.log("p2");
-  //   await getOdontograma();
-  //   console.log("p3");
-  //   console.log("1", odontogramas);
-  //   history.push({
-  //     pathname: "/odontograma",
-  //     state: { idF: odontogramas[0]?.id_odontograma },
-  //   });
-  // }
+ 
 
   console.log("fuera", odontogramas);
 
@@ -60,7 +31,6 @@ function OdontoTable({ id_ficha }: { id_ficha: number | undefined }) {
     const { data } = await axios.get(
       `http://localhost:8080/api/odontograma/buscar/${id_ficha}`
     );
-    // setOdontograma(data as IOdontograma[]);
     setOdontograma((prevState) => [...(data as IOdontograma[])]);
   };
 

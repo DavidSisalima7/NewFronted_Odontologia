@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import "../Styles/css/Navbar.css";
 
 export const NavBarPaciente: React.FC = () => {
@@ -57,5 +57,3 @@ export const NavBarPaciente: React.FC = () => {
     </>
   );
 };
-{
-}

@@ -6,7 +6,6 @@ import { fasicellService } from "../FasicellService";
 export class AuthService{
 
    public static async login(obj:User):Promise<ApiResponse>{
-      //return (await fasicellService.post('/login', obj)).data
       return (await fasicellService.post('/signin', obj)).data
    }
 
