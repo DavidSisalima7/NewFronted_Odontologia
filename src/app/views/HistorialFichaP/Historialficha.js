@@ -36,7 +36,7 @@ function Historial_ficha() {
   }
 
 const peticionGet=async()=>{
-  await axios.get("http://localhost:8080/api/ficha/listar")
+  await axios.get(`http://localhost:8080/api/ficha/buscarF/${id_persona}`)
   .then(response=>{
     setFichas(response.data);
     setTablaFichas(response.data);
