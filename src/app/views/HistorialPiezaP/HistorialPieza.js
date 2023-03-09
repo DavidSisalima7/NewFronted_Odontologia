@@ -169,6 +169,9 @@ export const HistorialPiezaP = () => {
                 }}
                 field="odontograma.fichaOdontologica.persona.nombre"
                 header="NOMBRE"
+                body={(rowData) => {
+                  return rowData.odontograma.fichaOdontologica.persona.nombre + " " +rowData.odontograma.fichaOdontologica.persona.apellido;
+                }}
               ></Column>
               <Column
                 style={{
