@@ -10,14 +10,14 @@ export const HistorialPiezaP = () => {
 
   //Capturar id_persona de session Storage
   const userData = sessionStorage.getItem("user");
-  const userObj = JSON.parse(userData|| "{}");
-  const id_persona=userObj.id;
+  const userObj = JSON.parse(userData || "{}");
+  const id_persona = userObj.id;
 
   //Eliminar solo es un log para ver si recibe el id_persona
-  useEffect((()=>{
-    console.log(id_persona); 
+  useEffect((() => {
+    console.log(id_persona);
   }))
-  
+
 
   const [piezas, setPiezas] = useState([]);
   const [tablaPiezas, setTablaPiezas] = useState([]);
@@ -25,10 +25,10 @@ export const HistorialPiezaP = () => {
   useEffect(() => {
     peticionGet();
   }, []);
-  
+
   const peticionGet = async () => {
     await axios
-      .get("http://localhost:8080/api/pieza/listarID/"+id_persona)
+      .get("http://localhost:8080/api/pieza/listarID/" + id_persona)
       .then((response) => {
         setPiezas(response.data);
         setTablaPiezas(response.data);
@@ -71,11 +71,11 @@ export const HistorialPiezaP = () => {
       <Divider />
       <div
         id="busqueda"
-        className="containerInput"
-        style={{ alignItems: "center" }}
+        className=""
+        style={{ alignItems: "center", paddingLeft: "75px", paddingRight: "75px" }}
       >
         <input
-          className="form-control inputBuscar"
+          className="form-control "
           value={busqueda}
           placeholder="Búsqueda por cedula, por fecha de odontograma, nombre de persona"
           onChange={handleChange}
@@ -90,7 +90,7 @@ export const HistorialPiezaP = () => {
         {/* Card de el odontograma y la tabla de piezas */}
 
         <div className="linea">
-          <Card className="table">
+          <Card className="">
             {/* Tabla de piezas */}
             <DataTable
               header={header}
@@ -100,7 +100,7 @@ export const HistorialPiezaP = () => {
                 // .filter((p) => p.odontograma.id_odontograma === idondonto)
               }
               responsiveLayout="scroll"
-              style={{ textAlign: "center",}}
+              style={{ textAlign: "center", }}
               selectionMode="single"
               paginator
               rows={5}
@@ -170,7 +170,7 @@ export const HistorialPiezaP = () => {
                 field="odontograma.fichaOdontologica.persona.nombre"
                 header="NOMBRE"
                 body={(rowData) => {
-                  return rowData.odontograma.fichaOdontologica.persona.nombre + " " +rowData.odontograma.fichaOdontologica.persona.apellido;
+                  return rowData.odontograma.fichaOdontologica.persona.nombre + " " + rowData.odontograma.fichaOdontologica.persona.apellido;
                 }}
               ></Column>
               <Column
@@ -186,13 +186,13 @@ export const HistorialPiezaP = () => {
                 }}
                 field="odontograma.fecha_Odontograma"
                 header="FECHA ODONTOGRAMA"
-                // body={(rowData) => {
-                //   const fecha = new Date(rowData.fecha_creacion);
-                //   return fecha.toLocaleDateString();
-                // }}
+              // body={(rowData) => {
+              //   const fecha = new Date(rowData.fecha_creacion);
+              //   return fecha.toLocaleDateString();
+              // }}
               ></Column>
-              
-              
+
+
             </DataTable>
 
             <br />
@@ -201,7 +201,7 @@ export const HistorialPiezaP = () => {
                 <b>ODONTOGRAMA</b>
               </div>
             </Divider>
-            <table className="odontograma">
+            <table className="odontograma table">
               <tbody>
                 <tr>
                   <td>

@@ -65,16 +65,16 @@ export const HistorialPieza = () => {
     setPiezas(resultadosBusqueda);
   };
   const header = (
-    <div className="flex flex-wrap align-items-center justify-content-between gap-2">
+    <div className="flex flex-wrap align-items-center justify-content-between " >
       <span className="text-xl text-900 font-bold">Historial de Piezas</span>
       <Divider />
       <div
         id="busqueda"
-        className="containerInput"
-        style={{ alignItems: "center" }}
+        className=""
+        style={{ alignItems: "center", paddingLeft:"75px" , paddingRight:"75px" }}
       >
-        <input
-          className="form-control inputBuscar"
+        <input 
+          className="form-control "
           value={busqueda}
           placeholder="Búsqueda por cedula, por fecha de odontograma, nombre de persona"
           onChange={handleChange}
@@ -89,7 +89,7 @@ export const HistorialPieza = () => {
         {/* Card de el odontograma y la tabla de piezas */}
 
         <div className="linea">
-          <Card className="table">
+          <Card className="">
             {/* Tabla de piezas */}
             <DataTable
               header={header}
@@ -200,7 +200,7 @@ export const HistorialPieza = () => {
                 <b>ODONTOGRAMA</b>
               </div>
             </Divider>
-            <table className="odontograma">
+            <table className="odontograma table">
               <tbody>
                 <tr>
                   <td>
