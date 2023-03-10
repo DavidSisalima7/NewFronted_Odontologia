@@ -1,28 +1,30 @@
 import './Historialficha.css';
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import * as XLSX from 'xlsx/xlsx.mjs';
 
 function Historial_ficha() {
-  
+
   //Capturar id_persona de session Storage
   const userData = sessionStorage.getItem("user");
-  const userObj = JSON.parse(userData|| "{}");
-  const id_persona=userObj.id;
+  const userObj = JSON.parse(userData || "{}");
+  const id_persona = userObj.id;
 
   //Eliminar solo es un log para ver si recibe el id_persona
-  useEffect((()=>{
-    console.log(id_persona); 
+  useEffect((() => {
+    console.log(id_persona);
   }))
 
-  
-  const [ficha, setFichas]= useState([]);
-  const [tablaFichas, setTablaFichas]= useState([]);
-  const [busqueda, setBusqueda]= useState("");
-  
+
+  const [ficha, setFichas] = useState([]);
+  const [tablaFichas, setTablaFichas] = useState([]);
+  const [busqueda, setBusqueda] = useState("");
+
   var XLSX = require("xlsx");
   const generateExcel = () => {
     // Obtener la tabla
@@ -35,41 +37,41 @@ function Historial_ficha() {
     XLSX.writeFile(workbook, 'HISTORIAL FICHA.xlsx');
   }
 
-const peticionGet=async()=>{
-  await axios.get("http://localhost:8080/api/ficha/listar")
-  .then(response=>{
-    setFichas(response.data);
-    setTablaFichas(response.data);
-  }).catch(error=>{
-    console.log(error);
-  })
-}
+  const peticionGet = async () => {
+    await axios.get("http://localhost:8080/api/ficha/listar")
+      .then(response => {
+        setFichas(response.data);
+        setTablaFichas(response.data);
+      }).catch(error => {
+        console.log(error);
+      })
+  }
 
-const handleChange=e=>{
-  setBusqueda(e.target.value);
-  filtrar(e.target.value);
-}
+  const handleChange = e => {
+    setBusqueda(e.target.value);
+    filtrar(e.target.value);
+  }
 
-const filtrar=(terminoBusqueda)=>{
-  var resultadosBusqueda=tablaFichas.filter((elemento)=>{
-    if(elemento.id_ficha.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())
-    || elemento.persona.cedula.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())
-    || elemento.fecha_consulta.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())
-    || elemento.persona.nombre.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())+elemento.persona.apellido.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())
-    ){
-      return elemento;
-    }
-  });
-  setFichas(resultadosBusqueda);
-}
+  const filtrar = (terminoBusqueda) => {
+    var resultadosBusqueda = tablaFichas.filter((elemento) => {
+      if (elemento.id_ficha.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())
+        || elemento.persona.cedula.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())
+        || elemento.fecha_consulta.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())
+        || elemento.persona.nombre.toString().toLowerCase().includes(terminoBusqueda.toLowerCase()) + elemento.persona.apellido.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())
+      ) {
+        return elemento;
+      }
+    });
+    setFichas(resultadosBusqueda);
+  }
 
-useEffect(()=>{
-peticionGet();
-},[])
+  useEffect(() => {
+    peticionGet();
+  }, [])
 
   return (
     <div className="App">
-      
+
       <div className="containerInput">
         <input
           className="form-control inputBuscar"
@@ -78,44 +80,37 @@ peticionGet();
           onChange={handleChange}
         />
         <button className="btn btn-success">
-          <FontAwesomeIcon icon={faSearch}/>
+          <FontAwesomeIcon icon={faSearch} />
         </button>
       </div>
 
-     <div className="table-responsive">
-       <table id="my-table"className="table table-sm table-bordered">
-         <thead>
-           <tr>
-             <th>ID FICHA</th>
-             <th>DIÁGNOSTICO</th>
-             <th>FECHA</th>
-             <th>MOTIVO</th>
-             <th>OBSERVACIONES</th>
-             <th>CÉDULA</th>
-             <th>NOMBRE</th>
-           </tr>
-         </thead>
+      <div className="table-responsive">
+        <DataTable
+          id="my-table"
+          responsiveLayout="scroll"
+          style={{ textAlign: "center", }}
+          selectionMode="single"
+          paginator
+          rows={5}
+          rowsPerPageOptions={[5, 10, 25, 50]}
+          value={ficha}>
 
-         <tbody>
-           {ficha && 
-           ficha.map((ficha)=>(
-             <tr key={ficha.id_ficha}>
-               <td>{ficha.id_ficha}</td>
-               <td>{ficha.diagnostico}</td>
-
-               <td>{ficha.fecha_consulta}</td>
-               <td>{ficha.motivo_consulta}</td>
-               <td>{ficha.observaciones}</td>
-               <td>{ficha.persona.cedula}</td>
-               <td>{ficha.persona.nombre+" "+ficha.persona.apellido}</td>
-             </tr>
-           ))}
-         </tbody>
-
-       </table>
-      
-     </div>
-     <button onClick={generateExcel} className="mi-boton">IMPRIMIR</button>
+          <Column field="id_ficha" header="ID FICHA" />
+          <Column field="diagnostico" header="DIÁGNOSTICO" />
+          <Column field="fecha_consulta" header="FECHA" />
+          <Column field="motivo_consulta" header="MOTIVO" />
+          <Column field="observaciones" header="OBSERVACIONES" />
+          <Column field="persona.cedula" header="CÉDULA" />
+          <Column
+            field="persona.nombre"
+            header="NOMBRE"
+            body={(rowData) =>
+              `${rowData.persona.nombre} ${rowData.persona.apellido}`
+            }
+          />
+        </DataTable>
+      </div>
+      <button onClick={generateExcel} className="mi-boton">IMPRIMIR</button>
     </div>
   );
 }
