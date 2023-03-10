@@ -132,6 +132,24 @@ export const PersonForm = (props) => {
         }
     };
 
+    const [label, setLab] = useState("Habilitar/Deshabilitar");
+
+    const ChangeEnabled = async () => {
+
+        if (personData.enabled == true) {
+            updateField(false, "enabled");
+            //setLab('Habilitar');
+            //showSuccess("OK", "Usuario Deshabilitado");
+            showSuccess("OK", "Registro Habilitado");
+        } else if (personData.enabled == false) {
+            updateField(true, "enabled");
+            //setLab('Deshabilitar');
+            showSuccess("OK", "Registro Deshabilitado");
+            //showSuccess("OK", "Usuario Habilitado");
+        }
+        updatePerson(personData);
+    };
+
     const clearSelected = () => {
         setIsVisible(false);
         setEditPersons(false);
@@ -142,7 +160,7 @@ export const PersonForm = (props) => {
 
         <div className="ui-dialog-buttonpane p-clearfix">
             <ConfirmDialog />
-            <Button label="Eliminar" icon="pi pi-times" onClick={_deletePerson} autoFocus/>
+            <Button label={label} icon="pi pi-times" onClick={ChangeEnabled} autoFocus />
             <Button label="Guardar" icon="pi pi-check" onClick={confirmSubmit} />
         </div>
     );

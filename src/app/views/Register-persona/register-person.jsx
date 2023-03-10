@@ -11,7 +11,6 @@ import { Divider } from "primereact/divider";
 import { Button } from "primereact/button";
 import { Calendar } from "primereact/calendar";
 import { Password } from "primereact/password";
-import { useFormik } from 'formik';
 import { TabView, TabPanel } from "primereact/tabview";
 import axios from "axios";
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
@@ -19,7 +18,6 @@ import { PersonContext } from "./contexts/PersonContext";
 import { RolContext } from "./contexts/RolContext";
 import { Toast } from "primereact/toast";
 import { claseValidaciones } from "../../Validaciones/ClaseValidaciones";
-import { PersonService } from "./services/persona";
 
 export const RegisterPerson = () => {
 
@@ -126,14 +124,12 @@ export const RegisterPerson = () => {
         const selectedPersona = persons.find(
             (item) => item.id_persona === persona.id
         );
-        console.log(selectedPersona.id_persona);
         setSelectedPersona(selectedPersona || null);
     }
 
     function onRolChange(rol) {
 
         const selectedRol = roles.find((item) => item.rolId === rol.id);
-        console.log(selectedRol.rolId);
         setSelectedRol(selectedRol || null);
     }
 
@@ -158,7 +154,7 @@ export const RegisterPerson = () => {
         setPerson(initialPersonState);
     };
 
-    const initialPersonState2 = {
+    /* const initialPersonState2 = {
 
         nombre: "",
         apellido: "",
@@ -173,7 +169,7 @@ export const RegisterPerson = () => {
     const vaciarCampos2 = () => {
 
         setPerson(initialPersonState2);
-    };
+    }; */
 
     const vaciarCamposUsr = () => {
 
@@ -206,14 +202,10 @@ export const RegisterPerson = () => {
 
                 if (validarcedul(person.cedula) && data.id_persona != null) {
 
-                    console.log('llego');
-                    console.log(person.cedula);
                     setCedul(data.cedula);
                     /* setPerson(data); */
                 } else {
 
-                    console.log('No llego');
-                    console.log(person.cedula);
                     /* vaciarCampos2(); */
 
                 }
@@ -269,7 +261,6 @@ export const RegisterPerson = () => {
                 showError("ERROR", 'Llene Todos Los Campos')
             }
         }
-
     };
 
     const validarcedul = (cedula) => {
@@ -599,7 +590,7 @@ export const RegisterPerson = () => {
                                                         onChange={(e) =>
                                                             onInputChange(e.target.value, "cedula")
                                                         }
-                                                    className={isValid}
+                                                        className={isValid}
                                                     />
                                                     <label htmlFor="name">Cédula:</label>
                                                 </span>
@@ -666,7 +657,7 @@ export const RegisterPerson = () => {
                                                         onChange={(e) =>
                                                             onInputChange(e.target.value, "direccion")
                                                         }
-                                                    className={isValidD}
+                                                        className={isValidD}
                                                     />
                                                     <label htmlFor="direccion">Dirección:</label>
                                                 </span>
@@ -683,7 +674,7 @@ export const RegisterPerson = () => {
                                                         onChange={(e) =>
                                                             onInputChange(e.target.value, "email")
                                                         }
-                                                    className={isValidE}
+                                                        className={isValidE}
                                                     />
                                                     <label htmlFor="email">Correo Electrónico:</label>
                                                 </span>

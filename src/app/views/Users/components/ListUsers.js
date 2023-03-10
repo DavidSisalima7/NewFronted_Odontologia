@@ -71,7 +71,7 @@ export const UserList = () => {
             filters={filters}
             globalFilterFields={[
               "username",
-              "persona.cedula" /* , 'persona.nombre', 'persona.apellido', 'rol.rolNombre', 'enabled' */,
+              "persona.cedula", 'enabled',
             ]}
             filterDisplay="row"
             header={header}
@@ -92,7 +92,7 @@ export const UserList = () => {
             <Column field="persona.nombre" header="Nombre" />
             <Column field="persona.apellido" header="Apellido" />
             <Column field="rol.rolNombre" header="Rol" />
-            <Column field="enabled" header="Habilitado" />
+            {/* <Column field="enabled" header="Habilitado" /> */}
           </DataTable>
         </Panel>
 

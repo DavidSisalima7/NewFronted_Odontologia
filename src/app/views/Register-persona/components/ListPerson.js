@@ -8,6 +8,7 @@ import { InputText } from "primereact/inputtext";
 import { PersonContext } from "../contexts/PersonContext";
 import PersonForm from "./RegisterPerson";
 import "../../../Styles/css/Register-person.css";
+import moment from 'moment';
 
 export const PersonList = () => {
   const { persons, findPerson } = useContext(PersonContext);
@@ -70,7 +71,7 @@ export const PersonList = () => {
             rows={10}
             dataKey="id"
             filters={filters}
-            globalFilterFields={["cedula", "nombre"]}
+            globalFilterFields={["cedula", "nombre", "enabled"]}
             filterDisplay="row"
             header={header}
             emptyMessage="Cero Datos Encontrados"
@@ -82,7 +83,9 @@ export const PersonList = () => {
             <Column field="nombre" header="Nombres" />
             <Column field="apellido" header="Apellidos" />
             <Column field="email" header="Correo Electrónico" />
-            <Column field="fechaNac" header="Fecha de Nacimiento" />
+            <Column field="fechaNac" header="Fecha de Nacimiento" /* body={(rowData) => {
+                  return moment(rowData.fechaNac).format('yyyy-MM-DD')
+                }}  *//>
             <Column field="celular" header="N° Celular" />
             <Column field="direccion" header="Dirección" />
             <Column field="telefono" header="N° Teléfono" />
