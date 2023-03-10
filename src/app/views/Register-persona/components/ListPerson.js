@@ -8,7 +8,7 @@ import { InputText } from "primereact/inputtext";
 import { PersonContext } from "../contexts/PersonContext";
 import PersonForm from "./RegisterPerson";
 import "../../../Styles/css/Register-person.css";
-import moment from 'moment';
+
 
 export const PersonList = () => {
   const { persons, findPerson } = useContext(PersonContext);
