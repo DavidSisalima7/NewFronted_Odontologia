@@ -71,7 +71,7 @@ export const PersonList = () => {
             rows={10}
             dataKey="id"
             filters={filters}
-            globalFilterFields={["cedula", "nombre", "enabled"]}
+            globalFilterFields={["cedula", "nombre", /* "enabled" */]}
             filterDisplay="row"
             header={header}
             emptyMessage="Cero Datos Encontrados"

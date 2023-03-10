@@ -71,7 +71,7 @@ export const UserList = () => {
             filters={filters}
             globalFilterFields={[
               "username",
-              "persona.cedula", 'enabled',
+              "persona.cedula", /* 'enabled' */,
             ]}
             filterDisplay="row"
             header={header}
