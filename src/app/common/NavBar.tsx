@@ -14,10 +14,10 @@ export const NavBar: React.FC = () => {
         <body className="body2">
           <nav>
             <div className="icon_diente"></div>
-            <div id="logo">Odontología Integral SM</div>
+            <div id="logo">SM Odontología</div>
 
             <label htmlFor="drop" className="toggle">
-              Menu
+              Menú
             </label>
             <input type="checkbox" id="drop" />
             <ul className="menu">
@@ -52,7 +52,7 @@ export const NavBar: React.FC = () => {
                 <input type="checkbox" id="drop-2" />
                 <ul style={{ zIndex: 999 }}>
                   <li>
-                    <a href="/list-person">■ Persona</a>
+                    <a href="/list-person">■ Personas</a>
                   </li>
                   <li>
                     <a href="/list-users">■ Usuarios</a>

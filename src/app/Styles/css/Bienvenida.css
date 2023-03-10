@@ -244,6 +244,7 @@ html {
 
 }
 
+
 .fondo2 {
   background: url(../../Image/serv/ComponentF2.jpg);
   width: 100%;
@@ -631,7 +632,10 @@ button {
   .trick__title {
     font-size: 12px;
   }
-
+  .marcador{
+    margin-left: 180px;
+    margin-top: 16px ;
+    }
 
 }
 
@@ -1169,7 +1173,15 @@ button {
   .trick__title {
     font-size: 12px;
   }
-
+  .marcador{
+    background: url(../../Image/serv/marcador.png);
+  width: 20px;
+  height: 20px;
+  background-size: cover;
+  float: left;
+  margin-left: 30px;
+  margin-top: 16px ;
+  }
 
 }
 

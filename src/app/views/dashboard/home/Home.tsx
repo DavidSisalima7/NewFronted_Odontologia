@@ -42,13 +42,14 @@ const Home = () => {
           <footer className="footer section" id="foot">
             <div className="footer__container container grid">
               <div className="footer__content">
+                <div className="marcadorM"></div>
                 <a
                   href="https://goo.gl/maps/p52hmMxoGnToaB5D7"
                   target="_blank"
-                  className="footer__logo"
-                >
+                  className="footer__logo">
                   Av. Américas Sector Entrada La Católica
                 </a>
+                
                 <p className="footer__description">Od. Jonnathan SanMartin</p>
 
                 <div className="footer__social">

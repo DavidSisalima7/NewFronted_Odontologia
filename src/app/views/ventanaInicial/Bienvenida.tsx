@@ -8,9 +8,9 @@ const Bienvenida = () => {
       <body className="body2" id="Principal">
         <nav>
           <div className="icon_diente"></div>
-          <div id="logo">Odontología Integral SM</div>
+          <div id="logo">SM Odontología</div>
           <label htmlFor="drop" className="toggle">
-            Menu
+            Menú
           </label>
           <input type="checkbox" id="drop" />
           <ul className="menu">
@@ -196,7 +196,7 @@ const Bienvenida = () => {
                     Acerca de Nosotros
                   </h2>
                   <p className="about__description">
-                    Odontologia Integral "SM" es una organización que pretende ser
+                    SM Odontologia es una organización que pretende ser
                     un referente a seguir dentro del sector de la odontología,
                     por la calidad de su trabajo y actitud humana. Por ello,
                     prestamos especial atención al tratamiento deseado de
@@ -215,12 +215,14 @@ const Bienvenida = () => {
           <footer className="footer section" id="foot">
             <div className="footer__container container grid">
               <div className="footer__content">
+              <div className="marcador">    </div>
                 <a
                   href="https://goo.gl/maps/p52hmMxoGnToaB5D7"
                   target="_blank"
-                  className="footer__logo">  
+                  className="footer__logo">
                   Av. Américas Sector Entrada La Católica
                 </a>
+            
                 <p className="footer__description">Od. Jonnathan SanMartin</p>
 
                 <div className="footer__social">

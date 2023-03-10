@@ -12,10 +12,10 @@ export const NavBarUserDisabled: React.FC = () => {
         <body className="body2">
           <nav>
             <div className="icon_diente"></div>
-            <div id="logo">Odontología Integral SM</div>
+            <div id="logo">SM Odontología</div>
 
             <label htmlFor="drop" className="toggle">
-              Menu
+              Menú
             </label>
             <input type="checkbox" id="drop" />
             <ul className="menu">
