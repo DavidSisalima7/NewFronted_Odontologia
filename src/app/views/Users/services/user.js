@@ -2,7 +2,7 @@ import axios from "axios";
 
 export class UserService {
 
-    baseUrl = "http://localhost:8080/usuarios/";
+    baseUrl = "http://142.93.194.44:8080/usuarios/";
 
     create(person) {
 

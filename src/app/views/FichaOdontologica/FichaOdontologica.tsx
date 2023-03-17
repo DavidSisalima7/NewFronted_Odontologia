@@ -36,7 +36,7 @@ export default function FichaOdontologica() {
 
   const getFicha = async (id_persona: number) => {
     const { data } = await axios.get(
-      `http://localhost:8080/api/ficha/buscarF/${id_persona}`
+      `http://142.93.194.44:8080/api/ficha/buscarF/${id_persona}`
     );
     setObservaciones((data as IFicha).observaciones || "");
     setAntecedente((data as IFicha).diagnostico || "");
@@ -46,7 +46,7 @@ export default function FichaOdontologica() {
 
   const getPaciente = async () => {
     const { data } = await axios.get(
-      "http://localhost:8080/api/persona/listarP"
+      "http://142.93.194.44:8080/api/persona/listarP"
     );
     setPacientes(data as IPaciente[]);
   };
@@ -88,7 +88,7 @@ export default function FichaOdontologica() {
   };
 
   const postFicha = async () => {
-    const url = "http://localhost:8080/api/ficha/crear";
+    const url = "http://142.93.194.44:8080/api/ficha/crear";
     const data = {
       diagnostico: antecedentes,
       fecha_consulta: date,
@@ -104,7 +104,7 @@ export default function FichaOdontologica() {
   };
 
   const deleteFicha = async () => {
-    const url = `http://localhost:8080/api/ficha/eliminar/${ficha?.id_ficha}`;
+    const url = `http://142.93.194.44:8080/api/ficha/eliminar/${ficha?.id_ficha}`;
     const data = {
       habilitado: 0,
     };
@@ -113,7 +113,7 @@ export default function FichaOdontologica() {
   };
 
   const putFicha = async () => {
-    const url = `http://localhost:8080/api/ficha/actualizar/${ficha?.id_ficha}`;
+    const url = `http://142.93.194.44:8080/api/ficha/actualizar/${ficha?.id_ficha}`;
     const data = {
       diagnostico: antecedentes,
       fecha_consulta: date,

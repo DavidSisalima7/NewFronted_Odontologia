@@ -2,7 +2,7 @@ import axios from "axios";
 
 export class PersonService {
 
-    baseUrl = "http://localhost:8080/api/persona/";
+    baseUrl = "http://142.93.194.44:8080/api/persona/";
 
     create(person) {
 
