@@ -27,7 +27,7 @@ export const HistorialPieza = () => {
   }, []);
   const peticionGet = async () => {
     await axios
-      .get("http://localhost:8080/api/pieza/listarP")
+      .get("http://142.93.194.44:8080/api/pieza/listarP")
       .then((response) => {
         setPiezas(response.data);
         setTablaPiezas(response.data);
