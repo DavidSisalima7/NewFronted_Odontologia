@@ -2,7 +2,7 @@ import axios from 'axios';
 
 
 export class PiezaService {
-   baseUrl = "http://142.93.194.44:8080/api/pieza/";
+   baseUrl = "http://localhost:8080/api/pieza/";
 
    getAll() {
       return axios.get(this.baseUrl + "listar").then(res => res.data);

@@ -37,7 +37,7 @@ function OdontoTable({ id_ficha }: { id_ficha: number | undefined }) {
   const date = new Date();
 
   const postOdontograma = async () => {
-    const url = "http://142.93.194.44:8080/api/odontograma/crear";
+    const url = "http://localhost:8080/api/odontograma/crear";
     const odonto = {
       fecha_Odontograma: date,
       fichaOdontologica: {

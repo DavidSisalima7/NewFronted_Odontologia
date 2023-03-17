@@ -2,7 +2,7 @@ import axios from "axios";
 
 export class RolService {
 
-    baseUrl = "http://142.93.194.44:8080/api/rol/";
+    baseUrl = "http://localhost:8080/api/rol/";
 
     create(person) {
 
