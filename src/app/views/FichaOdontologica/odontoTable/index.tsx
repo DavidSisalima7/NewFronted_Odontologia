@@ -29,7 +29,7 @@ function OdontoTable({ id_ficha }: { id_ficha: number | undefined }) {
 
   const getOdontograma = async () => {
     const { data } = await axios.get(
-      `http://localhost:8080/api/odontograma/buscar/${id_ficha}`
+      `http://142.93.194.44:8080/api/odontograma/buscar/${id_ficha}`
     );
     setOdontograma((prevState) => [...(data as IOdontograma[])]);
   };
