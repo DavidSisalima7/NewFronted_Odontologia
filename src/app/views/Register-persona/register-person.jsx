@@ -197,7 +197,7 @@ export const RegisterPerson = () => {
             if (person.cedula !== undefined) {
 
                 const { data } = await axios.get(
-                    `http://142.93.194.44:8080/api/persona/buscarcedul/${cedula}`
+                    `http://localhost:8080/api/persona/buscarcedul/${cedula}`
                 );
 
                 if (validarcedul(person.cedula) && data.id_persona != null) {
@@ -232,7 +232,7 @@ export const RegisterPerson = () => {
 
                         if (validate.validarEmail(person.email)) {
 
-                            await axios.post("http://142.93.194.44:8080/api/persona/crear", person);
+                            await axios.post("http://localhost:8080/api/persona/crear", person);
 
                             handleInputClick();
                             vaciarCampos();
@@ -298,7 +298,7 @@ export const RegisterPerson = () => {
         const getCedul = async (cedula) => {
 
             const { data } = await axios.get(
-                `http://142.93.194.44:8080/api/persona/buscarcedul/${cedula}`
+                `http://localhost:8080/api/persona/buscarcedul/${cedula}`
             );
 
             setIdper(data.id_persona);
@@ -307,7 +307,7 @@ export const RegisterPerson = () => {
         const getUsername = async (user) => {
 
             const { data } = await axios.get(
-                `http://142.93.194.44:8080/usuarios/search/${user}`
+                `http://localhost:8080/usuarios/search/${user}`
             );
 
             setIdperUsr(data.persona?.id_persona)
@@ -322,7 +322,7 @@ export const RegisterPerson = () => {
 
     const postUser = async () => {
 
-        const url = "http://142.93.194.44:8080/usuarios/signup";
+        const url = "http://localhost:8080/usuarios/signup";
 
         const data = {
             username: username,
