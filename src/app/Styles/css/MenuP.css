@@ -78,15 +78,7 @@ html {
 
 }
 
-/* .marcadorM{
-  background: url(../../Image/serv/marcador.png);
-width: 20px;
-height: 20px;
-background-size: cover;
-float: left;
-margin-left: 30px;
-margin-top: 16px ;
-} */
+
 
 body {
   margin: var(--header-height) 0 0 0;
@@ -650,15 +642,6 @@ button {
 
   .footer__description {
     margin-left: 50px;
-  }
-  .marcadorM{
-    background: url(../../Image/serv/marcador.png);
-  width: 20px;
-  height: 20px;
-  background-size: cover;
-  float: left;
-  margin-left: 30px;
-  margin-top: 16px ;
   }
 
 
