@@ -191,11 +191,11 @@ const Bienvenida = () => {
           <div className="fondo2">
             <section className="section about" id="about">
               <div className="about__container container grid">
-                <div className="about__data">
+                <div className="title about__data">
                   <h2 className="section__title about__title">
                     Acerca de Nosotros
                   </h2>
-                  <p className="about__description">
+                  <p className="about__description" style={{textAlign: "justify"}}>
                     Odontologia Integral "SM" es una organización que pretende ser
                     un referente a seguir dentro del sector de la odontología,
                     por la calidad de su trabajo y actitud humana. Por ello,

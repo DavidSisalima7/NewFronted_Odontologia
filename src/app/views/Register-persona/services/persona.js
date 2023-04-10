@@ -11,7 +11,7 @@ export class PersonService {
 
     readAll() {
 
-        return axios.get(this.baseUrl + "listar").then(res => res.data);
+        return axios.get(this.baseUrl + "listarP").then(res => res.data);
     }
 
     update(person) {

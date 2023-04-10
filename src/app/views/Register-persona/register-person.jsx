@@ -19,6 +19,9 @@ import { RolContext } from "./contexts/RolContext";
 import { Toast } from "primereact/toast";
 import { claseValidaciones } from "../../Validaciones/ClaseValidaciones";
 
+//send mails
+import emailjs from 'emailjs-com';
+
 export const RegisterPerson = () => {
 
     const toast = useRef(null);
@@ -111,7 +114,7 @@ export const RegisterPerson = () => {
 
     /* MENSAJES EMERGENTES */
 
-    const { persons, findPerson, setEditPersons } = useContext(PersonContext);
+    const { persons, setEditPersons } = useContext(PersonContext);
 
     const { roles } = useContext(RolContext);
 
@@ -125,6 +128,8 @@ export const RegisterPerson = () => {
             (item) => item.id_persona === persona.id
         );
         setSelectedPersona(selectedPersona || null);
+
+        console.log(selectedPersona);
     }
 
     function onRolChange(rol) {
@@ -183,9 +188,9 @@ export const RegisterPerson = () => {
     const [person, setPerson] = useState({ initialPersonState });
 
     const onInputChange = (data, field) => {
-        setPerson({ ...person, [field]: data });
 
-        console.log(person);
+        setPerson({ ...person, [field]: data });
+        //console.log(person);
     };
 
     const [cedul, setCedul] = useState("");
@@ -196,18 +201,20 @@ export const RegisterPerson = () => {
 
             if (person.cedula !== undefined) {
 
-                const { data } = await axios.get(
-                    `http://localhost:8080/api/persona/buscarcedul/${cedula}`
-                );
+                if (validate.validarCedulaTs(person.cedula)) {
 
-                if (validarcedul(person.cedula) && data.id_persona != null) {
+                    const { data } = await axios.get(
+                        `http://localhost:8080/api/persona/buscarcedul/${cedula}`
+                    );
 
-                    setCedul(data.cedula);
-                    /* setPerson(data); */
-                } else {
+                    if (validarcedul(person.cedula) && data.id_persona != null) {
 
-                    /* vaciarCampos2(); */
+                        setCedul(data.cedula);
+                        /* setPerson(data); */
+                    } else {
 
+                        /* vaciarCampos2(); */
+                    }
                 }
             }
         };
@@ -218,7 +225,22 @@ export const RegisterPerson = () => {
 
     const [usern, setUsern] = useState();
 
+    const formi = useRef();
+    /* const enviarCorreo = () => {
+
+        emailjs.sendForm("service_8cupxnl", "template_8todihq", formi.current, '1yHvJdUZ-zUkawH0b').then((result) => {
+            console.log('se envio');
+        },
+            (error) => {
+                console.log('valio hart')
+            })
+
+    } */
+
+
     const onSubmit = async () => {
+
+        /* enviarCorreo(); */
 
         if (tab == 0) {
 
@@ -297,22 +319,32 @@ export const RegisterPerson = () => {
 
         const getCedul = async (cedula) => {
 
-            const { data } = await axios.get(
-                `http://localhost:8080/api/persona/buscarcedul/${cedula}`
-            );
+            if (person.cedula !== undefined) {
 
-            setIdper(data.id_persona);
+                if (validate.validarCedulaTs(person.cedula)) {
+
+                    const { data } = await axios.get(
+                        `http://localhost:8080/api/persona/buscarcedul/${cedula}`
+                    );
+
+                    setIdper(data.id_persona);
+                }
+            }
         };
 
         const getUsername = async (user) => {
 
-            const { data } = await axios.get(
-                `http://localhost:8080/usuarios/search/${user}`
-            );
+            if (username !== '') {
 
-            setIdperUsr(data.persona?.id_persona)
+                const { data } = await axios.get(
+                    `http://localhost:8080/usuarios/search/${user}`
+                );
 
-            setUsern(data.username);
+                setIdperUsr(data.persona?.id_persona)
+
+                setUsern(data.username);
+            }
+
         };
 
         getCedul(selectedPersona?.cedula);
@@ -403,7 +435,7 @@ export const RegisterPerson = () => {
     const [isValidP, setIsValidP] = useState("p-valid");
     const [isValidA, setIsValidA] = useState("p-valid");
     const [isValidE, setIsValidE] = useState("p-valid");
-    /* const [isValidF, setIsValidF] = useState("p-valid"); */
+    const [isValidF, setIsValidF] = useState("p-valid");
     const [isValidC, setIsValidC] = useState("p-valid");
     const [isValidT, setIsValidT] = useState("p-valid");
     const [isValidD, setIsValidD] = useState("p-valid");
@@ -458,18 +490,20 @@ export const RegisterPerson = () => {
             setIsValidD("p-valid");
         }
 
-    }, [person.cedula, person.nombre, person.apellido, person.email,
-    person.genero, person.celular, person.telefono, person.direccion]);
-
-    const handleInputClick = () => {
-        if (person.cedula?.trim() !== '') {
-
-            setIsValid('p-invalid');
+        if (person.fechaNac === '') {
+            setIsValidF("p-invalid"); // valida que el campo no esté vacío
+        } else {
+            setIsValidF("p-valid");
         }
 
-        if (person.nombre?.trim() !== '') {
+    }, [person.cedula, person.nombre, person.apellido, person.email,
+    person.genero, person.celular, person.telefono, person.direccion, person.fechaNac]);
 
-            setIsValidP('p-invalid');
+    const handleInputClick = () => {
+        if (person.cedula?.trim() === '') {
+            setIsValid('p-invalid');
+        } else {
+            setIsValidP("p-valid");
         }
 
         if (person.nombre?.trim() === '') {
@@ -512,6 +546,12 @@ export const RegisterPerson = () => {
             setIsValidD("p-invalid"); // valida que el campo no esté vacío
         } else {
             setIsValidD("p-valid");
+        }
+
+        if (person.fechaNac === '') {
+            setIsValidF("p-invalid"); // valida que el campo no esté vacío
+        } else {
+            setIsValidF("p-valid");
         }
     };
 
@@ -572,7 +612,7 @@ export const RegisterPerson = () => {
                                         Registrar Persona
                                     </h2>
                                 </Divider>
-                                <form
+                                <form ref={formi}
                                     onSubmit={(e) => onSubmit(e)}
                                     className="p-fluid"
                                     style={{ marginTop: "-10px", marginBottom: 80 }}
@@ -667,7 +707,7 @@ export const RegisterPerson = () => {
                                             <div className="campo p-col-12 p-md-4">
                                                 <span className="p-float-label">
                                                     <InputText
-                                                        id="float-input"
+                                                        id="email"
                                                         type="text"
                                                         name="email"
                                                         value={person.email}
@@ -707,7 +747,7 @@ export const RegisterPerson = () => {
                                                                 "fechaNac"
                                                             )
                                                         } maxDate={maxDate} showIcon readOnlyInput
-                                                        /* className={isValidF} */
+                                                        className={isValidF}
                                                         dateFormat="yy-mm-dd"
                                                     />
                                                     <label htmlFor="fechaNac">
@@ -786,7 +826,7 @@ export const RegisterPerson = () => {
                         </TabPanel>
 
                         <TabPanel header="Crear Usuario" rightIcon="pi pi-user">
-                            <div className="form">
+                            <div className="form" style={{ height: "705px" }}>
                                 <Divider align="center" style={{ marginTop: "20px", marginBottom: "50px" }}>
                                     <h2 className="text-center" style={{ color: "black" }}>
                                         Crear Usuarios
@@ -799,8 +839,8 @@ export const RegisterPerson = () => {
                                     style={{ marginTop: "-14px", marginBottom: "80px" }}
                                 >
                                     <div className="p-grid p-fluid">
-                                        <div className="campo p-col-12 p-md-4">
-                                            <span className="p-float-label">
+                                        <center>
+                                            <div className="campo p-col-12 p-md-4" style={{ width: 450 }}>
                                                 <Dropdown
                                                     filter
                                                     valueTemplate={selectedPersonTemplate}
@@ -817,13 +857,12 @@ export const RegisterPerson = () => {
                                                         id: item.id_persona,
                                                         label: `${item.cedula}`,
                                                     }))}
-                                                    placeholder="Paciente"
+                                                    optionLabel="label"
+                                                    placeholder="Seleccione un Registro"
                                                     className="w-full md:w-14rem"
                                                 />
-                                                <label htmlFor="numCedula">Número de Cédula:</label>
-                                            </span>
-                                        </div>
-
+                                            </div>
+                                        </center>
                                         <div className="row">
                                             <div className="col">
                                                 <div className="campo p-col-12 p-md-4">
@@ -858,25 +897,25 @@ export const RegisterPerson = () => {
 
                                             <div className="col">
                                                 <div className="campo p-col-12 p-md-4">
-                                                    <span className="p-float-label">
-                                                        <Dropdown
-                                                            id="password"
-                                                            value={{
-                                                                id: selectedRol?.rolId,
-                                                                label: `${selectedRol?.rolNombre}`,
-                                                            }}
-                                                            onChange={(e) => {
-                                                                onRolChange(e.value);
-                                                            }}
-                                                            options={roles.map((item) => ({
-                                                                id: item.rolId,
-                                                                label: `${item.rolNombre}`,
-                                                            }))}
-                                                            placeholder="Rol"
-                                                            className="w-full md:w-14rem"
-                                                        />
-                                                        <label htmlFor="rolNombre">Rol:</label>
-                                                    </span>
+                                                    <Dropdown
+                                                        valueTemplate={selectedPersonTemplate}
+                                                        itemTemplate={personOptionTemplate}
+                                                        id="password"
+                                                        value={{
+                                                            id: selectedRol?.rolId,
+                                                            label: `${selectedRol?.rolNombre}`,
+                                                        }}
+                                                        onChange={(e) => {
+                                                            onRolChange(e.value);
+                                                        }}
+                                                        options={roles.map((item) => ({
+                                                            id: item.rolId,
+                                                            label: `${item.rolNombre}`,
+                                                        }))}
+                                                        optionLabel="label"
+                                                        placeholder="Seleccione un Rol"
+                                                        className="w-full md:w-14rem"
+                                                    />
                                                 </div>
 
                                                 <div className="campo p-col-12 p-md-4">

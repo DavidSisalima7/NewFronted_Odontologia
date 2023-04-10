@@ -1501,3 +1501,7 @@ li>a:only-child:after {
 }
 
 /*=============== segunda parte ===============*/
+
+.title{
+  width: 100%;
+}
